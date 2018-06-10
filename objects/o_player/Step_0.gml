@@ -2,10 +2,15 @@
 // You can write your code in this editor
 
 vkey_pressed = false; hkey_pressed = false;
-collide_bottom = instance_position(x, y+17, o_collide) || instance_position(x+16, y+17, o_collide);
-collide_top = instance_position(x, y-1, o_collide) || instance_position(x+16, y-1, o_collide);
-collide_left = instance_position(x-1, y, o_collide) || instance_position(x-1, y+16, o_collide);
-collide_right = instance_position(x+17, y, o_collide) || instance_position(x+17, y+16, o_collide);
+
+spriteHeight = sprite_get_height(0)
+spriteWidth = sprite_get_width(0)
+
+
+collide_bottom = instance_position(x, y + spriteHeight + 1 , o_collide) || instance_position(x+ spriteWidth, y +spriteHeight + 1 , o_collide);
+collide_top = instance_position(x, y-1, o_collide) || instance_position(x + spriteWidth , y-1, o_collide);
+collide_left = instance_position(x-1, y, o_collide) || instance_position(x-1, y + spriteHeight, o_collide);
+collide_right = instance_position(x+spriteWidth + 2, y, o_collide) || instance_position(x+spriteWidth + 2 , y+ spriteHeight, o_collide);
 
 if (collide_top) {
 	vspeed = 0;
@@ -20,9 +25,9 @@ if (collide_top) {
 }
 
 if (collide_bottom) {
-	vspeed = 0;
+	//vspeed = 0;
 } else {
-	while (instance_position(x, y+17+vspeed, o_collide) || instance_position(x+16, y+17+vspeed, o_collide)) {
+	while (instance_position(x, y+spriteHeight+vspeed, o_collide) || instance_position(x+spriteWidth, y+spriteHeight+1+vspeed, o_collide)) {
 		if (vspeed >= 1) {
 			vspeed = round(vspeed * decrease_factor);
 		} else {

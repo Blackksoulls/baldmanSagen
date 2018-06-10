@@ -35,8 +35,8 @@
     "option_windowsuap_splash_png": "${base_options_dir}\\windowsuap\\splash\\SplashScreen.scale-100.png",
     "option_windowsuap_start_fullscreen": false,
     "option_windowsuap_store_logo": "${base_options_dir}\\windowsuap\\logos\\StoreLogo.scale-100.png",
-    "option_windowsuap_target_platform_min_version": "10.0.15063.0",
-    "option_windowsuap_target_platform_version": "10.0.15063.0",
+    "option_windowsuap_target_platform_min_version": "10.0.14393.0",
+    "option_windowsuap_target_platform_version": "10.0.14393.0",
     "option_windowsuap_texture_page": "2048x2048",
     "option_windowsuap_use_synchronization": true,
     "option_windowsuap_version": {
