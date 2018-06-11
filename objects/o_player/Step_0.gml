@@ -7,6 +7,43 @@ spriteHeight = sprite_get_height(0)
 spriteWidth = sprite_get_width(0)
 
 
+// @function calcSpeed()
+
+
+
+if (keyboard_check(vk_up))
+{
+
+	vspeed -= speed_factor
+
+}
+else if (keyboard_check(vk_down))
+{
+	vspeed += speed_factor
+}
+
+else if (keyboard_check(vk_left))
+{
+	hspeed -= speed_factor
+	
+}
+else if (keyboard_check(vk_right))
+{
+
+	hspeed += speed_factor
+}
+
+
+vspeed *= 1-decrease_factor;
+hspeed *= 1-decrease_factor;
+
+if (keyboard_check(ord("F"))) 
+{
+	room_restart();
+}
+
+/*
+
 collide_bottom = instance_position(x, y + spriteHeight + 1 , o_collide) || instance_position(x+ spriteWidth, y +spriteHeight + 1 , o_collide);
 collide_top = instance_position(x, y-1, o_collide) || instance_position(x + spriteWidth , y-1, o_collide);
 collide_left = instance_position(x-1, y, o_collide) || instance_position(x-1, y + spriteHeight, o_collide);
@@ -88,9 +125,7 @@ if (!keyboard_check(k_up) || !keyboard_check(k_down)) {
 	vspeed = round(vspeed * decrease_factor);
 }
 
-if (keyboard_check(ord("F"))) {
-	room_restart();
-}
+
 
 if (hkey_pressed == false) {
 	if (power(hspeed, 2) > smin) {
@@ -107,3 +142,5 @@ if (vkey_pressed == false) {
 		vspeed = 0;	
 	}
 }
+
+*/
