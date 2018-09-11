@@ -57,15 +57,15 @@ namespace BotDiscord.Env
                         if (players[0].AvatarUrl == players[0].DefaultAvatarUrl)
                         {
                             // image = Image.FromFile();
-                            stream2 = new FileStream($"..//..//Images//UserIcons//{letter}.png", FileMode.Open);
+                            stream2 = new FileStream($"..//Images//UserIcons//{letter}.png", FileMode.Open);
                             letter = (char) (Convert.ToUInt32(letter) + 1);
                         }
                         else
                         {
                             new WebClient().DownloadFile(players[0].AvatarUrl.Replace("size=1024", "size=256"),
-                                $"..//..//Images//UserIcons//{name}.png");
-                            //image = Image.FromFile($"..//..//Images//UserIcons//{name}.png");
-                            stream2 = new FileStream($"..//..//Images//UserIcons//{name}.png", FileMode.Open);
+                                $"..//Images//UserIcons//{name}.png");
+                            //image = Image.FromFile($"..//Images//UserIcons//{name}.png");
+                            stream2 = new FileStream($"..//Images//UserIcons//{name}.png", FileMode.Open);
                         }
 
                         //image.Save(stream, ImageFormat.Png);

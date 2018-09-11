@@ -21,7 +21,7 @@ namespace BotDiscord
 
         public async Task AsyncMain()
         {
-            _config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../../config.json"));
+            _config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../Config/config.json"));
             _client = new DiscordClient(new DiscordConfiguration {LogLevel = LogLevel.Debug, Token = _config.Token});
             _commands = _client.UseCommandsNext(new CommandsNextConfiguration
             {

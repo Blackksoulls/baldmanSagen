@@ -45,7 +45,7 @@ namespace BotDiscord.Env
         {
             // ReSharper disable once PossibleNullReferenceException
             Texts = JsonConvert.DeserializeObject<Language>(File.ReadAllText(
-                $@"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName}/Locale/{lang}/lang.json",
+                $@".//Bot//Locale/{lang}/lang.json",
                 Encoding.UTF8));
         }
 

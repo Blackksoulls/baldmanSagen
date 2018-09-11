@@ -5,6 +5,7 @@
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject>BotDiscord.Program</StartupObject>
+    <Win32Resource />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -61,9 +62,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00522" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00522" />
-    <PackageReference Include="DSharpPlus.WebSocket.WebSocketSharp" Version="4.0.0-nightly-00522" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00523" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00523" />
+    <PackageReference Include="DSharpPlus.WebSocket.WebSocketSharp" Version="4.0.0-nightly-00523" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="runtime.linux-x64.CoreCompat.System.Drawing" Version="1.0.0-beta009" />
   </ItemGroup>

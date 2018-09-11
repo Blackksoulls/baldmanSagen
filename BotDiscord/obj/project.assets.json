@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.0": {
-      "DSharpPlus/4.0.0-nightly-00522": {
+      "DSharpPlus/4.0.0-nightly-00523": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "10.0.3",
@@ -18,10 +18,10 @@
           "lib/netstandard2.0/DSharpPlus.dll": {}
         }
       },
-      "DSharpPlus.CommandsNext/4.0.0-nightly-00522": {
+      "DSharpPlus.CommandsNext/4.0.0-nightly-00523": {
         "type": "package",
         "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00522",
+          "DSharpPlus": "4.0.0-nightly-00523",
           "Microsoft.Extensions.DependencyInjection": "2.0.0"
         },
         "compile": {
@@ -31,7 +31,7 @@
           "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {}
         }
       },
-      "DSharpPlus.WebSocket.WebSocketSharp/4.0.0-nightly-00522": {
+      "DSharpPlus.WebSocket.WebSocketSharp/4.0.0-nightly-00523": {
         "type": "package",
         "compile": {
           "lib/net46/DSharpPlus.WebSocket.WebSocketSharp.dll": {}
@@ -1405,12 +1405,12 @@
     }
   },
   "libraries": {
-    "DSharpPlus/4.0.0-nightly-00522": {
-      "sha512": "WS59HK7ApuDF3VTXkHMIYVHb7g7+9+FMlVHUx5bPjAxKZhz+paEGgHHuh/KVSirnyfJ+QAEyRaKg9i10uqapjQ==",
+    "DSharpPlus/4.0.0-nightly-00523": {
+      "sha512": "qQG4OoH+nkyv9+wzqgtmo11oOKWdEBSAb2jAMn9yvLWKz7BRdc9HG9+KO/SXCnsD1EaXn1SI+EB4pArZ/I4FOg==",
       "type": "package",
-      "path": "dsharpplus/4.0.0-nightly-00522",
+      "path": "dsharpplus/4.0.0-nightly-00523",
       "files": [
-        "dsharpplus.4.0.0-nightly-00522.nupkg.sha512",
+        "dsharpplus.4.0.0-nightly-00523.nupkg.sha512",
         "dsharpplus.nuspec",
         "lib/net45/DSharpPlus.dll",
         "lib/net45/DSharpPlus.xml",
@@ -1426,12 +1426,12 @@
         "lib/netstandard2.0/DSharpPlus.xml"
       ]
     },
-    "DSharpPlus.CommandsNext/4.0.0-nightly-00522": {
-      "sha512": "n7QrnL0VBZLsVDIuzsMlova7sMlI7b45bNe/taTheV5qRV+o08l1V+YU/0VCmj0Y2YaMwnf/Cb8ZhO0kKBuKiA==",
+    "DSharpPlus.CommandsNext/4.0.0-nightly-00523": {
+      "sha512": "2jqleDwNwQcqv/RciiXi4b3Getebiabs2P36WXYmMOnW7sxK2FRXpQfFdU9JKCvJvQEgZTqgB/1Fz4rUVOIjHQ==",
       "type": "package",
-      "path": "dsharpplus.commandsnext/4.0.0-nightly-00522",
+      "path": "dsharpplus.commandsnext/4.0.0-nightly-00523",
       "files": [
-        "dsharpplus.commandsnext.4.0.0-nightly-00522.nupkg.sha512",
+        "dsharpplus.commandsnext.4.0.0-nightly-00523.nupkg.sha512",
         "dsharpplus.commandsnext.nuspec",
         "lib/net45/DSharpPlus.CommandsNext.dll",
         "lib/net45/DSharpPlus.CommandsNext.xml",
@@ -1447,12 +1447,12 @@
         "lib/netstandard2.0/DSharpPlus.CommandsNext.xml"
       ]
     },
-    "DSharpPlus.WebSocket.WebSocketSharp/4.0.0-nightly-00522": {
-      "sha512": "63DkmM4sFB7SiYzcGZw6vKGazcXb0r4QuGASxmcXpUscMfv/gT9yeHKr8hENowWkL9jf+aLXEea0ZUd49ChR8g==",
+    "DSharpPlus.WebSocket.WebSocketSharp/4.0.0-nightly-00523": {
+      "sha512": "ua++M7GK2uey6elr7o0HicVowdVDaR86xoly8bzh9aDC9zpSBhe/DC6w0+D4qVfHTpmNi8MHBHk5KYImgboIpw==",
       "type": "package",
-      "path": "dsharpplus.websocket.websocketsharp/4.0.0-nightly-00522",
+      "path": "dsharpplus.websocket.websocketsharp/4.0.0-nightly-00523",
       "files": [
-        "dsharpplus.websocket.websocketsharp.4.0.0-nightly-00522.nupkg.sha512",
+        "dsharpplus.websocket.websocketsharp.4.0.0-nightly-00523.nupkg.sha512",
         "dsharpplus.websocket.websocketsharp.nuspec",
         "lib/net45/DSharpPlus.WebSocket.WebSocketSharp.dll",
         "lib/net45/DSharpPlus.WebSocket.WebSocketSharp.xml",
@@ -4586,9 +4586,9 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
-      "DSharpPlus >= 4.0.0-nightly-00522",
-      "DSharpPlus.CommandsNext >= 4.0.0-nightly-00522",
-      "DSharpPlus.WebSocket.WebSocketSharp >= 4.0.0-nightly-00522",
+      "DSharpPlus >= 4.0.0-nightly-00523",
+      "DSharpPlus.CommandsNext >= 4.0.0-nightly-00523",
+      "DSharpPlus.WebSocket.WebSocketSharp >= 4.0.0-nightly-00523",
       "Microsoft.NETCore.App >= 2.0.0",
       "Newtonsoft.Json >= 11.0.2",
       "runtime.linux-x64.CoreCompat.System.Drawing >= 1.0.0-beta009"
@@ -4638,15 +4638,15 @@
         "dependencies": {
           "DSharpPlus": {
             "target": "Package",
-            "version": "[4.0.0-nightly-00522, )"
+            "version": "[4.0.0-nightly-00523, )"
           },
           "DSharpPlus.CommandsNext": {
             "target": "Package",
-            "version": "[4.0.0-nightly-00522, )"
+            "version": "[4.0.0-nightly-00523, )"
           },
           "DSharpPlus.WebSocket.WebSocketSharp": {
             "target": "Package",
-            "version": "[4.0.0-nightly-00522, )"
+            "version": "[4.0.0-nightly-00523, )"
           },
           "Microsoft.NETCore.App": {
             "target": "Package",
@@ -4675,7 +4675,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Le package 'DSharpPlus.WebSocket.WebSocketSharp 4.0.0-nightly-00522' a été restauré en utilisant '.NETFramework,Version=v4.6.1' au lieu du framework cible du projet '.NETCoreApp,Version=v2.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
+      "message": "Le package 'DSharpPlus.WebSocket.WebSocketSharp 4.0.0-nightly-00523' a été restauré en utilisant '.NETFramework,Version=v4.6.1' au lieu du framework cible du projet '.NETCoreApp,Version=v2.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
       "libraryId": "DSharpPlus.WebSocket.WebSocketSharp",
       "targetGraphs": [
         ".NETCoreApp,Version=v2.0"
