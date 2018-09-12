@@ -70,7 +70,7 @@ namespace BotDiscord.Env
 
                         //image.Save(stream, ImageFormat.Png);
 
-                        emoji = await game.Guild.CreateEmojiAsync(name, stream2);
+                        emoji = await game.Guild.CreateEmojiAsync(name, stream2).ConfigureAwait(true);
 
                     }
                     catch (Exception e)
@@ -119,8 +119,8 @@ namespace BotDiscord.Env
 
                 foreach (var dm in players)
                 {
-                    await game.DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels);
-                    await game.DiscordChannels[GameChannel.BotText].AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels);
+                    await game.DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels).ConfigureAwait(true);
+                    await game.DiscordChannels[GameChannel.BotText].AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels).ConfigureAwait(true);
                 }
 
             }
@@ -204,25 +204,25 @@ namespace BotDiscord.Env
             Global.Roles = new Dictionary<CustomRoles, DiscordRole>();
 
 
-            var adminRole = await game.Guild.CreateRoleAsync(game.Texts.BotName, Permissions.Administrator, Color.AdminColor, true, true, "GameRole Bot");
+            var adminRole = await game.Guild.CreateRoleAsync(game.Texts.BotName, Permissions.Administrator, Color.AdminColor, true, true, "GameRole Bot").ConfigureAwait(true);
             Global.Roles.Add(CustomRoles.Admin, adminRole);
 
 
             var playerPerms = GameBuilder.CreatePerms(Permissions.SendMessages, Permissions.ReadMessageHistory,
                 Permissions.AddReactions);
 
-            var playerRole = await game.Guild.CreateRoleAsync(game.Texts.Player, playerPerms, Color.PlayerColor, true, true, "GameRole Joueur");
+            var playerRole = await game.Guild.CreateRoleAsync(game.Texts.Player, playerPerms, Color.PlayerColor, true, true, "GameRole Joueur").ConfigureAwait(true);
             Global.Roles.Add(CustomRoles.Player, playerRole);
 
 
             var spectPerms = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.ReadMessageHistory);
             GameBuilder.RevokePerm(spectPerms, Permissions.ManageEmojis);
-            var spectRole = await game.Guild.CreateRoleAsync(game.Texts.Spectator, spectPerms, Color.SpectColor, true, false, "GameRole spectateur");
+            var spectRole = await game.Guild.CreateRoleAsync(game.Texts.Spectator, spectPerms, Color.SpectColor, true, false, "GameRole spectateur").ConfigureAwait(true);
 
             Global.Roles.Add(CustomRoles.Spectator, spectRole);
 
 
-            await game.Guild.EveryoneRole.ModifyAsync(x => x.Permissions = Permissions.None);
+            await game.Guild.EveryoneRole.ModifyAsync(x => x.Permissions = Permissions.None).ConfigureAwait(true);
 
             #endregion
         }

@@ -31,15 +31,6 @@
           "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {}
         }
       },
-      "DSharpPlus.WebSocket.WebSocketSharp/4.0.0-nightly-00523": {
-        "type": "package",
-        "compile": {
-          "lib/net46/DSharpPlus.WebSocket.WebSocketSharp.dll": {}
-        },
-        "runtime": {
-          "lib/net46/DSharpPlus.WebSocket.WebSocketSharp.dll": {}
-        }
-      },
       "Microsoft.Extensions.DependencyInjection/2.0.0": {
         "type": "package",
         "dependencies": {
@@ -1445,21 +1436,6 @@
         "lib/netstandard1.3/DSharpPlus.CommandsNext.xml",
         "lib/netstandard2.0/DSharpPlus.CommandsNext.dll",
         "lib/netstandard2.0/DSharpPlus.CommandsNext.xml"
-      ]
-    },
-    "DSharpPlus.WebSocket.WebSocketSharp/4.0.0-nightly-00523": {
-      "sha512": "ua++M7GK2uey6elr7o0HicVowdVDaR86xoly8bzh9aDC9zpSBhe/DC6w0+D4qVfHTpmNi8MHBHk5KYImgboIpw==",
-      "type": "package",
-      "path": "dsharpplus.websocket.websocketsharp/4.0.0-nightly-00523",
-      "files": [
-        "dsharpplus.websocket.websocketsharp.4.0.0-nightly-00523.nupkg.sha512",
-        "dsharpplus.websocket.websocketsharp.nuspec",
-        "lib/net45/DSharpPlus.WebSocket.WebSocketSharp.dll",
-        "lib/net45/DSharpPlus.WebSocket.WebSocketSharp.xml",
-        "lib/net46/DSharpPlus.WebSocket.WebSocketSharp.dll",
-        "lib/net46/DSharpPlus.WebSocket.WebSocketSharp.xml",
-        "lib/net47/DSharpPlus.WebSocket.WebSocketSharp.dll",
-        "lib/net47/DSharpPlus.WebSocket.WebSocketSharp.xml"
       ]
     },
     "Microsoft.Extensions.DependencyInjection/2.0.0": {
@@ -4588,30 +4564,29 @@
     ".NETCoreApp,Version=v2.0": [
       "DSharpPlus >= 4.0.0-nightly-00523",
       "DSharpPlus.CommandsNext >= 4.0.0-nightly-00523",
-      "DSharpPlus.WebSocket.WebSocketSharp >= 4.0.0-nightly-00523",
       "Microsoft.NETCore.App >= 2.0.0",
       "Newtonsoft.Json >= 11.0.2",
       "runtime.linux-x64.CoreCompat.System.Drawing >= 1.0.0-beta009"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Elyspio\\.nuget\\packages\\": {},
+    "C:\\Users\\jonag\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "P:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
+      "projectUniqueName": "M:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
       "projectName": "BotDiscord",
-      "projectPath": "P:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
-      "packagesPath": "C:\\Users\\Elyspio\\.nuget\\packages\\",
-      "outputPath": "P:\\IUT\\PTUT\\BotDiscord\\obj\\",
+      "projectPath": "M:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
+      "packagesPath": "C:\\Users\\jonag\\.nuget\\packages\\",
+      "outputPath": "M:\\IUT\\PTUT\\BotDiscord\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Elyspio\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jonag\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4644,10 +4619,6 @@
             "target": "Package",
             "version": "[4.0.0-nightly-00523, )"
           },
-          "DSharpPlus.WebSocket.WebSocketSharp": {
-            "target": "Package",
-            "version": "[4.0.0-nightly-00523, )"
-          },
           "Microsoft.NETCore.App": {
             "target": "Package",
             "version": "[2.0.0, )",
@@ -4669,17 +4640,5 @@
         "warn": true
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Le package 'DSharpPlus.WebSocket.WebSocketSharp 4.0.0-nightly-00523' a été restauré en utilisant '.NETFramework,Version=v4.6.1' au lieu du framework cible du projet '.NETCoreApp,Version=v2.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
-      "libraryId": "DSharpPlus.WebSocket.WebSocketSharp",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.0"
-      ]
-    }
-  ]
+  }
 }

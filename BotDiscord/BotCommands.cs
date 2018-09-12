@@ -24,26 +24,26 @@ namespace BotDiscord
             {
                 Global.Games.Add(new Game(e, lang));
                 Global.Games.Last().CreateGuild(e, lang).GetAwaiter().GetResult();
-            });
+            }).ConfigureAwait(true);
         }
 
         [Command("ping"), Description("")]
         public async Task Ping(CommandContext e)
         {
-            await e.TriggerTypingAsync();
-            await e.RespondAsync($"{e.User.Mention} Pong ({e.Client.Ping}ms)");
+            await e.TriggerTypingAsync().ConfigureAwait(true);
+            await e.RespondAsync($"{e.User.Mention} Pong ({e.Client.Ping}ms)").ConfigureAwait(true);
         }
 
 
         private async Task NewGuildMember(GuildMemberAddEventArgs e)
         {
-            await e.Member.GrantRoleAsync(Global.Roles[CustomRoles.Spectator]);
+            await e.Member.GrantRoleAsync(Global.Roles[CustomRoles.Spectator]).ConfigureAwait(true);
         }
 
         private async Task StartMember(GuildMemberAddEventArgs e)
         {
             Permissions p = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice, Permissions.Speak);
-            await Global.Games[Global.currGame].DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(e.Member, p);
+            await Global.Games[Global.currGame].DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(e.Member, p).ConfigureAwait(true);
             Game.WriteDebug($"D : {e.Member.Username}");
         }
 
@@ -51,9 +51,9 @@ namespace BotDiscord
         [Command("disconnect"), Aliases("dis", "dc")]
         public async Task Disconnect(CommandContext e)
         {
-            await e.Client.UpdateStatusAsync(userStatus: UserStatus.Invisible);
+            await e.Client.UpdateStatusAsync(userStatus: UserStatus.Invisible).ConfigureAwait(true);
             e.Client.DebugLogger.LogMessage(LogLevel.Info, "AlphaBot", "Disconnecting from Discord", DateTime.Now);
-            await e.Client.DisconnectAsync();
+            await e.Client.DisconnectAsync().ConfigureAwait(true);
             Thread.Sleep(1000);
             Environment.Exit(0);
         }
@@ -62,7 +62,7 @@ namespace BotDiscord
         [Command("test")]
         public async Task Test(CommandContext e)
         {
-            await Task.Run(() => Game.WriteDebug("test"));
+            await Task.Run(() => Game.WriteDebug("test")).ConfigureAwait(true);
         }
 
         [Command("delete")]
@@ -70,7 +70,7 @@ namespace BotDiscord
         {
             foreach (var discordChannel in e.Guild.Channels)
             {
-                await discordChannel.DeleteAsync();
+                await discordChannel.DeleteAsync().ConfigureAwait(true);
             }
         }
 
@@ -79,7 +79,7 @@ namespace BotDiscord
         {
             var adminRole = e.Guild.CreateRoleAsync("ADMIN", Permissions.Administrator).GetAwaiter().GetResult();
 
-            await GameBuilder.GetMember(e.Guild, e.User).GrantRoleAsync(adminRole);
+            await GameBuilder.GetMember(e.Guild, e.User).GrantRoleAsync(adminRole).ConfigureAwait(true);
         }
     }
 }

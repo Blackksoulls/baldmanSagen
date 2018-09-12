@@ -22,25 +22,25 @@ namespace BotDiscord
                 Title = game.Texts.DailyVoteMessage,
                 Color = Color.PollColor
             };
-            DailyVotingMessage = await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+            DailyVotingMessage = await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
 
             var startTime = DateTime.Now;
 
             foreach (var personnage in game.PersonnagesList.FindAll(personnage => personnage.Alive))
             {
                 Console.WriteLine($"Personnage : {personnage.Me.Username} -> {personnage.Emoji.Name}");
-                await DailyVotingMessage.CreateReactionAsync(personnage.Emoji);
+                await DailyVotingMessage.CreateReactionAsync(personnage.Emoji).ConfigureAwait(true);
             }
             //Global.currGame = 
             Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
 
             while (DateTime.Now < startTime.AddSeconds(TimeToVote))
             {
-                await Task.Delay(500);
+                await Task.Delay(500).ConfigureAwait(true);
             }
 
             Console.WriteLine("Le temps est fini");
-            DailyVotingMessage = await game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DailyVotingMessage.Id);
+            DailyVotingMessage = await game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DailyVotingMessage.Id).ConfigureAwait(true);
             foreach (var discordReaction in DailyVotingMessage.Reactions)
             {
                 Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
@@ -50,20 +50,20 @@ namespace BotDiscord
             {
                 var emoji = DailyVotingMessage.Reactions.First(x => x.Count == DailyVotingMessage.Reactions.Max(y => y.Count)).Emoji;
                 var p = game.PersonnagesList.Find(personnage => personnage.Emoji.Id == emoji.Id);
-                await MakeDeath(game, p);
+                await MakeDeath(game, p).ConfigureAwait(true);
                 embed = new DiscordEmbedBuilder()
                 {
                     Title = game.Texts.DeadMessagePrivate,
                     Color = Color.InfoColor
                 };
-                await p.ChannelT.SendMessageAsync(embed: embed.Build());
+                await p.ChannelT.SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
 
                 embed = new DiscordEmbedBuilder()
                 {
                     Title = $"{p.GotKilled()}",
                     Color = Color.PollColor
                 };
-                await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+                await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
             }
             catch (Exception exception)
             {
@@ -91,19 +91,19 @@ namespace BotDiscord
 
             if (!present || (GameBuilder.GetMember(game.Guild, e.User)).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
             {
-                await DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
+                await DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User).ConfigureAwait(true);
                 return;
             }
 
 
             if (!e.User.IsBot && !GameBuilder.GetMember(game.Guild, e.User).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
             {
-                foreach (var otherEmoji in (await game.Guild.GetEmojisAsync()))
+                foreach (var otherEmoji in (await game.Guild.GetEmojisAsync().ConfigureAwait(true)))
                 {
                     if (otherEmoji.Name != e.Emoji.Name)
                     {
                         await DailyVotingMessage.DeleteReactionAsync(otherEmoji, e.User,
-                            $"{e.User.Username} already voted");
+                            $"{e.User.Username} already voted").ConfigureAwait(true);
                     }
                 }
             }
@@ -124,7 +124,7 @@ namespace BotDiscord
 
             if (!present || (GameBuilder.GetMember(Game.Guild, e.User)).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
             {
-                await DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
+                await DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User).ConfigureAwait(true);
                 return;
             }
 
@@ -132,13 +132,13 @@ namespace BotDiscord
 
             if (!e.User.IsBot && !GameBuilder.GetMember(Game.Guild, e.User).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
             {
-                foreach (var otherEmoji in (await Game.Guild.GetEmojisAsync()))
+                foreach (var otherEmoji in (await Game.Guild.GetEmojisAsync().ConfigureAwait(true)))
                 {
                     cnt++;
                     if (otherEmoji.Name != e.Emoji.Name && cnt > 1)
                     {
                         await DailyVotingMessage.DeleteReactionAsync(otherEmoji, e.User,
-                            $"{e.User.Username} already voted");
+                            $"{e.User.Username} already voted").ConfigureAwait(true);
                         cnt = 0; // 0  car on ajoute 1 avant le test
                     }
                 }
@@ -148,26 +148,26 @@ namespace BotDiscord
         internal static async Task HunterDeath(Game game)
         {
             var hunter = game.PersonnagesList.Find(p => p.GetType() == typeof(Hunter));
-            var message = await hunter.ChannelT.SendMessageAsync(game.Texts.HunterDeathQuestion);
+            var message = await hunter.ChannelT.SendMessageAsync(game.Texts.HunterDeathQuestion).ConfigureAwait(true);
 
 
-            foreach (var emoji in (await game.Guild.GetEmojisAsync()).ToList()
+            foreach (var emoji in (await game.Guild.GetEmojisAsync().ConfigureAwait(true)).ToList()
                 .FindAll(emo => emo.Id != hunter.Emoji.Id))
             {
-                await message.CreateReactionAsync(emoji);
+                await message.CreateReactionAsync(emoji).ConfigureAwait(true);
             }
 
-            await Task.Delay(10 * 1000);
+            await Task.Delay(10 * 1000).ConfigureAwait(true);
 
             var react = message.Reactions.First(reaction => reaction.Count == message.Reactions.Max(x => x.Count));
             var target = game.PersonnagesList.Find(p => p.Emoji.Id == react.Emoji.Id);
-            await game.Kill(target);
+            await game.Kill(target).ConfigureAwait(true);
             var embed = new DiscordEmbedBuilder()
             {
                 Title = $"{hunter.Me.Username} {game.Texts.PublicHunterMessage} {target.Me.Username}",
                 Color = Color.DeadColor
             };
-            await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+            await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
         }
 
         internal static async Task SeerAction(Game game)
@@ -175,15 +175,15 @@ namespace BotDiscord
             var seer = game.PersonnagesList.Find(p => p.GetType() == typeof(Seer));
             if (seer != null)
             {
-                var msg = await seer.ChannelT.SendMessageAsync(game.Texts.SeerAskMsg);
+                var msg = await seer.ChannelT.SendMessageAsync(game.Texts.SeerAskMsg).ConfigureAwait(true);
 
-                foreach (var emoji in (await game.Guild.GetEmojisAsync()).ToList()
+                foreach (var emoji in (await game.Guild.GetEmojisAsync().ConfigureAwait(true)).ToList()
                     .FindAll(emo => emo.Id != seer.Emoji.Id))
                 {
-                    await msg.CreateReactionAsync(emoji);
+                    await msg.CreateReactionAsync(emoji).ConfigureAwait(true);
                 }
 
-                await Task.Delay(TimeToVote);
+                await Task.Delay(TimeToVote).ConfigureAwait(true);
                 var react = msg.Reactions.First(reaction => reaction.Count == msg.Reactions.Max(x => x.Count));
                 var target = game.PersonnagesList.Find(p => p.Emoji.Id == react.Emoji.Id);
                 var embed = new DiscordEmbedBuilder()
@@ -191,7 +191,7 @@ namespace BotDiscord
                     Title = $"{game.Texts.SeerRecMsg} {target.GetClassName()}",
                     Color = Color.InfoColor
                 };
-                await seer.ChannelT.SendMessageAsync(embed: embed.Build());
+                await seer.ChannelT.SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
             }
         }
 
@@ -208,14 +208,14 @@ namespace BotDiscord
                     Title = $"{game.NightTargets[0]} {game.Texts.WitchSaveMsg}"
                 };
 
-                var healMsg = await witchCh.SendMessageAsync(embed: embed.Build());
-                await healMsg.CreateReactionAsync(DiscordEmoji.FromName(Global.Client, ":thumbsup:"));
-                await healMsg.CreateReactionAsync(DiscordEmoji.FromName(Global.Client, ":thumbsdown:"));
+                var healMsg = await witchCh.SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
+                await healMsg.CreateReactionAsync(DiscordEmoji.FromName(Global.Client, ":thumbsup:")).ConfigureAwait(true);
+                await healMsg.CreateReactionAsync(DiscordEmoji.FromName(Global.Client, ":thumbsdown:")).ConfigureAwait(true);
 
                 Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
 
-                await Task.Delay(TimeToVote / 2);
-                healMsg = await witchCh.GetMessageAsync(healMsg.Id);
+                await Task.Delay(TimeToVote / 2).ConfigureAwait(true);
+                healMsg = await witchCh.GetMessageAsync(healMsg.Id).ConfigureAwait(true);
                 if (healMsg.GetReactionsAsync(DiscordEmoji.FromName(Global.Client, ":thumbsup:")).GetAwaiter().GetResult()
                         .Count == 2)
                 {
@@ -227,17 +227,17 @@ namespace BotDiscord
                     Color = Color.PollColor,
                     Title = game.Texts.WitchKillMsg,
                 };
-                var killMsg = await witchCh.SendMessageAsync(embed: embed.Build());
+                var killMsg = await witchCh.SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
                 foreach (var emoji in game.Guild.GetEmojisAsync().GetAwaiter().GetResult().ToList()
                     .FindAll(e => e.Id != witch.Emoji.Id))
                 {
-                    await killMsg.CreateReactionAsync(emoji);
+                    await killMsg.CreateReactionAsync(emoji).ConfigureAwait(true);
                 }
 
                 Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
 
-                await Task.Delay(TimeToVote / 2);
-                killMsg = await witchCh.GetMessageAsync(killMsg.Id);
+                await Task.Delay(TimeToVote / 2).ConfigureAwait(true);
+                killMsg = await witchCh.GetMessageAsync(killMsg.Id).ConfigureAwait(true);
                 game.NightTargets.Add(game.PersonnagesList.Find(p =>
                     p.Emoji == killMsg.Reactions.ToList().Find(r => r.Count == 2).Emoji));
             }
@@ -252,15 +252,15 @@ namespace BotDiscord
                 Title = game.Texts.NightlyWolfMessage
             };
 
-            var msg = await game.DiscordChannels[GameChannel.WolfText].SendMessageAsync(embed: embed.Build());
+            var msg = await game.DiscordChannels[GameChannel.WolfText].SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
 
             foreach (var personnage in game.PersonnagesList.FindAll(p => p.GetType() != typeof(Wolf) && p.Alive))
             {
-                await msg.CreateReactionAsync(personnage.Emoji);
+                await msg.CreateReactionAsync(personnage.Emoji).ConfigureAwait(true);
             }
 
-            await Task.Delay(TimeToVote);
-            msg = await game.DiscordChannels[GameChannel.WolfText].GetMessageAsync(msg.Id);
+            await Task.Delay(TimeToVote).ConfigureAwait(true);
+            msg = await game.DiscordChannels[GameChannel.WolfText].GetMessageAsync(msg.Id).ConfigureAwait(true);
             var react = msg.Reactions.First(reaction => reaction.Count == msg.Reactions.Max(x => x.Count));
             var target = game.PersonnagesList.Find(p => p.Emoji.Id == react.Emoji.Id);
 
@@ -280,12 +280,12 @@ namespace BotDiscord
                     Title = game.Texts.CupidMessage
                 };
 
-                var msg = await channel.SendMessageAsync(embed: embed.Build());
+                var msg = await channel.SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
                 Global.Client.MessageReactionAdded += OnReactionAddedCupidon;
 
-                await Task.Delay(TimeToVote);
+                await Task.Delay(TimeToVote).ConfigureAwait(true);
 
-                msg = await channel.GetMessageAsync(msg.Id);
+                msg = await channel.GetMessageAsync(msg.Id).ConfigureAwait(true);
 
                 var react = msg.Reactions.ToList()
                     .FindAll(reaction => reaction.Count == msg.Reactions.Max(x => x.Count));
@@ -315,8 +315,8 @@ namespace BotDiscord
                     Title = $"{game.Texts.DeadMessagePrivate}",
                     Color = Color.DeadColor
                 };
-                await target.ChannelT.SendMessageAsync(embed: embed.Build());
-                await MakeDeath(game, target);
+                await target.ChannelT.SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
+                await MakeDeath(game, target).ConfigureAwait(true);
             }
 
             game.CheckVictory();
@@ -329,7 +329,7 @@ namespace BotDiscord
 
         public static async Task MakeDeath(Game game, Personnage p)
         {
-            await game.Kill(p);
+            await game.Kill(p).ConfigureAwait(true);
 
 
             if (p.GetType() == typeof(Hunter))
@@ -345,8 +345,8 @@ namespace BotDiscord
                     Title = $"{loved.Me.Username} {game.Texts.LoveSuicide}",
                     Color = Color.LoveColor
                 };
-                await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
-                await game.Kill(loved);
+                await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
+                await game.Kill(loved).ConfigureAwait(true);
             }
         }
 
@@ -363,16 +363,16 @@ namespace BotDiscord
                 Title = game.Texts.NightAnnoucement,
                 Color = Color.InfoColor
             };
-            await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+            await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
             foreach (var p in game.PersonnagesList.FindAll(p => p.Alive))
             {
                 if (p.GetType() != typeof(Wolf))
                 {
-                    await p.Me.PlaceInAsync(p.ChannelV);
+                    await p.Me.PlaceInAsync(p.ChannelV).ConfigureAwait(true);
                 }
                 else
                 {
-                    await p.Me.PlaceInAsync(game.DiscordChannels[GameChannel.WolfVoice]);
+                    await p.Me.PlaceInAsync(game.DiscordChannels[GameChannel.WolfVoice]).ConfigureAwait(true);
                 }
             }
         }
@@ -384,10 +384,10 @@ namespace BotDiscord
                 Title = game.Texts.DayAnnoucement,
                 Color = Color.InfoColor
             };
-            await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+            await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build()).ConfigureAwait(true);
             foreach (var p in game.PersonnagesList.FindAll(p => p.Alive))
             {
-                await p.Me.PlaceInAsync(game.DiscordChannels[GameChannel.TownVoice]);
+                await p.Me.PlaceInAsync(game.DiscordChannels[GameChannel.TownVoice]).ConfigureAwait(true);
             }
         }
     }

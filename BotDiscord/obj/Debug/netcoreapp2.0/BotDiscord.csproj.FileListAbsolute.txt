@@ -22,3 +22,15 @@ P:\IUT\PTUT\BotDiscord\obj\Debug\netcoreapp2.0\BotDiscord.AssemblyInfoInputs.cac
 P:\IUT\PTUT\BotDiscord\obj\Debug\netcoreapp2.0\BotDiscord.AssemblyInfo.cs
 P:\IUT\PTUT\BotDiscord\obj\Debug\netcoreapp2.0\BotDiscord.dll
 P:\IUT\PTUT\BotDiscord\obj\Debug\netcoreapp2.0\BotDiscord.pdb
+M:\IUT\PTUT\BotDiscord\bin\Debug\netcoreapp2.0\BotDiscord.dll.config
+M:\IUT\PTUT\BotDiscord\bin\Debug\netcoreapp2.0\BotDiscord.deps.json
+M:\IUT\PTUT\BotDiscord\bin\Debug\netcoreapp2.0\BotDiscord.runtimeconfig.json
+M:\IUT\PTUT\BotDiscord\bin\Debug\netcoreapp2.0\BotDiscord.runtimeconfig.dev.json
+M:\IUT\PTUT\BotDiscord\bin\Debug\netcoreapp2.0\BotDiscord.dll
+M:\IUT\PTUT\BotDiscord\bin\Debug\netcoreapp2.0\BotDiscord.pdb
+M:\IUT\PTUT\BotDiscord\obj\Debug\netcoreapp2.0\BotDiscord.csprojAssemblyReference.cache
+M:\IUT\PTUT\BotDiscord\obj\Debug\netcoreapp2.0\BotDiscord.csproj.CoreCompileInputs.cache
+M:\IUT\PTUT\BotDiscord\obj\Debug\netcoreapp2.0\BotDiscord.AssemblyInfoInputs.cache
+M:\IUT\PTUT\BotDiscord\obj\Debug\netcoreapp2.0\BotDiscord.AssemblyInfo.cs
+M:\IUT\PTUT\BotDiscord\obj\Debug\netcoreapp2.0\BotDiscord.dll
+M:\IUT\PTUT\BotDiscord\obj\Debug\netcoreapp2.0\BotDiscord.pdb
