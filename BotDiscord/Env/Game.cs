@@ -31,6 +31,7 @@ namespace BotDiscord.Env
         public int Laps;
 
         public int Id;
+        
         public static int Ids;
 
         public Game(CommandContext e, string lang)
@@ -45,7 +46,7 @@ namespace BotDiscord.Env
         {
             // ReSharper disable once PossibleNullReferenceException
             Texts = JsonConvert.DeserializeObject<Language>(File.ReadAllText(
-                $@"..//Bot//Locale/{lang}/lang.json",
+                $@"..//Locale/{lang}/lang.json",
                 Encoding.UTF8));
         }
 

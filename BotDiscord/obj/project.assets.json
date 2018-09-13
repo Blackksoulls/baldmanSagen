@@ -303,68 +303,6 @@
           }
         }
       },
-      "runtime.linux-x64.CoreCompat.System.Drawing/1.0.0-beta009": {
-        "type": "package",
-        "dependencies": {
-          "System.Runtime": "4.1.0"
-        },
-        "compile": {
-          "lib/netstandard1.5/runtime.linux-x64.CoreCompat.System.Drawing.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.5/runtime.linux-x64.CoreCompat.System.Drawing.dll": {}
-        },
-        "runtimeTargets": {
-          "runtimes/linux-x64/native/libcairo.so.2": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libexif.so.12": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libfontconfig.so.1": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libfreetype.so.6": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libgdiplus.so": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libgif.so.7": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libglib-2.0.so.0": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libjbig.so.0": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libjpeg.so.8": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libpixman-1.so.0": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libpng12.so.0": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libtiff.so.5": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          }
-        }
-      },
       "runtime.native.System/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -2028,28 +1966,6 @@
         "runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
         "runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.nuspec",
         "runtimes/fedora.24-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
-      ]
-    },
-    "runtime.linux-x64.CoreCompat.System.Drawing/1.0.0-beta009": {
-      "sha512": "6t5B23rZDy6xXWKWZ34Tj2mVeq+CCW4nFZmBCcC1U4lbdhWu2KCQi6Mr1fPJ0F8LErfT7ict8yL0MXL/xBvswQ==",
-      "type": "package",
-      "path": "runtime.linux-x64.corecompat.system.drawing/1.0.0-beta009",
-      "files": [
-        "lib/netstandard1.5/runtime.linux-x64.CoreCompat.System.Drawing.dll",
-        "runtime.linux-x64.corecompat.system.drawing.1.0.0-beta009.nupkg.sha512",
-        "runtime.linux-x64.corecompat.system.drawing.nuspec",
-        "runtimes/linux-x64/native/libcairo.so.2",
-        "runtimes/linux-x64/native/libexif.so.12",
-        "runtimes/linux-x64/native/libfontconfig.so.1",
-        "runtimes/linux-x64/native/libfreetype.so.6",
-        "runtimes/linux-x64/native/libgdiplus.so",
-        "runtimes/linux-x64/native/libgif.so.7",
-        "runtimes/linux-x64/native/libglib-2.0.so.0",
-        "runtimes/linux-x64/native/libjbig.so.0",
-        "runtimes/linux-x64/native/libjpeg.so.8",
-        "runtimes/linux-x64/native/libpixman-1.so.0",
-        "runtimes/linux-x64/native/libpng12.so.0",
-        "runtimes/linux-x64/native/libtiff.so.5"
       ]
     },
     "runtime.native.System/4.3.0": {
@@ -4565,28 +4481,27 @@
       "DSharpPlus >= 4.0.0-nightly-00523",
       "DSharpPlus.CommandsNext >= 4.0.0-nightly-00523",
       "Microsoft.NETCore.App >= 2.0.0",
-      "Newtonsoft.Json >= 11.0.2",
-      "runtime.linux-x64.CoreCompat.System.Drawing >= 1.0.0-beta009"
+      "Newtonsoft.Json >= 11.0.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jonag\\.nuget\\packages\\": {},
+    "C:\\Users\\Elyspio\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "M:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
+      "projectUniqueName": "P:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
       "projectName": "BotDiscord",
-      "projectPath": "M:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
-      "packagesPath": "C:\\Users\\jonag\\.nuget\\packages\\",
-      "outputPath": "M:\\IUT\\PTUT\\BotDiscord\\obj\\",
+      "projectPath": "P:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
+      "packagesPath": "C:\\Users\\Elyspio\\.nuget\\packages\\",
+      "outputPath": "P:\\IUT\\PTUT\\BotDiscord\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\jonag\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Elyspio\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4627,10 +4542,6 @@
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[11.0.2, )"
-          },
-          "runtime.linux-x64.CoreCompat.System.Drawing": {
-            "target": "Package",
-            "version": "[1.0.0-beta009, )"
           }
         },
         "imports": [
