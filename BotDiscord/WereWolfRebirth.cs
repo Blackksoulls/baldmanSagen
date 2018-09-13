@@ -78,14 +78,14 @@ namespace BotDiscord
             _client.WebhooksUpdated += Client_WebhooksUpdated;
             try
             {
-                await _client.ConnectAsync().ConfigureAwait(true);
+                await _client.ConnectAsync();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
-            await Task.Delay(-1).ConfigureAwait(true);
+            await Task.Delay(-1);
         }
 
         private Task Client_GuildAvailable(GuildCreateEventArgs e)

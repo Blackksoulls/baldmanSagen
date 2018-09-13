@@ -3,6 +3,6 @@ echo "Bot Launching"
 
 cd .\Bot
 cd .\Bin
-start dotnet.exe BotDiscord.dll
+dotnet.exe BotDiscord.dll
 echo "Bot Closed"
 PAUSE
