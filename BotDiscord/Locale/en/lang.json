@@ -62,6 +62,9 @@
 
   "NotEnoughPlayer": "Not enough players :",
 
-  "RoleString": "Personal informations: "
+  "RoleString": "Personal informations: ",
+  "NoWolfKill": "You chose to eat nobody this night.",
+  "NoTownKill": "Les votants n'arrive pas à se mettre d'accord, le vote est repoussé à demain.",
+  "TownPollAgain": "Les votants n'arrive pas à se mettre d'accord, nous allons revoter."
 
 }

@@ -42,7 +42,7 @@ namespace BotDiscord
 
         private async Task StartMember(GuildMemberAddEventArgs e)
         {
-            Permissions p = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice, Permissions.Speak);
+            var p = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice, Permissions.Speak);
             await Global.Games[Global.currGame].DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(e.Member, p);
             Game.WriteDebug($"D : {e.Member.Username}");
         }

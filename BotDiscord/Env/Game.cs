@@ -187,7 +187,7 @@ namespace BotDiscord.Env
             {
                 WriteDebug($"Y : {p.Me.Username}");
 
-                DiscordMember usr = GameBuilder.GetMember(Guild, p.Me);
+                var usr = GameBuilder.GetMember(Guild, p.Me);
 
                 await DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(usr, Permissions.None,
                     GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice));
@@ -432,7 +432,7 @@ namespace BotDiscord.Env
 
                 await DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
 
-                Permissions pToRemove = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.ManageEmojis);
+                var pToRemove = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.ManageEmojis);
 
                 foreach (var discordChannel in DiscordChannels.Values)
                     await discordChannel.AddOverwriteAsync(p.Me, pToRemove);

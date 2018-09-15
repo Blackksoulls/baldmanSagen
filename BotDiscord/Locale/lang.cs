@@ -61,6 +61,9 @@ namespace BotDiscord.Locale
         public string BotWantPlay { get; set; }
 
         public string RoleString { get; set; }
+        public string NoWolfKill { get; set; }
+        public string NoTownKill { get; set; }
+        public string TownPollAgain { get; set; }
 
         public static string FirstDieMessages(Game game, DiscordMember dm)
         {

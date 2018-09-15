@@ -15,14 +15,15 @@ namespace BotDiscord
         public static DiscordMessage DailyVotingMessage;
         public static readonly int TimeToVote = 10_000;
 
-        public static async Task DailyVote(Game game)
+        public static async Task DailyVote(Game game, int nbTry = 1)
         {
             var embed = new DiscordEmbedBuilder()
             {
                 Title = game.Texts.DailyVoteMessage,
                 Color = Color.PollColor
             };
-            DailyVotingMessage = await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+            DailyVotingMessage =
+                await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
 
             var startTime = DateTime.Now;
 
@@ -31,8 +32,12 @@ namespace BotDiscord
                 Console.WriteLine($"Personnage : {personnage.Me.Username} -> {personnage.Emoji.Name}");
                 await DailyVotingMessage.CreateReactionAsync(personnage.Emoji);
             }
-            //Global.currGame = 
-            Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
+
+            if (nbTry == 1)
+            {
+                Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
+            }
+
 
             while (DateTime.Now < startTime.AddSeconds(TimeToVote))
             {
@@ -40,15 +45,36 @@ namespace BotDiscord
             }
 
             Console.WriteLine("Le temps est fini");
-            DailyVotingMessage = await game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DailyVotingMessage.Id);
+            DailyVotingMessage =
+                await game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DailyVotingMessage.Id);
             foreach (var discordReaction in DailyVotingMessage.Reactions)
             {
                 Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
             }
 
-            try
+
+            var emoji = DailyVotingMessage.Reactions
+                .First(x => x.Count == DailyVotingMessage.Reactions.Max(y => y.Count) && x.Count >= 2).Emoji;
+
+            if (emoji == null)
             {
-                var emoji = DailyVotingMessage.Reactions.First(x => x.Count == DailyVotingMessage.Reactions.Max(y => y.Count)).Emoji;
+                if (nbTry == 1)
+                {
+                    embed = new DiscordEmbedBuilder()
+                    {
+                        Title = game.Texts.NoTownKill,
+                        Color = Color.InfoColor
+                    };
+                    await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed);
+                }
+
+                else
+                {
+                    await DailyVote(game, 2);
+                }
+            }
+            else
+            {
                 var p = game.PersonnagesList.Find(personnage => personnage.Emoji.Id == emoji.Id);
                 await MakeDeath(game, p);
                 embed = new DiscordEmbedBuilder()
@@ -65,13 +91,11 @@ namespace BotDiscord
                 };
                 await game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
             }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-            }
+
 
             Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
         }
+
 
         private static Task ClientOnMessageReactionAdded(MessageReactionAddEventArgs e)
         {
@@ -89,14 +113,16 @@ namespace BotDiscord
                 }
             }
 
-            if (!present || (GameBuilder.GetMember(game.Guild, e.User)).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+            if (!present ||
+                (GameBuilder.GetMember(game.Guild, e.User)).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
             {
                 await DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
                 return;
             }
 
 
-            if (!e.User.IsBot && !GameBuilder.GetMember(game.Guild, e.User).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+            if (!e.User.IsBot && !GameBuilder.GetMember(game.Guild, e.User).Roles
+                    .Contains(Global.Roles[CustomRoles.Spectator]))
             {
                 foreach (var otherEmoji in (await game.Guild.GetEmojisAsync()))
                 {
@@ -111,10 +137,9 @@ namespace BotDiscord
 
         private static async Task OnReactionAddedCupidon(MessageReactionAddEventArgs e)
         {
-
-            Game Game = Global.Games[Global.currGame];
+            var game = Global.Games[Global.currGame];
             var present = false;
-            foreach (var personnage in Game.PersonnagesList.FindAll(p => p.Alive))
+            foreach (var personnage in game.PersonnagesList.FindAll(p => p.Alive))
             {
                 if (e.Emoji == personnage.Emoji)
                 {
@@ -122,7 +147,8 @@ namespace BotDiscord
                 }
             }
 
-            if (!present || (GameBuilder.GetMember(Game.Guild, e.User)).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+            if (!present ||
+                (GameBuilder.GetMember(game.Guild, e.User)).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
             {
                 await DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
                 return;
@@ -130,9 +156,10 @@ namespace BotDiscord
 
             var cnt = 0;
 
-            if (!e.User.IsBot && !GameBuilder.GetMember(Game.Guild, e.User).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+            if (!e.User.IsBot && !GameBuilder.GetMember(game.Guild, e.User).Roles
+                    .Contains(Global.Roles[CustomRoles.Spectator]))
             {
-                foreach (var otherEmoji in (await Game.Guild.GetEmojisAsync()))
+                foreach (var otherEmoji in (await game.Guild.GetEmojisAsync()))
                 {
                     cnt++;
                     if (otherEmoji.Name != e.Emoji.Name && cnt > 1)
@@ -216,7 +243,8 @@ namespace BotDiscord
 
                 await Task.Delay(TimeToVote / 2);
                 healMsg = await witchCh.GetMessageAsync(healMsg.Id);
-                if (healMsg.GetReactionsAsync(DiscordEmoji.FromName(Global.Client, ":thumbsup:")).GetAwaiter().GetResult()
+                if (healMsg.GetReactionsAsync(DiscordEmoji.FromName(Global.Client, ":thumbsup:")).GetAwaiter()
+                        .GetResult()
                         .Count == 2)
                 {
                     game.NightTargets.Clear();
@@ -261,10 +289,23 @@ namespace BotDiscord
 
             await Task.Delay(TimeToVote);
             msg = await game.DiscordChannels[GameChannel.WolfText].GetMessageAsync(msg.Id);
-            var react = msg.Reactions.First(reaction => reaction.Count == msg.Reactions.Max(x => x.Count));
-            var target = game.PersonnagesList.Find(p => p.Emoji.Id == react.Emoji.Id);
+            var react = msg.Reactions.First(reaction =>
+                reaction.Count == msg.Reactions.Max(x => x.Count) && reaction.Count >= 2);
 
-            game.NightTargets.Add(target);
+            if (react != null)
+            {
+                var target = game.PersonnagesList.Find(p => p.Emoji.Id == react.Emoji.Id);
+                game.NightTargets.Add(target);
+            }
+            else
+            {
+                embed = new DiscordEmbedBuilder()
+                {
+                    Color = Color.InfoColor,
+                    Title = game.Texts.NoWolfKill
+                };
+                await game.DiscordChannels[GameChannel.WolfText].SendMessageAsync(embed: embed.Build());
+            }
         }
 
 
@@ -279,7 +320,6 @@ namespace BotDiscord
                     Color = Color.PollColor,
                     Title = game.Texts.CupidMessage
                 };
-
                 var msg = await channel.SendMessageAsync(embed: embed.Build());
                 Global.Client.MessageReactionAdded += OnReactionAddedCupidon;
 
