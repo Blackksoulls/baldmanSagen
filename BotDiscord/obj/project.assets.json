@@ -4485,23 +4485,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Elyspio\\.nuget\\packages\\": {},
+    "C:\\Users\\jonag\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "P:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
+      "projectUniqueName": "M:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
       "projectName": "BotDiscord",
-      "projectPath": "P:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
-      "packagesPath": "C:\\Users\\Elyspio\\.nuget\\packages\\",
-      "outputPath": "P:\\IUT\\PTUT\\BotDiscord\\obj\\",
+      "projectPath": "M:\\IUT\\PTUT\\BotDiscord\\BotDiscord.csproj",
+      "packagesPath": "C:\\Users\\jonag\\.nuget\\packages\\",
+      "outputPath": "M:\\IUT\\PTUT\\BotDiscord\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Elyspio\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jonag\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

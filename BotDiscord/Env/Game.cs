@@ -38,7 +38,7 @@ namespace BotDiscord.Env
         {
             Id = Ids;
             Ids++;
-            Global.currGame = Id;
+            Global.CurrGame = Id;
         }
 
 
@@ -213,16 +213,16 @@ namespace BotDiscord.Env
             try
             {
                 // Création de tous les channels sans Droit
-                Game.WriteDebug(Global.currGame);
-                var chsPerso = await Global.Games[Global.currGame].Guild
-                    .CreateChannelAsync(Global.Games[Global.currGame].Texts.PersoGroup, ChannelType.Category);
-                Global.Games[Global.currGame].DiscordChannels.Add(GameChannel.PersoGroup, chsPerso);
+                Game.WriteDebug(Global.CurrGame);
+                var chsPerso = await Global.Games[Global.CurrGame].Guild
+                    .CreateChannelAsync(Global.Games[Global.CurrGame].Texts.PersoGroup, ChannelType.Category);
+                Global.Games[Global.CurrGame].DiscordChannels.Add(GameChannel.PersoGroup, chsPerso);
 
                 var wolfGrpChannel =
-                    await Global.Games[Global.currGame].Guild
-                        .CreateChannelAsync(Global.Games[Global.currGame].Texts.WolvesChannel, ChannelType.Category);
-                var townGrpChannel = await Global.Games[Global.currGame].Guild
-                    .CreateChannelAsync(Global.Games[Global.currGame].Texts.TownChannel, ChannelType.Category);
+                    await Global.Games[Global.CurrGame].Guild
+                        .CreateChannelAsync(Global.Games[Global.CurrGame].Texts.WolvesChannel, ChannelType.Category);
+                var townGrpChannel = await Global.Games[Global.CurrGame].Guild
+                    .CreateChannelAsync(Global.Games[Global.CurrGame].Texts.TownChannel, ChannelType.Category);
 
 
                 var townTChannel =

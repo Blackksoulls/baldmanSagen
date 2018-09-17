@@ -21,7 +21,6 @@ M:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.0\BotDiscord.AssemblyInfoInputs.c
 M:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.0\BotDiscord.AssemblyInfo.cs
 M:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.0\BotDiscord.dll
 M:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.0\BotDiscord.pdb
-M:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.0\BotDiscord.csprojAssemblyReference.cache
 P:\IUT\PTUT\BotDiscord\bin\Release\netcoreapp2.0\BotDiscord.dll.config
 P:\IUT\PTUT\BotDiscord\bin\Release\netcoreapp2.0\BotDiscord.deps.json
 P:\IUT\PTUT\BotDiscord\bin\Release\netcoreapp2.0\BotDiscord.runtimeconfig.json

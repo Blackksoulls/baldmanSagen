@@ -137,7 +137,7 @@ namespace BotDiscord
 
         private static async Task OnReactionAddedCupidon(MessageReactionAddEventArgs e)
         {
-            var game = Global.Games[Global.currGame];
+            var game = Global.Games[Global.CurrGame];
             var present = false;
             foreach (var personnage in game.PersonnagesList.FindAll(p => p.Alive))
             {
@@ -390,7 +390,7 @@ namespace BotDiscord
             }
         }
 
-        public static Task LittleGirlAction(Game Game)
+        public static Task LittleGirlAction(Game game)
         {
             //throw new NotImplementedException();
             return Task.CompletedTask;
