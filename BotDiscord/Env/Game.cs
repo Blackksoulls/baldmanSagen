@@ -30,16 +30,9 @@ namespace BotDiscord.Env
 
         public int Laps;
 
-        public int Id;
-        
-        public static int Ids;
 
-        public Game(string lang)
-        {
-            Id = Ids;
-            Ids++;
-            Global.CurrGame = Id;
-        }
+
+        public Game(CommandContext e, string lang) => CreateGuild(e, lang).GetAwaiter().GetResult();
 
 
         public void SetLanguage(string lang) => Texts = JsonConvert.DeserializeObject<Language>(
@@ -57,7 +50,7 @@ namespace BotDiscord.Env
             {
                 Global.Client = e.Client;
                 SetLanguage(lang);
-           
+
                 var msgs = (await e.Guild.GetDefaultChannel().GetMessagesAsync(10)).ToList()
                     .FindAll(m => m.Author == e.Client.CurrentUser || m.Content.Contains("!go"));
                 if (msgs.Count > 0)
@@ -73,6 +66,7 @@ namespace BotDiscord.Env
 
 
             while (Guild == null)
+            {
                 try
                 {
                     Guild = e.Client.CreateGuildAsync("Loup Garou").GetAwaiter().GetResult();
@@ -83,6 +77,7 @@ namespace BotDiscord.Env
                 {
                     Console.WriteLine(ex);
                 }
+            }
 
             await GameBuilder.CreateDiscordRoles(this);
 
@@ -127,7 +122,7 @@ namespace BotDiscord.Env
 
             try
             {
-                var timeToJoin = 10;
+                var timeToJoin = 30;
                 await Task.Delay(timeToJoin * 1000);
 
                 var users = await (await Guild.GetDefaultChannel().GetMessageAsync(askMessage.Id))
@@ -213,16 +208,14 @@ namespace BotDiscord.Env
             try
             {
                 // Création de tous les channels sans Droit
-                Game.WriteDebug(Global.CurrGame);
-                var chsPerso = await Global.Games[Global.CurrGame].Guild
-                    .CreateChannelAsync(Global.Games[Global.CurrGame].Texts.PersoGroup, ChannelType.Category);
-                Global.Games[Global.CurrGame].DiscordChannels.Add(GameChannel.PersoGroup, chsPerso);
+                var chsPerso = await Global.Game.Guild
+                    .CreateChannelAsync(Global.Game.Texts.PersoGroup, ChannelType.Category);
+                Global.Game.DiscordChannels.Add(GameChannel.PersoGroup, chsPerso);
 
                 var wolfGrpChannel =
-                    await Global.Games[Global.CurrGame].Guild
-                        .CreateChannelAsync(Global.Games[Global.CurrGame].Texts.WolvesChannel, ChannelType.Category);
-                var townGrpChannel = await Global.Games[Global.CurrGame].Guild
-                    .CreateChannelAsync(Global.Games[Global.CurrGame].Texts.TownChannel, ChannelType.Category);
+                    await Global.Game.Guild.CreateChannelAsync(Global.Game.Texts.WolvesChannel, ChannelType.Category);
+                var townGrpChannel = await Global.Game.Guild
+                    .CreateChannelAsync(Global.Game.Texts.TownChannel, ChannelType.Category);
 
 
                 var townTChannel =
@@ -258,7 +251,7 @@ namespace BotDiscord.Env
                             GameBuilder.CreatePerms(Permissions.UseVoiceDetection, Permissions.UseVoice,
                                 Permissions.Speak));
 
-                await GameBuilder.CreatePersonnages(this, players);
+                await GameBuilder.CreatePersonnages(players);
 
                 await (await e.Channel.GetMessageAsync(msgInv.Id)).ModifyAsync((await townTChannel.CreateInviteAsync())
                     .ToString());
@@ -368,35 +361,35 @@ namespace BotDiscord.Env
                     switch (Moments.Pop())
                     {
                         case Moment.Voting:
-                            await BotFunctions.DailyVote(this);
+                            await BotFunctions.DailyVote();
                             break;
 
                         case Moment.HunterDead:
-                            await BotFunctions.HunterDeath(this);
+                            await BotFunctions.HunterDeath();
                             break;
 
                         case Moment.EndNight:
-                            await BotFunctions.EndNight(this);
-                            await BotFunctions.DayAnnoucement(this);
+                            await BotFunctions.EndNight();
+                            await BotFunctions.DayAnnoucement();
                             break;
 
                         case Moment.NightPhase1:
-                            await BotFunctions.NightAnnoucement(this);
-                            await BotFunctions.WolfVote(this);
-                            await BotFunctions.SeerAction(this);
-                            await BotFunctions.LittleGirlAction(this);
+                            await BotFunctions.NightAnnoucement();
+                            await BotFunctions.WolfVote();
+                            await BotFunctions.SeerAction();
+                            await BotFunctions.LittleGirlAction();
                             break;
 
                         case Moment.NightPhase2:
-                            await BotFunctions.WitchMoment(this);
+                            await BotFunctions.WitchMoment();
                             break;
 
                         case Moment.Election:
-                            await BotFunctions.Elections(this);
+                            await BotFunctions.Elections();
                             break;
 
                         case Moment.Cupid:
-                            await BotFunctions.CupidonChoice(this);
+                            await BotFunctions.CupidonChoice();
                             break;
 
                         case Moment.End:
@@ -415,6 +408,7 @@ namespace BotDiscord.Env
 
         public void Ending()
         {
+
         }
 
 
@@ -424,7 +418,7 @@ namespace BotDiscord.Env
             {
                 p.Alive = false;
                 await p.Me.PlaceInAsync(DiscordChannels[GameChannel.GraveyardVoice]);
-                var embed = new DiscordEmbedBuilder
+                var embed = new DiscordEmbedBuilder()
                 {
                     Color = Color.DeadColor,
                     Title = $"{p.Me.Username} {Texts.DeadMessagePublic} {p.GetClassName()}"
@@ -432,11 +426,9 @@ namespace BotDiscord.Env
 
                 await DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
 
-                var pToRemove = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.ManageEmojis);
-
                 foreach (var discordChannel in DiscordChannels.Values)
-                    await discordChannel.AddOverwriteAsync(p.Me, pToRemove);
-
+                    await discordChannel.AddOverwriteAsync(p.Me, Permissions.AccessChannels, Permissions.ManageEmojis);
+                    
                 await p.Me.RevokeRoleAsync(Global.Roles[CustomRoles.Player]);
                 await p.Me.GrantRoleAsync(Global.Roles[CustomRoles.Spectator]);
             }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BotDiscord.Env;
@@ -22,8 +21,8 @@ namespace BotDiscord
             
             await Task.Run(() =>
             {
-                Global.Games.Add(new Game(lang));
-                Global.Games.Last().CreateGuild(e, lang).GetAwaiter().GetResult();
+                Global.Game = new Game(e, lang);
+                
             });
         }
 
@@ -43,7 +42,7 @@ namespace BotDiscord
         private async Task StartMember(GuildMemberAddEventArgs e)
         {
             var p = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice, Permissions.Speak);
-            await Global.Games[Global.CurrGame].DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(e.Member, p);
+            await Global.Game.DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(e.Member, p);
             Game.WriteDebug($"D : {e.Member.Username}");
         }
 

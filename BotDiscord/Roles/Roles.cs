@@ -12,224 +12,207 @@ namespace BotDiscord.Roles
 
     public class Wolf : Personnage
     {
-        public Wolf(Game game, DiscordMember me, DiscordGuildEmoji emoji) : base(game, me, emoji)
+        public Wolf(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
-            Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(me, GameBuilder.UsrPerms);
-            Game.DiscordChannels[GameChannel.WolfVoice].AddOverwriteAsync(me, GameBuilder.UsrPerms);
-        }
-
-
-        public void DoRole()
-        {
-            throw new NotImplementedException();
+            Global.Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(me, GameBuilder.UsrPerms);
+            Global.Game.DiscordChannels[GameChannel.WolfVoice].AddOverwriteAsync(me, GameBuilder.UsrPerms);
         }
 
         public override string ToString()
         {
-            return Game.Texts.WolfToString;
+            return Global.Game.Texts.WolfToString;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Game.Texts.WolfName}";
+            return base.GotKilled() + $"{Global.Game.Texts.WolfName}";
         }
 
         public override string GetClassName()
         {
-            return Game.Texts.WolfName;
+            return Global.Game.Texts.WolfName;
         }
     }
 
 
     public class Citizen : Personnage
     {
-        public Citizen(Game game, DiscordMember me, DiscordGuildEmoji emoji) : base(game, me, emoji)
+        public Citizen(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
         }
-
-        public void DoRole()
-        {
-        }
-
 
         public override string ToString()
         {
-            return Game.Texts.CitizenToString;
+            return Global.Game.Texts.CitizenToString;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Game.Texts.CitizenName}";
+            return base.GotKilled() + $"{Global.Game.Texts.CitizenName}";
         }
 
         public override string GetClassName()
         {
-            return Game.Texts.CitizenName;
+            return Global.Game.Texts.CitizenName;
         }
     }
 
 
     public class Salvator : Citizen
     {
-        public Salvator(Game game, DiscordMember me, DiscordGuildEmoji emoji) : base(game, me, emoji)
+        public Salvator(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
         }
-
-        public new void DoRole()
-        {
-            throw new NotImplementedException();
-        }
-
 
         public override string ToString()
         {
-            return Game.Texts.SaviorToString + " \n " + Game.Texts.TownFriendly;
+            return Global.Game.Texts.SaviorToString + " \n " + Global.Game.Texts.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Game.Texts.SaviorName}";
+            return base.GotKilled() + $"{Global.Game.Texts.SaviorName}";
         }
 
         public override string GetClassName()
         {
-            return Game.Texts.SaviorName;
+            return Global.Game.Texts.SaviorName;
         }
     }
 
 
     public class Witch : Citizen
     {
-        public Witch(Game game, DiscordMember me, DiscordGuildEmoji emoji) : base(game, me, emoji)
+        public Witch(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
         }
 
 
         public override string ToString()
         {
-            return Game.Texts.WitchToString + " \n " + Game.Texts.TownFriendly;
+            return Global.Game.Texts.WitchToString + " \n " + Global.Game.Texts.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Game.Texts.WitchName}";
+            return base.GotKilled() + $"{Global.Game.Texts.WitchName}";
         }
 
         public override string GetClassName()
         {
-            return Game.Texts.WitchName;
+            return Global.Game.Texts.WitchName;
         }
     }
 
     public class LittleGirl : Citizen
     {
-        public LittleGirl(Game game, DiscordMember me, DiscordGuildEmoji emoji) : base(game, me, emoji)
+        public LittleGirl(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
         }
 
 
         public override string ToString()
         {
-            return Game.Texts.LittleGirlToString + " \n " + Game.Texts.TownFriendly;
+            return Global.Game.Texts.LittleGirlToString + " \n " + Global.Game.Texts.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Game.Texts.LittleGirlName}";
+            return base.GotKilled() + $"{Global.Game.Texts.LittleGirlName}";
         }
 
         public override string GetClassName()
         {
-            return Game.Texts.LittleGirlName;
+            return Global.Game.Texts.LittleGirlName;
         }
     }
 
     public class Hunter : Citizen
     {
-        public Hunter(Game game, DiscordMember me, DiscordGuildEmoji emoji) : base(game, me, emoji)
+        public Hunter(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
         }
 
         public override string ToString()
         {
-            return Game.Texts.HunterToString + " \n " + Game.Texts.TownFriendly;
+            return Global.Game.Texts.HunterToString + " \n " + Global.Game.Texts.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Game.Texts.HunterName}";
+            return base.GotKilled() + $"{Global.Game.Texts.HunterName}";
         }
 
         public override string GetClassName()
         {
-            return Game.Texts.HunterName;
+            return Global.Game.Texts.HunterName;
         }
     }
 
     public class Cupidon : Citizen
     {
-        public Cupidon(Game game, DiscordMember me, DiscordGuildEmoji emoji) : base(game, me, emoji)
+        public Cupidon(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
         }
 
         public override string ToString()
         {
-            return Game.Texts.CupidToString + " \n " + Game.Texts.TownFriendly;
+            return Global.Game.Texts.CupidToString + " \n " + Global.Game.Texts.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return Language.FirstDieMessages(Game, Me) + Game.Texts.CupidName;
+            return Language.FirstDieMessages(Global.Game, Me) + Global.Game.Texts.CupidName;
         }
 
         public override string GetClassName()
         {
-            return Game.Texts.CupidName;
+            return Global.Game.Texts.CupidName;
         }
     }
 
     public class Seer : Citizen
     {
-        public Seer(Game game, DiscordMember me, DiscordGuildEmoji emoji) : base(game, me, emoji)
+        public Seer(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
         }
 
         public override string ToString()
         {
-            return Game.Texts.SeerToString + " \n " + Game.Texts.TownFriendly;
+            return Global.Game.Texts.SeerToString + " \n " + Global.Game.Texts.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Game.Texts.SeerName}";
+            return base.GotKilled() + $"{Global.Game.Texts.SeerName}";
         }
 
         public override string GetClassName()
         {
-            return Game.Texts.SeerName;
+            return Global.Game.Texts.SeerName;
         }
     }
 
     public class TalkativeSeer : Seer
     {
-        public TalkativeSeer(Game game, DiscordMember me, DiscordGuildEmoji emoji) : base(game, me, emoji)
+        public TalkativeSeer(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
         }
 
         public override string ToString()
         {
-            return Game.Texts.SeerToString + " \n " + Game.Texts.TalkativeSeerToString + " \n " +
-                   Game.Texts.TownFriendly;
+            return Global.Game.Texts.SeerToString + " \n " + Global.Game.Texts.TalkativeSeerToString + " \n " +
+                   Global.Game.Texts.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Game.Texts.TalkativeSeerName}";
+            return base.GotKilled() + $"{Global.Game.Texts.TalkativeSeerName}";
         }
 
         public override string GetClassName()
         {
-            return Game.Texts.TalkativeSeerName;
+            return Global.Game.Texts.TalkativeSeerName;
         }
     }
 
@@ -246,33 +229,34 @@ namespace BotDiscord.Roles
 
         public DiscordGuildEmoji Emoji;
 
-        public Game Game { get; set; }
+      
 
-        protected Personnage(Game game, DiscordMember me, DiscordGuildEmoji emoji)
+ 
+
+        protected Personnage(DiscordMember me, DiscordGuildEmoji emoji)
         {
             Me = me;
             Emoji = emoji;
             Alive = true;
-            Game = game;
             var name = Me.Username.RemoveSpecialChars() ?? "jesaispasquoi";
 
 
-            ChannelV = Game.Guild.CreateChannelAsync(Me.Username.RemoveSpecialChars(), ChannelType.Voice,
-                Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
-            ChannelT = Game.Guild.CreateChannelAsync(Me.Username.RemoveSpecialChars(), ChannelType.Text,
-                Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
+            ChannelV = Global.Game.Guild.CreateChannelAsync(Me.Username.RemoveSpecialChars(), ChannelType.Voice,
+            Global.Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
 
-            // ReSharper disable once VirtualMemberCallInConstructor
+            ChannelT = Global.Game.Guild.CreateChannelAsync(Me.Username.RemoveSpecialChars(), ChannelType.Text,
+            Global.Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
+
 
 
             ChannelT.AddOverwriteAsync(Me, GameBuilder.UsrPerms);
             ChannelV.AddOverwriteAsync(Me, GameBuilder.UsrPerms);
 
-            Game.DiscordChannels[GameChannel.TownText].AddOverwriteAsync(Me, GameBuilder.UsrPerms);
-            Game.DiscordChannels[GameChannel.TownVoice].AddOverwriteAsync(Me, GameBuilder.UsrPerms);
+            Global.Game.DiscordChannels[GameChannel.TownText].AddOverwriteAsync(Me, GameBuilder.UsrPerms);
+            Global.Game.DiscordChannels[GameChannel.TownVoice].AddOverwriteAsync(Me, GameBuilder.UsrPerms);
             var embed = new DiscordEmbedBuilder
             {
-                Title = Game.Texts.RoleString,
+                Title = Global.Game.Texts.RoleString,
                 Color = Color.InfoColor
             };
             embed.AddField("Role", ToString());
@@ -282,7 +266,7 @@ namespace BotDiscord.Roles
 
         public virtual string GotKilled()
         {
-            return Me.DisplayName + Game.Texts.DeadMessagePublic;
+            return Me.DisplayName + Global.Game.Texts.DeadMessagePublic;
         }
 
         public abstract string GetClassName();

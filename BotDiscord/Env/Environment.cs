@@ -8,17 +8,19 @@ using BotDiscord.Env.Extentions;
 using BotDiscord.Roles;
 using DSharpPlus;
 using DSharpPlus.Entities;
-using System.Drawing;
+using DSharpPlus.EventArgs;
+
 namespace BotDiscord.Env
 {
 
     public static class Global
     {
-        public static List<Game> Games = new List<Game>();
+        public static Game Game { get; set; }
         public static Dictionary<CustomRoles, DiscordRole> Roles { get; set; }
 
-        public static int currGame = 0;
         public static DiscordClient Client { get; set; }
+
+    
     }
 
 
@@ -27,7 +29,7 @@ namespace BotDiscord.Env
         public static Permissions UsrPerms = CreatePerms(Permissions.AccessChannels, Permissions.AddReactions,
             Permissions.SendMessages);
 
-        public static async Task CreatePersonnages(Game game, List<DiscordMember> players)
+        public static async Task CreatePersonnages(List<DiscordMember> players)
         {
             try
             {
@@ -35,7 +37,7 @@ namespace BotDiscord.Env
                 var rand = new Random(DateTime.Now.Millisecond);
 
 
-                game.PersonnagesList = new List<Personnage>();
+                Global.Game.PersonnagesList = new List<Personnage>();
 
                 var letter = 'a';
 
@@ -70,7 +72,7 @@ namespace BotDiscord.Env
 
                         //image.Save(stream, ImageFormat.Png);
 
-                        emoji = await game.Guild.CreateEmojiAsync(name, stream2);
+                        emoji = await Global.Game.Guild.CreateEmojiAsync(name, stream2);
 
                     }
                     catch (Exception e)
@@ -84,32 +86,32 @@ namespace BotDiscord.Env
                     switch (roles[nbRand])
                     {
                         case GameRole.Citizen:
-                            game.PersonnagesList.Add(new Citizen(game, players[0], emoji));
+                            Global.Game.PersonnagesList.Add(new Citizen(players[0], emoji));
                             break;
                         case GameRole.Hunter:
-                            game.PersonnagesList.Add(new Hunter(game, players[0], emoji));
+                            Global.Game.PersonnagesList.Add(new Hunter(players[0], emoji));
                             break;
                         case GameRole.Cupid:
-                            game.PersonnagesList.Add(new Cupidon(game, players[0], emoji));
+                            Global.Game.PersonnagesList.Add(new Cupidon(players[0], emoji));
                             break;
                         case GameRole.Witch:
-                            game.PersonnagesList.Add(new Witch(game, players[0], emoji));
+                            Global.Game.PersonnagesList.Add(new Witch(players[0], emoji));
                             break;
                         case GameRole.Savior:
-                            game.PersonnagesList.Add(new Salvator(game, players[0], emoji));
+                            Global.Game.PersonnagesList.Add(new Salvator(players[0], emoji));
                             break;
                         case GameRole.Seer:
-                            game.PersonnagesList.Add(new Seer(game, players[0], emoji));
+                            Global.Game.PersonnagesList.Add(new Seer(players[0], emoji));
                             break;
                         case GameRole.TalkativeSeer:
-                            game.PersonnagesList.Add(new TalkativeSeer(game, players[0], emoji));
+                            Global.Game.PersonnagesList.Add(new TalkativeSeer(players[0], emoji));
                             break;
                         case GameRole.LittleGirl:
-                            game.PersonnagesList.Add(new LittleGirl(game, players[0], emoji));
+                            Global.Game.PersonnagesList.Add(new LittleGirl(players[0], emoji));
                             break;
 
                         case GameRole.Wolf:
-                            game.PersonnagesList.Add(new Wolf(game, players[0], emoji));
+                            Global.Game.PersonnagesList.Add(new Wolf(players[0], emoji));
                             break;
                     }
 
@@ -117,10 +119,15 @@ namespace BotDiscord.Env
                     players.RemoveAt(0);
                 }
 
+
+                /**
+                 * param name="players": all players of the game
+                 * summary: Remove AccessChannel right from everyone
+                 */
                 foreach (var dm in players)
                 {
-                    await game.DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels);
-                    await game.DiscordChannels[GameChannel.BotText].AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels);
+                    await Global.Game.DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels);
+                    await Global.Game.DiscordChannels[GameChannel.BotText].AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels);
                 }
 
             }
@@ -129,6 +136,7 @@ namespace BotDiscord.Env
                 Console.WriteLine(ex1);
             }
         }
+
 
 
         public static List<GameRole> CreateRoles(int nbPlayer)
@@ -182,14 +190,14 @@ namespace BotDiscord.Env
 
         public static void Debug(Game game)
         {
-            if (game.PersonnagesList is null)
+            if (Global.Game.PersonnagesList is null)
             {
                 Console.WriteLine("Il n'y a aucun personnage joueur dans le jeu");
             }
             else
             {
                 var i = 0;
-                foreach (var p in game.PersonnagesList)
+                foreach (var p in Global.Game.PersonnagesList)
                 {
                     Console.WriteLine(i + " : " + p);
                     i++;
@@ -204,30 +212,39 @@ namespace BotDiscord.Env
             Global.Roles = new Dictionary<CustomRoles, DiscordRole>();
 
 
-            var adminRole = await game.Guild.CreateRoleAsync(game.Texts.BotName, Permissions.Administrator, Color.AdminColor, true, true, "GameRole Bot");
+            var adminRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.BotName, Permissions.Administrator, Color.AdminColor, true, true, "GameRole Bot");
             Global.Roles.Add(CustomRoles.Admin, adminRole);
 
 
-            var playerPerms = GameBuilder.CreatePerms(Permissions.SendMessages, Permissions.ReadMessageHistory,
+            var playerPerms = CreatePerms(Permissions.SendMessages, Permissions.ReadMessageHistory,
                 Permissions.AddReactions);
 
-            var playerRole = await game.Guild.CreateRoleAsync(game.Texts.Player, playerPerms, Color.PlayerColor, true, true, "GameRole Joueur");
+            var playerRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.Player, playerPerms, Color.PlayerColor, true, true, "GameRole Joueur");
             Global.Roles.Add(CustomRoles.Player, playerRole);
 
 
-            var spectPerms = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.ReadMessageHistory);
-            GameBuilder.RevokePerm(spectPerms, Permissions.ManageEmojis);
-            var spectRole = await game.Guild.CreateRoleAsync(game.Texts.Spectator, spectPerms, Color.SpectColor, true, false, "GameRole spectateur");
+            var spectPerms = CreatePerms(Permissions.AccessChannels, Permissions.ReadMessageHistory);
+            RevokePerm(spectPerms, Permissions.ManageEmojis);
+            var spectRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.Spectator, spectPerms, Color.SpectColor, true, false, "GameRole spectateur");
 
             Global.Roles.Add(CustomRoles.Spectator, spectRole);
 
 
-            await game.Guild.EveryoneRole.ModifyAsync(x => x.Permissions = Permissions.None);
+            await Global.Game.Guild.EveryoneRole.ModifyAsync(x => x.Permissions = Permissions.None);
 
             #endregion
+
+            Global.Client.MessageReactionAdded += Spectator_Reaction;
+
         }
 
-                public static Permissions CreatePerms(params Permissions[] perms)
+        private static Task Spectator_Reaction(MessageReactionAddEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public static Permissions CreatePerms(params Permissions[] perms)
         {
             return GrantPerm(Permissions.None, perms);
         }
@@ -253,12 +270,10 @@ namespace BotDiscord.Env
             return p;
         }
 
-        public static class DiscordUserExtention
-        {
-        }
+      
 
-        public static DiscordMember GetMember(DiscordGuild Guild, DiscordUser usr) => Guild.GetMemberAsync(usr.Id).GetAwaiter().GetResult();
-
+        public static DiscordMember GetMember(DiscordGuild guild, DiscordUser usr) => guild.GetMemberAsync(usr.Id).GetAwaiter().GetResult();
+        public static DiscordMember GetMember(this DiscordUser usr) => Global.Game.Guild.GetMemberAsync(usr.Id).GetAwaiter().GetResult();
 
     }
 }
