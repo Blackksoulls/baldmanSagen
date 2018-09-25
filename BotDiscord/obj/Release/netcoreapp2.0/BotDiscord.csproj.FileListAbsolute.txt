@@ -33,3 +33,4 @@ P:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.0\BotDiscord.AssemblyInfo.cs
 P:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.0\BotDiscord.dll
 P:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.0\BotDiscord.pdb
 P:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.0\BotDiscord.csprojAssemblyReference.cache
+M:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.0\BotDiscord.csprojAssemblyReference.cache

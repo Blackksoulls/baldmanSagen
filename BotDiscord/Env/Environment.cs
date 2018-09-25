@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using BotDiscord.Env.Enum;
@@ -20,7 +21,9 @@ namespace BotDiscord.Env
 
         public static DiscordClient Client { get; set; }
 
-    
+        public static bool InGame = false ;
+
+
     }
 
 
@@ -205,22 +208,27 @@ namespace BotDiscord.Env
             }
         }
 
-        public static async Task CreateDiscordRoles(Game game)
+        public static async Task CreateDiscordRoles()
         {
             #region Roles
 
             Global.Roles = new Dictionary<CustomRoles, DiscordRole>();
-
+            Game.WriteDebug(Global.Roles);
+            Game.WriteDebug(Global.Game);
+            Game.WriteDebug(Global.Game.Guild);
 
             var adminRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.BotName, Permissions.Administrator, Color.AdminColor, true, true, "GameRole Bot");
             Global.Roles.Add(CustomRoles.Admin, adminRole);
+            Game.WriteDebug("CreateDiscordRoles 2");
 
 
             var playerPerms = CreatePerms(Permissions.SendMessages, Permissions.ReadMessageHistory,
                 Permissions.AddReactions);
+            Game.WriteDebug("CreateDiscordRoles 3");
 
             var playerRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.Player, playerPerms, Color.PlayerColor, true, true, "GameRole Joueur");
             Global.Roles.Add(CustomRoles.Player, playerRole);
+            Game.WriteDebug("CreateDiscordRoles 4");
 
 
             var spectPerms = CreatePerms(Permissions.AccessChannels, Permissions.ReadMessageHistory);
@@ -228,19 +236,25 @@ namespace BotDiscord.Env
             var spectRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.Spectator, spectPerms, Color.SpectColor, true, false, "GameRole spectateur");
 
             Global.Roles.Add(CustomRoles.Spectator, spectRole);
+            Game.WriteDebug("CreateDiscordRoles 5");
 
 
             await Global.Game.Guild.EveryoneRole.ModifyAsync(x => x.Permissions = Permissions.None);
+            Game.WriteDebug("CreateDiscordRoles 6");
 
             #endregion
 
-            Global.Client.MessageReactionAdded += Spectator_Reaction;
+            Game.WriteDebug("CreateDiscordRoles 7");
 
         }
 
-        private static Task Spectator_Reaction(MessageReactionAddEventArgs e)
+        public static async Task Spectator_Reaction(MessageReactionAddEventArgs e)
         {
-            throw new NotImplementedException();
+            var p = (await Global.Game.Guild.GetAllMembersAsync()).ToList().Find(p2 => p2.Id == e.User.Id && p2.Roles.ToList().Contains(Global.Roles[CustomRoles.Spectator]) && !p2.IsBot);
+            if (p != null)
+            {
+                await e.Message.DeleteReactionAsync(e.Emoji, p, "Spectator can't vote");
+            }
         }
 
 

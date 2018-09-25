@@ -10,7 +10,7 @@
     <RootNamespace>WerewolfRebirth</RootNamespace>
     <AssemblyName>WerewolfRebirth</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <RuntimeFrameworkVersion>2.0.9</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>2.1.4</RuntimeFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>

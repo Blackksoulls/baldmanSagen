@@ -21,8 +21,9 @@ namespace BotDiscord
             
             await Task.Run(() =>
             {
-                Global.Game = new Game(e, lang);
-                
+                Global.Game = new Game(lang);
+                Global.Game.CreateGuild(e).GetAwaiter().GetResult();
+
             });
         }
 

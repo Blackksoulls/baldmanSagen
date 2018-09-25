@@ -32,7 +32,7 @@ namespace BotDiscord.Env
 
 
 
-        public Game(CommandContext e, string lang) => CreateGuild(e, lang).GetAwaiter().GetResult();
+        public Game( string lang) => SetLanguage(lang);
 
 
         public void SetLanguage(string lang) => Texts = JsonConvert.DeserializeObject<Language>(
@@ -44,12 +44,13 @@ namespace BotDiscord.Env
 
 
 
-        public async Task CreateGuild(CommandContext e, string lang = "fr")
+        public async Task CreateGuild(CommandContext e)
         {
             try
             {
                 Global.Client = e.Client;
-                SetLanguage(lang);
+                
+
 
                 var msgs = (await e.Guild.GetDefaultChannel().GetMessagesAsync(10)).ToList()
                     .FindAll(m => m.Author == e.Client.CurrentUser || m.Content.Contains("!go"));
@@ -79,14 +80,16 @@ namespace BotDiscord.Env
                 }
             }
 
-            await GameBuilder.CreateDiscordRoles(this);
+            WriteDebug("1");
 
-            await GameBuilder.GetMember(Guild, Global.Client.CurrentUser).GrantRoleAsync(Global.Roles[CustomRoles.Admin]);
 
+            await GameBuilder.CreateDiscordRoles(); // Role Admin, Joueur, Spectateur
+            WriteDebug("2");
+            await Global.Client.CurrentUser.GetMember().GrantRoleAsync(Global.Roles[CustomRoles.Admin]);
+            WriteDebug("3");
             await (await Guild.GetAllMembersAsync()).First().ModifyAsync(m => m.Nickname = Texts.BotName);
-
+            WriteDebug("4");
             Console.WriteLine("Guild Created");
-
             DiscordChannels = new Dictionary<GameChannel, DiscordChannel>();
 
             Console.WriteLine("Delatation faite");
@@ -141,6 +144,8 @@ namespace BotDiscord.Env
                 foreach (var discordMember in players) WriteDebug($"Il y a {discordMember.Username} dans le jeu");
 
                 e.Client.GuildMemberAdded -= StartMember;
+                Global.Client.MessageReactionAdded += GameBuilder.Spectator_Reaction;
+
             }
             catch (Exception ex)
             {
