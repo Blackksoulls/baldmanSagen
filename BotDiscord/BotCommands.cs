@@ -15,16 +15,23 @@ namespace BotDiscord
     {
         [Command("game"), Aliases("go")]
         [Description("Available langages: 'fr', 'en', 'es', 'de', 'ja'")]
-
         public async Task CreateGame(CommandContext e, string lang = "fr")
         {
-            
-            await Task.Run(() =>
+            try
             {
-                Global.Game = new Game(lang);
-                Global.Game.CreateGuild(e).GetAwaiter().GetResult();
+                Game.WriteDebug("GO ! ");
+                await Task.Run(() =>
+                {
+                    Global.Game = new Game(lang);
+                    Global.Game.CreateGuild(e).GetAwaiter().GetResult();
 
-            });
+                });
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+      
         }
 
         [Command("ping"), Description("")]

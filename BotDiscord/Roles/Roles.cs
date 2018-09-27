@@ -20,17 +20,17 @@ namespace BotDiscord.Roles
 
         public override string ToString()
         {
-            return Global.Game.Texts.WolfToString;
+            return Global.Game.Texts.GameRoles.WolfToString;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.WolfName}";
+            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.WolfName}";
         }
 
         public override string GetClassName()
         {
-            return Global.Game.Texts.WolfName;
+            return Global.Game.Texts.GameRoles.WolfName;
         }
     }
 
@@ -43,17 +43,17 @@ namespace BotDiscord.Roles
 
         public override string ToString()
         {
-            return Global.Game.Texts.CitizenToString;
+            return Global.Game.Texts.GameRoles.CitizenToString;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.CitizenName}";
+            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.CitizenName}";
         }
 
         public override string GetClassName()
         {
-            return Global.Game.Texts.CitizenName;
+            return Global.Game.Texts.GameRoles.CitizenName;
         }
     }
 
@@ -66,17 +66,17 @@ namespace BotDiscord.Roles
 
         public override string ToString()
         {
-            return Global.Game.Texts.SaviorToString + " \n " + Global.Game.Texts.TownFriendly;
+            return Global.Game.Texts.GameRoles.SaviorToString + " \n " + Global.Game.Texts.GameRoles.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.SaviorName}";
+            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.SaviorName}";
         }
 
         public override string GetClassName()
         {
-            return Global.Game.Texts.SaviorName;
+            return Global.Game.Texts.GameRoles.SaviorName;
         }
     }
 
@@ -90,17 +90,17 @@ namespace BotDiscord.Roles
 
         public override string ToString()
         {
-            return Global.Game.Texts.WitchToString + " \n " + Global.Game.Texts.TownFriendly;
+            return Global.Game.Texts.GameRoles.WitchToString + " \n " + Global.Game.Texts.GameRoles.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.WitchName}";
+            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.WitchName}";
         }
 
         public override string GetClassName()
         {
-            return Global.Game.Texts.WitchName;
+            return Global.Game.Texts.GameRoles.WitchName;
         }
     }
 
@@ -113,17 +113,17 @@ namespace BotDiscord.Roles
 
         public override string ToString()
         {
-            return Global.Game.Texts.LittleGirlToString + " \n " + Global.Game.Texts.TownFriendly;
+            return Global.Game.Texts.GameRoles.LittleGirlToString + " \n " + Global.Game.Texts.GameRoles.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.LittleGirlName}";
+            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.LittleGirlName}";
         }
 
         public override string GetClassName()
         {
-            return Global.Game.Texts.LittleGirlName;
+            return Global.Game.Texts.GameRoles.LittleGirlName;
         }
     }
 
@@ -135,17 +135,17 @@ namespace BotDiscord.Roles
 
         public override string ToString()
         {
-            return Global.Game.Texts.HunterToString + " \n " + Global.Game.Texts.TownFriendly;
+            return Global.Game.Texts.GameRoles.HunterToString + " \n " + Global.Game.Texts.GameRoles.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.HunterName}";
+            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.HunterName}";
         }
 
         public override string GetClassName()
         {
-            return Global.Game.Texts.HunterName;
+            return Global.Game.Texts.GameRoles.HunterName;
         }
     }
 
@@ -157,17 +157,17 @@ namespace BotDiscord.Roles
 
         public override string ToString()
         {
-            return Global.Game.Texts.CupidToString + " \n " + Global.Game.Texts.TownFriendly;
+            return Global.Game.Texts.GameRoles.CupidToString + " \n " + Global.Game.Texts.GameRoles.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return Language.FirstDieMessages(Global.Game, Me) + Global.Game.Texts.CupidName;
+            return Language.FirstDieMessages(Global.Game, Me) + Global.Game.Texts.GameRoles.CupidName;
         }
 
         public override string GetClassName()
         {
-            return Global.Game.Texts.CupidName;
+            return Global.Game.Texts.GameRoles.CupidName;
         }
     }
 
@@ -179,17 +179,17 @@ namespace BotDiscord.Roles
 
         public override string ToString()
         {
-            return Global.Game.Texts.SeerToString + " \n " + Global.Game.Texts.TownFriendly;
+            return Global.Game.Texts.GameRoles.SeerToString + " \n " + Global.Game.Texts.GameRoles.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.SeerName}";
+            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.SeerName}";
         }
 
         public override string GetClassName()
         {
-            return Global.Game.Texts.SeerName;
+            return Global.Game.Texts.GameRoles.SeerName;
         }
     }
 
@@ -201,18 +201,18 @@ namespace BotDiscord.Roles
 
         public override string ToString()
         {
-            return Global.Game.Texts.SeerToString + " \n " + Global.Game.Texts.TalkativeSeerToString + " \n " +
-                   Global.Game.Texts.TownFriendly;
+            return Global.Game.Texts.GameRoles.SeerToString + " \n " + Global.Game.Texts.GameRoles.TalkativeSeerToString + " \n " +
+                   Global.Game.Texts.GameRoles.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.TalkativeSeerName}";
+            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.TalkativeSeerName}";
         }
 
         public override string GetClassName()
         {
-            return Global.Game.Texts.TalkativeSeerName;
+            return Global.Game.Texts.GameRoles.TalkativeSeerName;
         }
     }
 
@@ -238,7 +238,6 @@ namespace BotDiscord.Roles
             Me = me;
             Emoji = emoji;
             Alive = true;
-            var name = Me.Username.RemoveSpecialChars() ?? "jesaispasquoi";
 
 
             ChannelV = Global.Game.Guild.CreateChannelAsync(Me.Username.RemoveSpecialChars(), ChannelType.Voice,
@@ -256,7 +255,7 @@ namespace BotDiscord.Roles
             Global.Game.DiscordChannels[GameChannel.TownVoice].AddOverwriteAsync(Me, GameBuilder.UsrPerms);
             var embed = new DiscordEmbedBuilder
             {
-                Title = Global.Game.Texts.RoleString,
+                Title = Global.Game.Texts.GameRoles.RoleString,
                 Color = Color.InfoColor
             };
             embed.AddField("Role", ToString());
@@ -266,7 +265,7 @@ namespace BotDiscord.Roles
 
         public virtual string GotKilled()
         {
-            return Me.DisplayName + Global.Game.Texts.DeadMessagePublic;
+            return Me.DisplayName + Global.Game.Texts.Annoucement.DeadMessagePublic;
         }
 
         public abstract string GetClassName();

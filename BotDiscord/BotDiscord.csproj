@@ -76,7 +76,9 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="&#xD;&#xA;java -jar $(SolutionDir)\deploy2.jar" />
+    <Exec Command="python $(SolutionDir)\\deploy.py" />
   </Target>
+
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>

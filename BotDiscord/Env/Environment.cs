@@ -1,19 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using BotDiscord.Env.Enum;
 using BotDiscord.Env.Extentions;
 using BotDiscord.Roles;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace BotDiscord.Env
 {
-
     public static class Global
     {
         public static Game Game { get; set; }
@@ -21,9 +20,7 @@ namespace BotDiscord.Env
 
         public static DiscordClient Client { get; set; }
 
-        public static bool InGame = false ;
-
-
+        public static bool InGame = false;
     }
 
 
@@ -76,7 +73,6 @@ namespace BotDiscord.Env
                         //image.Save(stream, ImageFormat.Png);
 
                         emoji = await Global.Game.Guild.CreateEmojiAsync(name, stream2);
-
                     }
                     catch (Exception e)
                     {
@@ -129,10 +125,11 @@ namespace BotDiscord.Env
                  */
                 foreach (var dm in players)
                 {
-                    await Global.Game.DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels);
-                    await Global.Game.DiscordChannels[GameChannel.BotText].AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels);
+                    await Global.Game.DiscordChannels[GameChannel.BotVoice]
+                        .AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels);
+                    await Global.Game.DiscordChannels[GameChannel.BotText]
+                        .AddOverwriteAsync(dm, Permissions.None, Permissions.AccessChannels);
                 }
-
             }
             catch (Exception ex1)
             {
@@ -141,13 +138,11 @@ namespace BotDiscord.Env
         }
 
 
-
         public static List<GameRole> CreateRoles(int nbPlayer)
         {
             var roleList = new List<GameRole>();
 
             for (var i = 0; i < nbPlayer; i++)
-            {
                 switch (i)
                 {
                     case 1:
@@ -186,7 +181,6 @@ namespace BotDiscord.Env
                         roleList.Add(i % 3 == 0 ? GameRole.Wolf : GameRole.Citizen);
                         break;
                 }
-            }
 
             return roleList;
         }
@@ -216,8 +210,11 @@ namespace BotDiscord.Env
             Game.WriteDebug(Global.Roles);
             Game.WriteDebug(Global.Game);
             Game.WriteDebug(Global.Game.Guild);
+            Game.WriteDebug(Global.Game.Texts.DiscordRoles);
+            Game.WriteDebug(Global.Game.Texts.DiscordRoles.BotName);
 
-            var adminRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.BotName, Permissions.Administrator, Color.AdminColor, true, true, "GameRole Bot");
+            var adminRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.DiscordRoles.BotName,
+                Permissions.Administrator, Color.AdminColor, true, true, "GameRole Bot");
             Global.Roles.Add(CustomRoles.Admin, adminRole);
             Game.WriteDebug("CreateDiscordRoles 2");
 
@@ -226,14 +223,16 @@ namespace BotDiscord.Env
                 Permissions.AddReactions);
             Game.WriteDebug("CreateDiscordRoles 3");
 
-            var playerRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.Player, playerPerms, Color.PlayerColor, true, true, "GameRole Joueur");
+            var playerRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.DiscordRoles.Player, playerPerms,
+                Color.PlayerColor, true, true, "GameRole Joueur");
             Global.Roles.Add(CustomRoles.Player, playerRole);
             Game.WriteDebug("CreateDiscordRoles 4");
 
 
             var spectPerms = CreatePerms(Permissions.AccessChannels, Permissions.ReadMessageHistory);
             RevokePerm(spectPerms, Permissions.ManageEmojis);
-            var spectRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.Spectator, spectPerms, Color.SpectColor, true, false, "GameRole spectateur");
+            var spectRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.DiscordRoles.Spectator,
+                spectPerms, Color.SpectColor, true, false, "GameRole spectateur");
 
             Global.Roles.Add(CustomRoles.Spectator, spectRole);
             Game.WriteDebug("CreateDiscordRoles 5");
@@ -245,16 +244,13 @@ namespace BotDiscord.Env
             #endregion
 
             Game.WriteDebug("CreateDiscordRoles 7");
-
         }
 
         public static async Task Spectator_Reaction(MessageReactionAddEventArgs e)
         {
-            var p = (await Global.Game.Guild.GetAllMembersAsync()).ToList().Find(p2 => p2.Id == e.User.Id && p2.Roles.ToList().Contains(Global.Roles[CustomRoles.Spectator]) && !p2.IsBot);
-            if (p != null)
-            {
-                await e.Message.DeleteReactionAsync(e.Emoji, p, "Spectator can't vote");
-            }
+            var p = (await Global.Game.Guild.GetAllMembersAsync()).ToList().Find(p2 =>
+                p2.Id == e.User.Id && p2.Roles.ToList().Contains(Global.Roles[CustomRoles.Spectator]) && !p2.IsBot);
+            if (p != null) await e.Message.DeleteReactionAsync(e.Emoji, p, "Spectator can't vote");
         }
 
 
@@ -266,28 +262,26 @@ namespace BotDiscord.Env
 
         public static Permissions GrantPerm(Permissions p, params Permissions[] grant)
         {
-            foreach (var pg in grant)
-            {
-                p |= pg;
-            }
+            foreach (var pg in grant) p |= pg;
 
             return p;
         }
 
         public static Permissions RevokePerm(Permissions p, params Permissions[] grant)
         {
-            foreach (var pg in grant)
-            {
-                p &= ~pg;
-            }
+            foreach (var pg in grant) p &= ~pg;
 
             return p;
         }
 
-      
+        public static DiscordMember GetMember(DiscordGuild guild, DiscordUser usr)
+        {
+            return guild.GetMemberAsync(usr.Id).GetAwaiter().GetResult();
+        }
 
-        public static DiscordMember GetMember(DiscordGuild guild, DiscordUser usr) => guild.GetMemberAsync(usr.Id).GetAwaiter().GetResult();
-        public static DiscordMember GetMember(this DiscordUser usr) => Global.Game.Guild.GetMemberAsync(usr.Id).GetAwaiter().GetResult();
-
+        public static DiscordMember GetMember(this DiscordUser usr)
+        {
+            return Global.Game.Guild.GetMemberAsync(usr.Id).GetAwaiter().GetResult();
+        }
     }
 }

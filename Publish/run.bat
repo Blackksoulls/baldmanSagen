@@ -5,4 +5,3 @@ cd .\Bot
 cd .\Bin
 dotnet.exe BotDiscord.dll
 echo "Bot Closed"
-PAUSE

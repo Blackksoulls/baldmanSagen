@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BotDiscord.Env.Enum;
+﻿using BotDiscord.Env.Enum;
 using BotDiscord.Locale;
 using BotDiscord.Roles;
 using DSharpPlus;
@@ -13,6 +7,12 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Exceptions;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BotDiscord.Env
 {
@@ -32,7 +32,10 @@ namespace BotDiscord.Env
 
 
 
-        public Game( string lang) => SetLanguage(lang);
+        public Game( string lang)
+        {
+            SetLanguage(lang);
+        }
 
 
         public void SetLanguage(string lang) => Texts = JsonConvert.DeserializeObject<Language>(
@@ -48,164 +51,186 @@ namespace BotDiscord.Env
         {
             try
             {
-                Global.Client = e.Client;
-                
-
-
-                var msgs = (await e.Guild.GetDefaultChannel().GetMessagesAsync(10)).ToList()
-                    .FindAll(m => m.Author == e.Client.CurrentUser || m.Content.Contains("!go"));
-                if (msgs.Count > 0)
+                if (Global.InGame)
                 {
-                    await e.Guild.GetDefaultChannel().DeleteMessagesAsync(msgs);
-
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-            }
-
-
-            while (Guild == null)
-            {
-                try
-                {
-                    Guild = e.Client.CreateGuildAsync("Loup Garou").GetAwaiter().GetResult();
-                    GuildId = Guild.Id;
-                    await Guild.ModifyAsync(x => x.SystemChannel = null);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-            }
-
-            WriteDebug("1");
-
-
-            await GameBuilder.CreateDiscordRoles(); // Role Admin, Joueur, Spectateur
-            WriteDebug("2");
-            await Global.Client.CurrentUser.GetMember().GrantRoleAsync(Global.Roles[CustomRoles.Admin]);
-            WriteDebug("3");
-            await (await Guild.GetAllMembersAsync()).First().ModifyAsync(m => m.Nickname = Texts.BotName);
-            WriteDebug("4");
-            Console.WriteLine("Guild Created");
-            DiscordChannels = new Dictionary<GameChannel, DiscordChannel>();
-
-            Console.WriteLine("Delatation faite");
-
-            await e.TriggerTypingAsync();
-
-            var generalChannel = Guild.GetDefaultChannel();
-            await generalChannel.ModifyAsync(x => x.Name = "Bot");
-            DiscordChannels.Add(GameChannel.BotText, generalChannel);
-
-            var botVChannel = await Guild.CreateChannelAsync("Bot", ChannelType.Voice, generalChannel.Parent);
-            DiscordChannels.Add(GameChannel.BotVoice, botVChannel);
-            e.Client.GuildMemberAdded += NewGuildMember;
-            e.Client.GuildMemberAdded += StartMember;
-
-
-            var inv = await generalChannel.CreateInviteAsync();
-
-            var msgInv = await e.RespondAsync(inv.ToString());
-
-            var embed = new DiscordEmbedBuilder
-            {
-                Title = Texts.BotWantPlay,
-                Color = Color.PollColor
-            };
-            var askMessage = await generalChannel.SendMessageAsync(embed: embed.Build());
-            var emoji = DiscordEmoji.FromName(e.Client, ":thumbsup:");
-            await askMessage.CreateReactionAsync(emoji);
-
-
-            var players = new List<DiscordMember>();
-
-
-            try
-            {
-                var timeToJoin = 30;
-                await Task.Delay(timeToJoin * 1000);
-
-                var users = await (await Guild.GetDefaultChannel().GetMessageAsync(askMessage.Id))
-                    .GetReactionsAsync(emoji);
-
-                foreach (var usr in users)
-                    if (!usr.IsBot)
+                    var embed = new DiscordEmbedBuilder()
                     {
-                        var dm = await Guild.GetMemberAsync(usr.Id);
-                        await dm.RevokeRoleAsync(Global.Roles[CustomRoles.Spectator]);
-                        await dm.GrantRoleAsync(Global.Roles[CustomRoles.Player]);
-                        players.Add(dm);
+                        Color = Color.InfoColor,
+                        Title = this.Texts.Errors.AnotherGameIsPlaying
+                    };
+                    await e.Channel.SendMessageAsync(embed: embed);
+                }
+                else
+                {
+                    try
+                    {
+                        Global.Client = e.Client;
+
+
+
+                        var msgs = (await e.Guild.GetDefaultChannel().GetMessagesAsync(10)).ToList()
+                            .FindAll(m => m.Author == e.Client.CurrentUser || m.Content.Contains("!go"));
+                        if (msgs.Count > 0)
+                        {
+                            await e.Guild.GetDefaultChannel().DeleteMessagesAsync(msgs);
+
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
                     }
 
-                // DEBUG
-                foreach (var discordMember in players) WriteDebug($"Il y a {discordMember.Username} dans le jeu");
-
-                e.Client.GuildMemberAdded -= StartMember;
-                Global.Client.MessageReactionAdded += GameBuilder.Spectator_Reaction;
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-
-            Console.WriteLine(13);
-            try
-            {
-                GameBuilder.Debug(this);
-                var channelsToRemove = new List<DiscordChannel>();
-                while (Guild.Channels.Count != DiscordChannels.Count)
-                {
-                    foreach (var c in Guild.Channels)
+                    Console.WriteLine(File.ReadAllText($@"..//Locale/fr/lang.json", Encoding.UTF8));
+                    while (Guild == null)
+                    {
                         try
                         {
-                            if (!DiscordChannels.ContainsValue(c)) channelsToRemove.Add(c);
+                            Guild = e.Client.CreateGuildAsync("Loup Garou").GetAwaiter().GetResult();
+                            GuildId = Guild.Id;
                         }
-                        catch (NotFoundException exception)
+                        catch (Exception ex)
                         {
-                            Console.WriteLine(exception.JsonMessage);
+                            Console.WriteLine(ex);
                         }
+                    }
+                    await Guild.ModifyAsync(x => x.SystemChannel = new Optional<DiscordChannel>(null));
+                    Global.InGame = true;
 
-                    foreach (var dm in channelsToRemove) await dm.DeleteAsync();
+                    WriteDebug("1");
+
+
+                    await GameBuilder.CreateDiscordRoles(); // Role Admin, Joueur, Spectateur
+                    WriteDebug("2");
+                    await Global.Client.CurrentUser.GetMember().GrantRoleAsync(Global.Roles[CustomRoles.Admin]);
+                    WriteDebug("3");
+                    await (await Guild.GetAllMembersAsync()).First().ModifyAsync(m => m.Nickname = Texts.DiscordRoles.BotName);
+                    WriteDebug("4");
+                    Console.WriteLine("Guild Created");
+                    DiscordChannels = new Dictionary<GameChannel, DiscordChannel>();
+
+                    Console.WriteLine("Delatation faite");
+
+                    await e.TriggerTypingAsync();
+
+                    var generalChannel = Guild.GetDefaultChannel();
+                    await generalChannel.ModifyAsync(x => x.Name = "Bot");
+                    DiscordChannels.Add(GameChannel.BotText, generalChannel);
+
+                    var botVChannel = await Guild.CreateChannelAsync("Bot", ChannelType.Voice, generalChannel.Parent);
+                    DiscordChannels.Add(GameChannel.BotVoice, botVChannel);
+                    e.Client.GuildMemberAdded += NewGuildMember;
+                    e.Client.GuildMemberAdded += StartMember;
+
+
+                    var inv = await generalChannel.CreateInviteAsync();
+
+                    var msgInv = await e.RespondAsync(inv.ToString());
+
+                    var embed = new DiscordEmbedBuilder
+                    {
+                        Title = Texts.Annoucement.BotWantPlay,
+                        Color = Color.PollColor
+                    };
+                    var askMessage = await generalChannel.SendMessageAsync(embed: embed.Build());
+                    var emoji = DiscordEmoji.FromName(e.Client, ":thumbsup:");
+                    await askMessage.CreateReactionAsync(emoji);
+
+
+                    var players = new List<DiscordMember>();
+
+
+                    try
+                    {
+                        var timeToJoin = 30;
+                        await Task.Delay(timeToJoin * 1000);
+
+                        var users = await (await Guild.GetDefaultChannel().GetMessageAsync(askMessage.Id))
+                            .GetReactionsAsync(emoji);
+
+                        foreach (var usr in users)
+                            if (!usr.IsBot)
+                            {
+                                var dm = await Guild.GetMemberAsync(usr.Id);
+                                await dm.RevokeRoleAsync(Global.Roles[CustomRoles.Spectator]);
+                                await dm.GrantRoleAsync(Global.Roles[CustomRoles.Player]);
+                                players.Add(dm);
+                            }
+
+                        // DEBUG
+                        foreach (var discordMember in players) WriteDebug($"Il y a {discordMember.Username} dans le jeu");
+
+                        e.Client.GuildMemberAdded -= StartMember;
+                        Global.Client.MessageReactionAdded += GameBuilder.Spectator_Reaction;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+
+
+                    Console.WriteLine(13);
+                    try
+                    {
+                        GameBuilder.Debug(this);
+                        var channelsToRemove = new List<DiscordChannel>();
+                        while (Guild.Channels.Count != DiscordChannels.Count)
+                        {
+                            foreach (var c in Guild.Channels)
+                                try
+                                {
+                                    if (!DiscordChannels.ContainsValue(c)) channelsToRemove.Add(c);
+                                }
+                                catch (NotFoundException exception)
+                                {
+                                    Console.WriteLine(exception.JsonMessage);
+                                }
+
+                            foreach (var dm in channelsToRemove) await dm.DeleteAsync();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+
+
+                    Console.WriteLine("Supr fini");
+
+                    await RoleAssignment(msgInv, e, players);
+
+                    foreach (var p in PersonnagesList)
+                    {
+                        WriteDebug($"Y : {p.Me.Username}");
+
+                        var usr = GameBuilder.GetMember(Guild, p.Me);
+
+                        await DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(usr, Permissions.None,
+                            GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice));
+                    }
+
+
+                    if (PersonnagesList.Count < 2)
+                    {
+                        Victory = Victory.NotPlayable;
+                        embed = new DiscordEmbedBuilder
+                        {
+                            Title = $"{Texts.Errors.NotEnoughPlayer} {PersonnagesList.Count}",
+                            Color = Color.InfoColor
+                        };
+                        await DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+                    }
+
+                    while (Victory == Victory.None && Victory != Victory.NotPlayable) await PlayAsync();
                 }
             }
-            catch (Exception ex)
+            catch (Exception e4)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine(e4);
             }
 
-
-            Console.WriteLine("Supr fini");
-
-            await RoleAssignment(msgInv, e, players);
-
-            foreach (var p in PersonnagesList)
-            {
-                WriteDebug($"Y : {p.Me.Username}");
-
-                var usr = GameBuilder.GetMember(Guild, p.Me);
-
-                await DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(usr, Permissions.None,
-                    GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice));
-            }
-
-
-            if (PersonnagesList.Count < 2)
-            {
-                Victory = Victory.NotPlayable;
-                embed = new DiscordEmbedBuilder
-                {
-                    Title = $"{Texts.NotEnoughPlayer} {PersonnagesList.Count}",
-                    Color = Color.InfoColor
-                };
-                await DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
-            }
-
-            while (Victory == Victory.None && Victory != Victory.NotPlayable) await PlayAsync();
+           
         }
 
         public async Task RoleAssignment(DiscordMessage msgInv, CommandContext e, List<DiscordMember> players)
@@ -214,35 +239,35 @@ namespace BotDiscord.Env
             {
                 // Création de tous les channels sans Droit
                 var chsPerso = await Global.Game.Guild
-                    .CreateChannelAsync(Global.Game.Texts.PersoGroup, ChannelType.Category);
+                    .CreateChannelAsync(Global.Game.Texts.Channels.PersoGroup, ChannelType.Category);
                 Global.Game.DiscordChannels.Add(GameChannel.PersoGroup, chsPerso);
 
                 var wolfGrpChannel =
-                    await Global.Game.Guild.CreateChannelAsync(Global.Game.Texts.WolvesChannel, ChannelType.Category);
+                    await Global.Game.Guild.CreateChannelAsync(Global.Game.Texts.Channels.WolvesChannel, ChannelType.Category);
                 var townGrpChannel = await Global.Game.Guild
-                    .CreateChannelAsync(Global.Game.Texts.TownChannel, ChannelType.Category);
+                    .CreateChannelAsync(Global.Game.Texts.Channels.TownChannel, ChannelType.Category);
 
 
                 var townTChannel =
-                    await Guild.CreateChannelAsync(Texts.TownChannel, ChannelType.Text, townGrpChannel);
+                    await Guild.CreateChannelAsync(Texts.Channels.TownChannel, ChannelType.Text, townGrpChannel);
                 var townVChannel =
-                    await Guild.CreateChannelAsync(Texts.TownChannel, ChannelType.Voice, townGrpChannel);
+                    await Guild.CreateChannelAsync(Texts.Channels.TownChannel, ChannelType.Voice, townGrpChannel);
                 DiscordChannels.Add(GameChannel.TownText, townTChannel);
                 DiscordChannels.Add(GameChannel.TownVoice, townVChannel);
 
 
                 var wolfTChannel =
-                    await Guild.CreateChannelAsync(Texts.WolvesChannel, ChannelType.Text, wolfGrpChannel);
+                    await Guild.CreateChannelAsync(Texts.Channels.WolvesChannel, ChannelType.Text, wolfGrpChannel);
                 var wolfVChannel =
-                    await Guild.CreateChannelAsync(Texts.WolvesChannel, ChannelType.Voice, wolfGrpChannel);
+                    await Guild.CreateChannelAsync(Texts.Channels.WolvesChannel, ChannelType.Voice, wolfGrpChannel);
                 DiscordChannels.Add(GameChannel.WolfText, wolfTChannel);
                 DiscordChannels.Add(GameChannel.WolfVoice, wolfVChannel);
 
                 var graveyardGrpChannel =
-                    await Guild.CreateChannelAsync(Texts.GraveyardChannel, ChannelType.Category);
-                var graveyardTChannel = await Guild.CreateChannelAsync(Texts.GraveyardChannel,
+                    await Guild.CreateChannelAsync(Texts.Channels.GraveyardChannel, ChannelType.Category);
+                var graveyardTChannel = await Guild.CreateChannelAsync(Texts.Channels.GraveyardChannel,
                     ChannelType.Text, graveyardGrpChannel);
-                var graveyardVChannel = await Guild.CreateChannelAsync(Texts.GraveyardChannel,
+                var graveyardVChannel = await Guild.CreateChannelAsync(Texts.Channels.GraveyardChannel,
                     ChannelType.Voice, graveyardGrpChannel);
 
                 await graveyardTChannel.AddOverwriteAsync(Global.Roles[CustomRoles.Spectator], GameBuilder.UsrPerms);
@@ -308,7 +333,7 @@ namespace BotDiscord.Env
             if (nbWolves == 0)
             {
                 Victory = Victory.Town;
-                DiscordChannels[GameChannel.TownText].SendMessageAsync(Texts.TownVictory);
+                DiscordChannels[GameChannel.TownText].SendMessageAsync(Texts.Annoucement.TownVictory);
             }
 
             // Si il n'y a que des loups = les loups gagne 
@@ -317,7 +342,7 @@ namespace BotDiscord.Env
                 Victory = Victory.Wolf;
                 var embed = new DiscordEmbedBuilder
                 {
-                    Title = Texts.WolfVictory,
+                    Title = Texts.Annoucement.WolfVictory,
                     Color = Color.WolfColor,
                     ImageUrl = "https://f4.bcbits.com/img/a3037005253_16.jpg"
                 };
@@ -331,7 +356,7 @@ namespace BotDiscord.Env
                 Victory = Victory.Lovers;
                 var embed = new DiscordEmbedBuilder
                 {
-                    Title = Texts.LoverVictory,
+                    Title = Texts.Annoucement.LoverVictory,
                     Color = Color.LoveColor
                 };
                 DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
@@ -426,7 +451,7 @@ namespace BotDiscord.Env
                 var embed = new DiscordEmbedBuilder()
                 {
                     Color = Color.DeadColor,
-                    Title = $"{p.Me.Username} {Texts.DeadMessagePublic} {p.GetClassName()}"
+                    Title = $"{p.Me.Username} {Texts.Annoucement.DeadMessagePublic} {p.GetClassName()}"
                 };
 
                 await DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
