@@ -95,6 +95,7 @@ namespace BotDiscord.Env
                         }
                     }
                     await Guild.ModifyAsync(x => x.SystemChannel = new Optional<DiscordChannel>(null));
+                    await Guild.ModifyAsync(opt => opt.DefaultMessageNotifications = DefaultMessageNotifications.MentionsOnly);
                     Global.InGame = true;
 
                     WriteDebug("1");
@@ -142,7 +143,7 @@ namespace BotDiscord.Env
 
                     try
                     {
-                        var timeToJoin = 30;
+                        const int timeToJoin = 30;
                         await Task.Delay(timeToJoin * 1000);
 
                         var users = await (await Guild.GetDefaultChannel().GetMessageAsync(askMessage.Id))
@@ -157,8 +158,6 @@ namespace BotDiscord.Env
                                 players.Add(dm);
                             }
 
-                        // DEBUG
-                        foreach (var discordMember in players) WriteDebug($"Il y a {discordMember.Username} dans le jeu");
 
                         e.Client.GuildMemberAdded -= StartMember;
                         Global.Client.MessageReactionAdded += GameBuilder.Spectator_Reaction;
@@ -300,7 +299,11 @@ namespace BotDiscord.Env
         private async Task StartMember(GuildMemberAddEventArgs e)
         {
             var p =
-                GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice, Permissions.Speak);
+                GameBuilder.CreatePerms(Permissions.AccessChannels, 
+                                        Permissions.UseVoice, 
+                                        Permissions.Speak, 
+                                        Permissions.UseVoiceDetection);
+
             await DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(e.Member, p);
             WriteDebug($"D : {e.Member.Username}");
         }
@@ -336,7 +339,7 @@ namespace BotDiscord.Env
                 DiscordChannels[GameChannel.TownText].SendMessageAsync(Texts.Annoucement.TownVictory);
             }
 
-            // Si il n'y a que des loups = les loups gagne 
+            // Si il n'y a que des loups = les loups gagnent
             if (nbWolves == PersonnagesList.FindAll(p => p.Alive).Count)
             {
                 Victory = Victory.Wolf;
@@ -349,7 +352,7 @@ namespace BotDiscord.Env
                 DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
             }
 
-            // On check si les amoureux sont les seuls restant 
+            // On check si les amoureux sont les seuls restants
             if (PersonnagesList.FindAll(p => p.Effect == Effect.Lover && p.Alive).Count ==
                 PersonnagesList.FindAll(p2 => p2.Alive).Count)
             {
@@ -436,10 +439,6 @@ namespace BotDiscord.Env
             }
         }
 
-        public void Ending()
-        {
-
-        }
 
 
         public async Task Kill(Personnage p)

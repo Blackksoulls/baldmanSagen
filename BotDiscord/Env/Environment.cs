@@ -216,17 +216,14 @@ namespace BotDiscord.Env
             var adminRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.DiscordRoles.BotName,
                 Permissions.Administrator, Color.AdminColor, true, true, "GameRole Bot");
             Global.Roles.Add(CustomRoles.Admin, adminRole);
-            Game.WriteDebug("CreateDiscordRoles 2");
 
 
             var playerPerms = CreatePerms(Permissions.SendMessages, Permissions.ReadMessageHistory,
                 Permissions.AddReactions);
-            Game.WriteDebug("CreateDiscordRoles 3");
 
             var playerRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.DiscordRoles.Player, playerPerms,
                 Color.PlayerColor, true, true, "GameRole Joueur");
             Global.Roles.Add(CustomRoles.Player, playerRole);
-            Game.WriteDebug("CreateDiscordRoles 4");
 
 
             var spectPerms = CreatePerms(Permissions.AccessChannels, Permissions.ReadMessageHistory);
@@ -235,22 +232,22 @@ namespace BotDiscord.Env
                 spectPerms, Color.SpectColor, true, false, "GameRole spectateur");
 
             Global.Roles.Add(CustomRoles.Spectator, spectRole);
-            Game.WriteDebug("CreateDiscordRoles 5");
 
 
             await Global.Game.Guild.EveryoneRole.ModifyAsync(x => x.Permissions = Permissions.None);
-            Game.WriteDebug("CreateDiscordRoles 6");
+
 
             #endregion
 
-            Game.WriteDebug("CreateDiscordRoles 7");
         }
 
         public static async Task Spectator_Reaction(MessageReactionAddEventArgs e)
         {
-            var p = (await Global.Game.Guild.GetAllMembersAsync()).ToList().Find(p2 =>
-                p2.Id == e.User.Id && p2.Roles.ToList().Contains(Global.Roles[CustomRoles.Spectator]) && !p2.IsBot);
-            if (p != null) await e.Message.DeleteReactionAsync(e.Emoji, p, "Spectator can't vote");
+            if (e.User.GetMember().Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+            {
+                await e.Message.DeleteReactionAsync(e.Emoji, e.User, $"Spectator {e.User.Username} can't vote");
+            }
+
         }
 
 
