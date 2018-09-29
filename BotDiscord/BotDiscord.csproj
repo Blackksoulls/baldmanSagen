@@ -82,7 +82,7 @@
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="taskkill /IM dotnet.exe /F" />
+    <Exec Command="python $(SolutionDir)\preBuild.py&#xD;&#xA;" />
   </Target>
 
 </Project>

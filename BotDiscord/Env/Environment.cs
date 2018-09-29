@@ -241,7 +241,7 @@ namespace BotDiscord.Env
 
         }
 
-        public static async Task Spectator_Reaction(MessageReactionAddEventArgs e)
+        public static async Task Spectator_ReactionAdd(MessageReactionAddEventArgs e)
         {
             if (e.User.GetMember().Roles.Contains(Global.Roles[CustomRoles.Spectator]))
             {
@@ -249,7 +249,14 @@ namespace BotDiscord.Env
             }
 
         }
+        public static async Task Spectator_ReactionRem(MessageReactionRemoveEventArgs e)
+        {
+            if (e.User.GetMember().Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+            {
+                await e.Message.DeleteReactionAsync(e.Emoji, e.User, $"Spectator {e.User.Username} can't vote");
+            }
 
+        }
 
         public static Permissions CreatePerms(params Permissions[] perms)
         {

@@ -160,8 +160,8 @@ namespace BotDiscord.Env
 
 
                         e.Client.GuildMemberAdded -= StartMember;
-                        Global.Client.MessageReactionAdded += GameBuilder.Spectator_Reaction;
-
+                        Global.Client.MessageReactionAdded += GameBuilder.Spectator_ReactionAdd;
+                        Global.Client.MessageReactionRemoved += GameBuilder.Spectator_ReactionRem;
                     }
                     catch (Exception ex)
                     {
@@ -291,7 +291,7 @@ namespace BotDiscord.Env
             }
         }
 
-        private async Task NewGuildMember(GuildMemberAddEventArgs e)
+        private static async Task NewGuildMember(GuildMemberAddEventArgs e)
         {
             await e.Member.GrantRoleAsync(Global.Roles[CustomRoles.Spectator]);
         }
