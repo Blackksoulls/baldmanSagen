@@ -6,7 +6,7 @@
     <OutputType>Exe</OutputType>
     <StartupObject>BotDiscord.Program</StartupObject>
     <Win32Resource />
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -76,9 +76,13 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="python $(SolutionDir)\\deploy.py" />
+    <Exec Command="python $(SolutionDir)\deploy.py&#xD;&#xA;" />
   </Target>
 
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="taskkill /IM dotnet.exe /F" />
+  </Target>
 
 </Project>

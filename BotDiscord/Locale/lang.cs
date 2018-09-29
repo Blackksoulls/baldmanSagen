@@ -107,7 +107,7 @@ namespace BotDiscord.Locale
         public string WitchSaveMsg { get; set; }
         public string WitchKillMsg { get; set; }
         public string SaviorName { get; internal set; }
-        public object DidNothing { get; internal set; }
+        public string DidNothing { get; internal set; }
     }
 
     public class Polls

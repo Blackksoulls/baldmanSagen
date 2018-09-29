@@ -14,7 +14,7 @@ namespace BotDiscord.Roles
     {
         public Wolf(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
-            Global.Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(me, GameBuilder.UsrPerms);
+            Global.Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(me, GameBuilder.UsrPerms.Grant(Permissions.AccessChannels));
             Global.Game.DiscordChannels[GameChannel.WolfVoice].AddOverwriteAsync(me, GameBuilder.UsrPerms);
         }
 
@@ -265,7 +265,7 @@ namespace BotDiscord.Roles
 
         public virtual string GotKilled()
         {
-            return Me.DisplayName + Global.Game.Texts.Annoucement.DeadMessagePublic;
+            return $"{Me.DisplayName} {Global.Game.Texts.Annoucement.DeadMessagePublic}";
         }
 
         public abstract string GetClassName();

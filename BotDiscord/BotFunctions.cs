@@ -53,43 +53,27 @@ namespace BotDiscord
             }
 
 
-            var emoji = DailyVotingMessage.Reactions
-                .First(x => x.Count == DailyVotingMessage.Reactions.Max(y => y.Count) && x.Count >= 2).Emoji;
+            var players = DailyVotingMessage.Reactions.ToList().FindAll(x =>
+                x.Count == DailyVotingMessage.Reactions.Max(y => y.Count) && x.Count >= 2);
 
-            if (emoji == null)
+
+
+            if (players.Count == 0)
             {
-                if (nbTry == 1)
-                {
                     embed = new DiscordEmbedBuilder()
                     {
                         Title = Global.Game.Texts.Polls.NoTownKill,
                         Color = Color.InfoColor
                     };
                     await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed);
-                }
+                
 
-                else
-                {
-                    await DailyVote(2);
-                }
+        
             }
             else
             {
-                var p = Global.Game.PersonnagesList.Find(personnage => personnage.Emoji.Id == emoji.Id);
+                var p = Global.Game.PersonnagesList.Find(personnage => personnage.Emoji.Id == players[0].Emoji.Id);
                 await MakeDeath(p);
-                embed = new DiscordEmbedBuilder()
-                {
-                    Title = Global.Game.Texts.Annoucement.DeadMessagePrivate,
-                    Color = Color.InfoColor
-                };
-                await p.ChannelT.SendMessageAsync(embed: embed.Build());
-
-                embed = new DiscordEmbedBuilder()
-                {
-                    Title = $"{p.GotKilled()}",
-                    Color = Color.PollColor
-                };
-                await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build()); //HERE
             }
             Global.Game.CheckVictory();
 
@@ -110,8 +94,7 @@ namespace BotDiscord
                 }
             }
 
-            if (!present ||
-                (GameBuilder.GetMember(Global.Game.Guild, e.User)).Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+            if (!present ||  e.User.GetMember().Roles.Contains(Global.Roles[CustomRoles.Spectator]))
             {
                 await DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
                 return;
@@ -181,7 +164,7 @@ namespace BotDiscord
                 await message.CreateReactionAsync(emoji);
             }
 
-            await Task.Delay(10 * 1000);
+            await Task.Delay(TimeToVote * 1000);
 
             var react = message.Reactions.First(reaction => reaction.Count == message.Reactions.Max(x => x.Count));
             var target = Global.Game.PersonnagesList.Find(p => p.Emoji.Id == react.Emoji.Id);
@@ -208,7 +191,7 @@ namespace BotDiscord
                     await msg.CreateReactionAsync(emoji);
                 }
 
-                await Task.Delay(TimeToVote);
+                await Task.Delay(TimeToVote * 1000);
                 var react = msg.Reactions.ToList()
                     .FindAll(reaction => reaction.Count == msg.Reactions.Max(x => x.Count));
 
@@ -362,10 +345,11 @@ namespace BotDiscord
         {
             Game.WriteDebug("Fin de la nuit");
 
-            foreach (var p in Global.Game.PersonnagesList)
+            foreach (var p in Global.Game.PersonnagesList.FindAll(p => p.GetType() == typeof(Wolf)))
             {
-                Permissions Sends = GameBuilder.CreatePerms(Permissions.SendMessages, Permissions.SendTtsMessages);
-                await Global.Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(p.Me, deny: Sends);
+                Permissions sends = GameBuilder.CreatePerms(Permissions.SendMessages, Permissions.SendTtsMessages);
+                Permissions others =GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.ReadMessageHistory);
+                await Global.Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(p.Me,allow:others,  deny: sends);
             }
 
 
@@ -377,8 +361,8 @@ namespace BotDiscord
                     Color = Color.DeadColor
                 };
                 Game.WriteDebug("MEUTRE DE " + target.Me.Username);
-                await target.ChannelT.SendMessageAsync(embed: embed.Build());//HERE
-                await MakeDeath(target);
+                await target.ChannelT.SendMessageAsync(embed: embed.Build());//PAS HERE (Message Privé)
+                await MakeDeath(target); // Here
             }
 
             Global.Game.CheckVictory();
@@ -426,7 +410,7 @@ namespace BotDiscord
                 Color = Color.InfoColor
             };
             await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
-            var sends = GameBuilder.CreatePerms(Permissions.SendMessages, Permissions.SendTtsMessages); 
+            var sends = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.SendMessages, Permissions.SendTtsMessages); 
             foreach (var p in Global.Game.PersonnagesList.FindAll(p => p.Alive))
             {
                 if (p.GetType() != typeof(Wolf))
@@ -436,7 +420,7 @@ namespace BotDiscord
                 else
                 {
                     await p.Me.PlaceInAsync(Global.Game.DiscordChannels[GameChannel.WolfVoice]);
-                    await Global.Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(p.Me, deny: sends);
+                    await Global.Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(p.Me, allow: sends);
                 }
             }
         }

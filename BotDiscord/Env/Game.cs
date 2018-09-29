@@ -331,6 +331,19 @@ namespace BotDiscord.Env
 
         public void CheckVictory()
         {
+            // On check si les amoureux sont les seuls restants
+            if (PersonnagesList.FindAll(p => p.Effect == Effect.Lover && p.Alive).Count ==
+                PersonnagesList.FindAll(p2 => p2.Alive).Count)
+            {
+                Victory = Victory.Lovers;
+                var embed = new DiscordEmbedBuilder
+                {
+                    Title = Texts.Annoucement.LoverVictory,
+                    Color = Color.LoveColor
+                };
+                DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+            }
+
             // Si il n'y a pas de loup = la ville gagne 
             var nbWolves = PersonnagesList.FindAll(p => p.GetType() == typeof(Wolf) && p.Alive).Count;
             if (nbWolves == 0)
@@ -352,18 +365,7 @@ namespace BotDiscord.Env
                 DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
             }
 
-            // On check si les amoureux sont les seuls restants
-            if (PersonnagesList.FindAll(p => p.Effect == Effect.Lover && p.Alive).Count ==
-                PersonnagesList.FindAll(p2 => p2.Alive).Count)
-            {
-                Victory = Victory.Lovers;
-                var embed = new DiscordEmbedBuilder
-                {
-                    Title = Texts.Annoucement.LoverVictory,
-                    Color = Color.LoveColor
-                };
-                DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
-            }
+          
 
             if (Victory != Victory.None) Moments.Push(Moment.End);
         }
@@ -450,11 +452,18 @@ namespace BotDiscord.Env
                 var embed = new DiscordEmbedBuilder()
                 {
                     Color = Color.DeadColor,
-                    Title = $"{p.Me.Username} {Texts.Annoucement.DeadMessagePublic} {p.GetClassName()}"
+                    Title = $"{p.GotKilled()}"
                 };
 
                 await DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
 
+                embed = new DiscordEmbedBuilder()
+                {
+                    Title = Global.Game.Texts.Annoucement.DeadMessagePrivate,
+                    Color = Color.InfoColor
+                };
+
+                await p.ChannelT.SendMessageAsync(embed: embed.Build());
                 foreach (var discordChannel in DiscordChannels.Values)
                     await discordChannel.AddOverwriteAsync(p.Me, Permissions.AccessChannels, Permissions.ManageEmojis);
                     

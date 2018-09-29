@@ -27,7 +27,7 @@ namespace BotDiscord.Env
     public static class GameBuilder
     {
         public static Permissions UsrPerms = CreatePerms(Permissions.AccessChannels, Permissions.AddReactions,
-            Permissions.SendMessages);
+            Permissions.SendMessages, Permissions.UseVoiceDetection, Permissions.Speak);
 
         public static async Task CreatePersonnages(List<DiscordMember> players)
         {
