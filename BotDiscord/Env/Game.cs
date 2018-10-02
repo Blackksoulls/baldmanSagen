@@ -284,6 +284,9 @@ namespace BotDiscord.Env
 
                 await (await e.Channel.GetMessageAsync(msgInv.Id)).ModifyAsync((await townTChannel.CreateInviteAsync())
                     .ToString());
+
+                Global.Client.MessageReactionAdded += GameBuilder.Spectator_ReactionAdd;
+                Global.Client.MessageReactionRemoved += GameBuilder.Spectator_ReactionRem;
             }
             catch (SystemException ex)
             {

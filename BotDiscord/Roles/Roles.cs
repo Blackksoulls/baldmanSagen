@@ -1,5 +1,4 @@
-﻿using System;
-using BotDiscord.Env;
+﻿using BotDiscord.Env;
 using BotDiscord.Env.Enum;
 using BotDiscord.Env.Extentions;
 using BotDiscord.Locale;
@@ -14,7 +13,8 @@ namespace BotDiscord.Roles
     {
         public Wolf(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
-            Global.Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(me, GameBuilder.UsrPerms.Grant(Permissions.AccessChannels));
+            Global.Game.DiscordChannels[GameChannel.WolfText]
+                .AddOverwriteAsync(me, GameBuilder.UsrPerms.Grant(Permissions.AccessChannels));
             Global.Game.DiscordChannels[GameChannel.WolfVoice].AddOverwriteAsync(me, GameBuilder.UsrPerms);
         }
 
@@ -25,7 +25,7 @@ namespace BotDiscord.Roles
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.WolfName}";
+            return $"{Global.Game.Texts.GameRoles.WolfName}";
         }
 
         public override string GetClassName()
@@ -48,7 +48,7 @@ namespace BotDiscord.Roles
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.CitizenName}";
+            return $"{Global.Game.Texts.GameRoles.CitizenName}";
         }
 
         public override string GetClassName()
@@ -71,8 +71,8 @@ namespace BotDiscord.Roles
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.SaviorName}";
-        }
+            return $"{Global.Game.Texts.GameRoles.SaviorName}";
+        }   
 
         public override string GetClassName()
         {
@@ -95,7 +95,7 @@ namespace BotDiscord.Roles
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.WitchName}";
+            return $"{Global.Game.Texts.GameRoles.WitchName}";
         }
 
         public override string GetClassName()
@@ -118,7 +118,7 @@ namespace BotDiscord.Roles
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.LittleGirlName}";
+            return $"{Global.Game.Texts.GameRoles.LittleGirlName}";
         }
 
         public override string GetClassName()
@@ -140,7 +140,7 @@ namespace BotDiscord.Roles
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.HunterName}";
+            return $"{Global.Game.Texts.GameRoles.HunterName}";
         }
 
         public override string GetClassName()
@@ -184,7 +184,7 @@ namespace BotDiscord.Roles
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.SeerName}";
+            return $"{Global.Game.Texts.GameRoles.SeerName}";
         }
 
         public override string GetClassName()
@@ -201,13 +201,14 @@ namespace BotDiscord.Roles
 
         public override string ToString()
         {
-            return Global.Game.Texts.GameRoles.SeerToString + " \n " + Global.Game.Texts.GameRoles.TalkativeSeerToString + " \n " +
+            return Global.Game.Texts.GameRoles.SeerToString + " \n " +
+                   Global.Game.Texts.GameRoles.TalkativeSeerToString + " \n " +
                    Global.Game.Texts.GameRoles.TownFriendly;
         }
 
         public override string GotKilled()
         {
-            return base.GotKilled() + $"{Global.Game.Texts.GameRoles.TalkativeSeerName}";
+            return $"{Global.Game.Texts.GameRoles.TalkativeSeerName}";
         }
 
         public override string GetClassName()
@@ -229,9 +230,6 @@ namespace BotDiscord.Roles
 
         public DiscordGuildEmoji Emoji;
 
-      
-
- 
 
         protected Personnage(DiscordMember me, DiscordGuildEmoji emoji)
         {
@@ -241,11 +239,10 @@ namespace BotDiscord.Roles
 
 
             ChannelV = Global.Game.Guild.CreateChannelAsync(Me.Username.RemoveSpecialChars(), ChannelType.Voice,
-            Global.Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
+                Global.Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
 
             ChannelT = Global.Game.Guild.CreateChannelAsync(Me.Username.RemoveSpecialChars(), ChannelType.Text,
-            Global.Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
-
+                Global.Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
 
 
             ChannelT.AddOverwriteAsync(Me, GameBuilder.UsrPerms);
