@@ -1,0 +1,60 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/home/kuro/Projects/PTUT/baldmanSagen/BotDiscord/BotDiscord.csproj",
+    "projectName": "BotDiscord",
+    "projectPath": "/home/kuro/Projects/PTUT/baldmanSagen/BotDiscord/BotDiscord.csproj",
+    "outputPath": "/home/kuro/Projects/PTUT/baldmanSagen/BotDiscord/obj/",
+    "projectStyle": "PackageReference",
+    "originalTargetFrameworks": [
+      "netcoreapp2.1"
+    ],
+    "frameworks": {
+      "netcoreapp2.1": {
+        "projectReferences": {}
+      }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
+    }
+  },
+  "frameworks": {
+    "netcoreapp2.1": {
+      "dependencies": {
+        "DSharpPlus": {
+          "target": "Package",
+          "version": "[4.0.0-nightly-00526, )"
+        },
+        "DSharpPlus.CommandsNext": {
+          "target": "Package",
+          "version": "[4.0.0-nightly-00526, )"
+        },
+        "Microsoft.Extensions.DependencyInjection": {
+          "target": "Package",
+          "version": "[2.2.0-preview2-35157, )"
+        },
+        "Microsoft.Extensions.DependencyInjection.Abstractions": {
+          "target": "Package",
+          "version": "[2.2.0-preview2-35157, )"
+        },
+        "Microsoft.NETCore.App": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.1.0, )",
+          "autoReferenced": true
+        },
+        "Newtonsoft.Json": {
+          "target": "Package",
+          "version": "[11.0.2, )"
+        }
+      },
+      "imports": [
+        "net461"
+      ],
+      "assetTargetFallback": true,
+      "warn": true
+    }
+  }
+}

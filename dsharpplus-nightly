@@ -1,0 +1,477 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+        <meta property="og:title" content="Gallery | MyGet" />
+        <meta property="og:type" content="MyGet" />
+        <meta property="og:url" content="http://myget.org" />
+        <meta property="og:description" content="MyGet - Hosting your NuGet, npm, Bower, Maven, PHP Composer and Vsix packages" />
+        <meta property="og:site_name" content="MyGet" />
+        <meta property="og:image:url" content="https://www.myget.org/Content/images/marketing/myget-cube.png" />
+    <title>Gallery | MyGet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" href="https://mgcdn-assets.azureedge.net/bundles/css/styles-new.min.css?c=MjAxOC4xLjAuMTEwNw==" type="text/css" />
+
+    <link href="https://mgcdn-assets.azureedge.net/favicon.ico?c=MjAxOC4xLjAuMTEwNw==" rel="shortcut icon" type="image/x-icon" />
+    <meta property="og:image" content="https://mgcdn-assets.azureedge.net/Content/images/myget/logo.png?c=MjAxOC4xLjAuMTEwNw==" />
+
+    <!--[if lt IE 9]>
+        <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+        <!-- Google Tag Manager -->
+    <script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N599R6Z');</script>
+    <!-- End Google Tag Manager -->
+
+
+    
+    <script type="text/javascript" src="https://mgcdn-assets.azureedge.net/bundles/js/scripts.min.js?c=MjAxOC4xLjAuMTEwNw=="></script>
+
+    
+    <link rel="nuget" type="application/rsd+xml" href="https://www.myget.org/Discovery/Feed/dsharpplus-nightly/" />
+    <link rel="alternate" type="application/rss+xml" title="dsharpplus-nightly Activity" href="https://www.myget.org/RSS/dsharpplus-nightly" />
+
+    <link href="https://mgcdn-assets.azureedge.net/Content/css/pagedown.css?c=MjAxOC4xLjAuMTEwNw==" rel="stylesheet"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@MyGetTeam">
+    <meta name="twitter:title" content="dsharpplus-nightly">
+    <meta name="twitter:description" content="DSharpPlus nightly builds">
+    <meta name="twitter:image:src" content="https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png?201809300226"/>
+
+</head>
+<body>
+        <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N599R6Z"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div class="content-wrapper">
+            <header>
+                <nav class="navbar navbar-static-top" role="navigation">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+                <a class="brand" href="/">
+                    <h1><span>MyGet - Hosted Package Management Server for NuGet, symbols, Npm, Bower, Maven, PHP Composer and VSIX</span></h1>
+                </a>
+            <div class="nav-collapse collapse pull-right">
+                    <ul class="nav">
+                            <li><a href="/features">Features</a></li>
+                            <li><a href="/enterprise">Enterprise</a></li>
+                            <li><a href="/pricing">Pricing</a></li>
+                        <li><a href="http://docs.myget.org">Docs</a></li>
+                        <li><a href="/Support">Support</a></li>
+                        <li><a href="http://blog.myget.org">Blog</a></li>
+                    </ul>
+                    <div class="navbar-form pull-right">
+                        <a class="btn" href="/Account/Login">Sign In</a>
+                        <a class="btn btn-primary" href="/Account/Register?ReturnUrl=%2FSubscription%2FSignUp%3Fsubscription_type%3Dtrial">Sign Up</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+</nav>
+            </header>
+
+        <div class="content">
+
+
+            
+    <div class="row breadcrumbs">
+    <div class="span12">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">Home</a>
+                <span class="divider"><i class="icon-chevron-right"></i></span>
+            </li>
+                        <li>
+                            <a href="/gallery">Gallery</a>
+                            <span class="divider"><i class="icon-chevron-right"></i></span>
+                        </li>
+                        <li>dsharpplus-nightly</li>
+
+        </ul>
+    </div>
+</div>
+
+            
+
+
+
+
+
+
+
+<div class="container">
+    <article>
+        <h3 class="mb-s">
+            Gallery
+        </h3>
+        <div class="u-row">
+            <div class="col-9">
+
+                <div class="well well-large">
+                    <div class="u-row">
+                        <div class="col-2">
+                            <img class="mb-s" src="https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png?201809300226" alt="dsharpplus-nightly" />
+                        </div>
+                        <div class="col-10">
+                            <h3 class="mb-s">dsharpplus-nightly</h3>
+                            <p class="galleryFeedDescription">
+
+                                DSharpPlus nightly builds
+                            </p>
+
+                                <div class="read-more">
+                                    <div class="read-more-content">
+                                        <h1 id="dsharpplus">DSharpPlus</h1>
+<p>This is the official nightly build feed for D#+.</p>
+
+                                    </div>
+                                    <p class="read-more-expand"><a href="#">Read more...</a></p>
+                                </div>
+                        </div>
+                    </div>
+                </div>                
+
+                <div id="connectToFeed" class="modal modal-medium hide fade" tabindex="-1" role="dialog">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close closeButton">x</button>
+                        <h3>Connect to feed</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="tabbable tabs-left">
+                            <ul class="nav nav-tabs">
+
+                                    <li class="active">
+                                        <a href="#tab1" data-toggle="tab">NuGet</a>
+                                    </li>
+                                                                                                                                                                                                                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab1">
+                                    <label><i class="icon icon-nuget"></i> NuGet V3 feed URL (Visual Studio 2015+):</label>
+                                    <input class="monofield input-xxlarge" type="text" spellcheck="false" readonly="readonly" value="https://www.myget.org/F/dsharpplus-nightly/api/v3/index.json" />
+                                        <span class="clippy-container" style="float: none;">
+        <span class="clippy-button" title="Copy to clipboard" data-bind="clipboard: ko.observable('https://www.myget.org/F/dsharpplus-nightly/api/v3/index.json')"></span>
+    </span>
+<br /><br />
+
+                                    <label><i class="icon icon-nuget"></i> NuGet V2 feed URL (Visual Studio 2012+):</label>
+                                    <input class="monofield input-xxlarge" type="text" spellcheck="false" readonly="readonly" value="https://www.myget.org/F/dsharpplus-nightly/api/v2" />
+                                        <span class="clippy-container" style="float: none;">
+        <span class="clippy-button" title="Copy to clipboard" data-bind="clipboard: ko.observable('https://www.myget.org/F/dsharpplus-nightly/api/v2')"></span>
+    </span>
+<br /><br />
+
+                                    
+
+                                </div>
+                                <div class="tab-pane " id="tab2">
+                                    <label><i class="icon icon-nugetsymbols"></i> Symbol server URL:</label>
+                                    <input class="monofield input-xxlarge" type="text" spellcheck="false" readonly="readonly" value="https://www.myget.org/F/dsharpplus-nightly/symbols/" />
+                                        <span class="clippy-container" style="float: none;">
+        <span class="clippy-button" title="Copy to clipboard" data-bind="clipboard: ko.observable('https://www.myget.org/F/dsharpplus-nightly/symbols/')"></span>
+    </span>
+<br /><br />
+
+                                    
+                                </div>
+                                <div class="tab-pane " id="tab3">
+                                    <label><i class="icon icon-npm"></i> Npm feed URL:</label>
+                                    <input class="monofield input-xxlarge" type="text" spellcheck="false" readonly="readonly" value="https://www.myget.org/F/dsharpplus-nightly/npm/" />
+                                        <span class="clippy-container" style="float: none;">
+        <span class="clippy-button" title="Copy to clipboard" data-bind="clipboard: ko.observable('https://www.myget.org/F/dsharpplus-nightly/npm/')"></span>
+    </span>
+<br /><br />
+
+                                    
+                                </div>
+                                <div class="tab-pane " id="tab4">
+                                    <label><i class="icon icon-bower"></i> Bower feed URL:</label>
+                                    <input class="monofield input-xxlarge" type="text" spellcheck="false" readonly="readonly" value="https://www.myget.org/F/dsharpplus-nightly/bower/" />
+                                        <span class="clippy-container" style="float: none;">
+        <span class="clippy-button" title="Copy to clipboard" data-bind="clipboard: ko.observable('https://www.myget.org/F/dsharpplus-nightly/bower/')"></span>
+    </span>
+<br /><br />
+
+                                    
+                                </div>
+                                <div class="tab-pane " id="tab5">
+                                    <label><i class="icon icon-maven"></i> Maven feed URL:</label>
+                                    <input class="monofield input-xxlarge" type="text" spellcheck="false" readonly="readonly" value="https://www.myget.org/F/dsharpplus-nightly/maven/" />
+                                        <span class="clippy-container" style="float: none;">
+        <span class="clippy-button" title="Copy to clipboard" data-bind="clipboard: ko.observable('https://www.myget.org/F/dsharpplus-nightly/maven/')"></span>
+    </span>
+<br /><br />
+
+                                    
+                                </div>
+                                <div class="tab-pane " id="tab6">
+                                    <label><i class="icon icon-vsix"></i> Vsix feed URL:</label>
+                                    <input class="monofield input-xxlarge" type="text" spellcheck="false" readonly="readonly" value="https://www.myget.org/F/dsharpplus-nightly/vsix/" />
+                                        <span class="clippy-container" style="float: none;">
+        <span class="clippy-button" title="Copy to clipboard" data-bind="clipboard: ko.observable('https://www.myget.org/F/dsharpplus-nightly/vsix/')"></span>
+    </span>
+<br /><br />
+
+                                    
+                                </div>
+                                <div class="tab-pane " id="tab6">
+                                    <label><i class="icon icon-phpc"></i> PHP Composer repository URL:</label>
+                                    <input class="monofield input-xxlarge" type="text" spellcheck="false" readonly="readonly" value="https://www.myget.org/F/dsharpplus-nightly/composer/" />
+                                        <span class="clippy-container" style="float: none;">
+        <span class="clippy-button" title="Copy to clipboard" data-bind="clipboard: ko.observable('https://www.myget.org/F/dsharpplus-nightly/composer/')"></span>
+    </span>
+<br /><br />
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-small" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+
+
+                <div data-bind="template: { name: function() { return activeView(); }, data: activeViewModel(), afterRender: wireValidation }"></div>
+            </div>
+            <div class="col-3">
+
+                <p>
+
+                    <a href="#connectToFeed" data-toggle="modal" class="btn btn-primary">Connect to feed</a>
+                </p>
+                <p>
+                    By:
+                    <a href="/users/emzi0767">Mateusz Brawański</a>
+                </p>
+
+                <p>
+                    Total download count:
+                    1030
+                </p>
+                <p>
+                        <span class="label label-info">Readonly</span>
+                                    </p>
+            </div>
+        </div>
+    </article>
+</div>
+
+<script type="text/html" id="packages-template">
+    <div class="btn-toolbar">
+        <div class="btn-group pull-right">
+            <input type="text" class="" placeholder="Search..." data-bind="value: $data.queryString, valueUpdate: 'afterkeydown'" />
+        </div>
+    </div>
+
+    <div>
+        <div data-bind="visible: !ko.utils.unwrapObservable($data.hasData)">
+            <p>It's kind of empty out here...</p>
+        </div>
+        <table class="table" data-bind="visible: $data.hasData">
+            <colgroup>
+                <col style="width: 66%;">
+                <col style="width: 17%;">
+                <col style="width: 17%;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Package Id</th>
+                    <th style="min-width: 50px;"><span class="pull-right">Latest Version</span></th>
+                    <th style="min-width: 100px;">
+                        <div class="pull-right">
+                            Uploaded
+
+                            <a href="https://www.myget.org/RSS/dsharpplus-nightly" title="Subscribe to this feed's activity RSS feed">
+                                <span class="label label-warning">rss</span>
+                            </a>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: $data.pageData">
+                <tr>
+                    <td>
+                        <img width="32" data-bind="attr: { src: $parent.generatePackageTypeIconUrl($data.PackageType()) }" class="package-icon" />
+                        <a class="fw-6" data-bind="attr: { href: $parent.generatePackageDetailsUrl($data.PackageType(), $data.Id()) }, text: $data.Title"></a>
+                        <p data-bind="visible: ko.utils.unwrapObservable($data.Authors)"><em><small>Authored by: </small><small data-bind="html: Authors"></small></em></p>
+                        <p class="fs-s" style="overflow: hidden;"><small data-bind="html: Description"></small></p>
+                    </td>
+                    <td><a class="pull-right" data-bind="text: $data.Version, visible: $data.Version() != '0.0.0', attr: { href: $parent.generatePackageDetailsUrl($data.PackageType(), $data.Id()) }"></a></td>
+                    <td><span class="pull-right" data-bind="moment: $data.LastUpdated"></span></td>
+                </tr>
+            </tbody>
+            <tfoot data-bind="css: { 'hide': ko.utils.unwrapObservable($data.pageCount) == 1 }">
+                <tr>
+                    <th colspan="3">
+                        <div class="centered pagination pagination-mini">
+                            <ul>
+                                <li data-bind="css: { 'disabled': ko.utils.unwrapObservable($data.page) == 1 }, click: function () { if ($data.page() > 1) { $data.page($data.page() - 1); } }"><a href="#">&larr; Previous</a></li>
+                                <!-- ko foreach: $data.pageNumbers -->
+                                <li data-bind="css: { 'active': $parent.page() == $data }, click: function () { $parent.page($data); }"><a href="#" data-bind=" text: $data"></a></li>
+                                <!-- /ko -->
+                                <li data-bind="css: { 'disabled': ko.utils.unwrapObservable($data.page) == ko.utils.unwrapObservable($data.pageCount) }, click: function () { if ($data.page() != $data.pageCount()) { $data.page($data.page() + 1); } }"><a href="#">Next &rarr;</a></li>
+                            </ul>
+                        </div>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</script>
+
+        </div>
+
+        <footer class="footer">
+            
+<div class="container">
+    <div class="clearfix">
+        <a class="footer-logo" href="/">
+            <img src="https://mgcdn-assets.azureedge.net/Content/images/myget-logo.svg?c=MjAxOC4xLjAuMTEwNw==" width="180" />
+        </a>
+        <div class="footer-links">
+            <div class="footer-col">
+                <h6>Learn More</h6>
+                <ul>
+                    <li><a href="/features">Features</a></li>
+                    <li><a href="/enterprise">Enterprise</a></li>
+                    <li><a href="/pricing">Pricing</a></li>
+                    <li><a href="/testimonials">Testimonials</a></li>
+                    <li><a href="/gallery">Gallery</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h6>Feeds</h6>
+                <ul>
+                    <li><a href="/nuget">NuGet</a></li>
+                    <li><a href="/npm">npm</a></li>
+                    <li><a href="/bower">Bower</a></li>
+                    <li><a href="/vsix">Vsix</a></li>
+                    <li><a href="/maven">Maven</a></li>
+                    <li><a href="/php-composer">PHP Composer</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h6>Resources</h6>
+                <ul>
+                    <li><a href="https://docs.myget.org">Documentation</a></li>
+                    <li><a href="/support">Support</a></li>
+                    <li><a href="https://blog.myget.org">Our Blog</a></li>
+                    <li><a href="/Account/Register">Free Trial</a></li>
+                    <li><a href="/enterprise-trial">Enterprise Trial</a></li>
+                    <li><a href="/Account/Login">Sign In</a></li>
+                    <li><a href="/Status">Status Page</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-secondary">
+        <div class="secondary-links">
+            <a href="/policies/terms">Terms of Service</a>
+            <a href="/policies/disclaimer">Disclaimer</a>
+            <a href="https://www.assembla.com/privacy-policy">Privacy (on Assembla)</a>
+            <a href="/policies/cookie-policy">Cookie Policy</a>
+            <a href="/policies/security">Security</a>
+        </div>
+        <div class="footer-socials">
+            <a class="share share-twitter" target="blank" href="https://twitter.com/share?url=http://www.myget.org/&text=Check %23MyGet, it's an online repository for private packages!"></a>
+            <a class="share share-facebook" target="blank" href="https://www.facebook.com/sharer.php?u=http://www.myget.org/"></a>
+            <a class="share share-linkedin" target="blank" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.myget.org/"></a>
+            <a class="share share-google" target="blank" href="https://plus.google.com/share?url=http://www.myget.org/"></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12 colofon">
+            <br />
+        </div>
+    </div>
+</div>
+
+
+            
+
+    <script type="text/javascript">
+    
+        if (true) {
+            var appInsights = window.appInsights || function (a) {
+                function b(a) { c[a] = function () { var b = arguments; c.queue.push(function () { c[a].apply(c, b) }) } } var c = { config: a }, d = document, e = window; setTimeout(function () { var b = d.createElement("script"); b.src = a.url || "https://az416426.vo.msecnd.net/scripts/a/ai.0.js", d.getElementsByTagName("script")[0].parentNode.appendChild(b) }); try { c.cookie = d.cookie } catch (a) { } c.queue = []; for (var f = ["Event", "Exception", "Metric", "PageView", "Trace", "Dependency"]; f.length;)b("track" + f.pop()); if (b("setAuthenticatedUserContext"), b("clearAuthenticatedUserContext"), b("startTrackEvent"), b("stopTrackEvent"), b("startTrackPage"), b("stopTrackPage"), b("flush"), !a.disableExceptionTracking) { f = "onerror", b("_" + f); var g = e[f]; e[f] = function (a, b, d, e, h) { var i = g && g(a, b, d, e, h); return !0 !== i && c["_" + f](a, b, d, e, h), i } } return c
+            }({
+                instrumentationKey: "f0c467d1-73c7-4668-97f2-861fab3580ce",
+                samplingPercentage: 20,
+
+                disableExceptionTracking: document.location.href.indexOf("://localhost") > 0
+            });
+
+            window.appInsights = appInsights, appInsights.queue && 0 === appInsights.queue.length && appInsights.trackPageView(window.location.pathname);
+
+            if (document.location.href.indexOf("://localhost") === -1) {
+            }
+        }
+    </script>
+
+
+        </footer>
+    </div>
+
+    <div id="ajaxActivity"></div>
+    <script type="text/html" id="blank-template">
+    </script>
+    <form id="_AntiForgeryForm" class="hidden"><input name="__RequestVerificationToken" type="hidden" value="wLv5_xqrpuVzpdmqFEl76y9yEzuBarPsFHnCkI78lgSJtbsiI23FXK34Syw7mSuCsazUnCzDRZ2hYnNR0kzcKhQWjuS0lwhhsDfykysUHdU1" /></form>
+
+    <script>
+        $(function () {
+            $('.btn-navbar').click(function (e) {
+                $('.navbar').toggleClass('nav-mobile-open');
+            });
+        });
+    </script>
+
+    
+    <script>
+        $(function () {
+            myget.shell.initialize([]);
+
+            var displayData = function (model) {
+                var viewModel = new myget.shell.pagedViewModel(ko.mapping.fromJS(model), null, function (item, queryString) {
+                    return (item.Id() && item.Id().toLowerCase().indexOf(queryString) != -1)
+                            || (item.Description() && item.Description().toLowerCase().indexOf(queryString) != -1)
+                            || (item.Version() && item.Version().toLowerCase().indexOf(queryString) != -1);
+                });
+                $.extend(viewModel, {
+                    generatePackageTypeIconUrl: function (packageType) {
+                        var urlTemplate = 'https://mgcdn-assets.azureedge.net/Content/images/packageDefaultIcon___packagetype.png?c=MjAxOC4xLjAuMTEwNw==';
+                        return urlTemplate.replace('__packagetype', packageType);
+                    },
+                    generatePackageDetailsUrl: function (packageType, identifier) {
+                        var url = '/feed/dsharpplus-nightly/package/__packagetype/__identifier';
+                        return url.replace('__packagetype', packageType).replace('__identifier', identifier);
+                    }
+                });
+
+                myget.shell.model.activateView('packages-template', viewModel);
+
+            };
+
+            displayData([{"Authors":"Naamloos afroraydude DrCreo Death TiaqoY0 Axiom Emzi0767 contributors","Description":"A C# API for Discord based off DiscordSharp, but rewritten to fit the API standards.","IsLatestVersion":true,"IsIncluded":false,"PackageSize":1517810,"VersionDownloadCount":1,"LastUpdated":"2018-09-28T16:54:04.6612264","ExternalPackageUrl":"https://www.myget.org/F/dsharpplus-nightly/api/v2/package/DSharpPlus/4.0.0-nightly-00539","IsListed":true,"IsPinned":false,"IsMirrored":true,"MinClientVersion":null,"FeedIdentifier":null,"Id":"DSharpPlus","Version":"4.0.0-nightly-00539","Title":"DSharpPlus","Prerelease":null,"Metadata":null,"IconUrl":"https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png","PackageType":"nuget"},{"Authors":"Naamloos afroraydude DrCreo Death TiaqoY0 Axiom Emzi0767 contributors","Description":"Advanced command framework for DSharpPlus.","IsLatestVersion":true,"IsIncluded":false,"PackageSize":336184,"VersionDownloadCount":1,"LastUpdated":"2018-09-28T16:54:09.8660681","ExternalPackageUrl":"https://www.myget.org/F/dsharpplus-nightly/api/v2/package/DSharpPlus.CommandsNext/4.0.0-nightly-00539","IsListed":true,"IsPinned":false,"IsMirrored":true,"MinClientVersion":null,"FeedIdentifier":null,"Id":"DSharpPlus.CommandsNext","Version":"4.0.0-nightly-00539","Title":"DSharpPlus.CommandsNext","Prerelease":null,"Metadata":null,"IconUrl":"https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png","PackageType":"nuget"},{"Authors":"Naamloos afroraydude DrCreo Death TiaqoY0 Axiom Emzi0767 contributors","Description":"An addon that adds interactivity capabilities to commands.","IsLatestVersion":true,"IsIncluded":false,"PackageSize":147184,"VersionDownloadCount":0,"LastUpdated":"2018-09-28T16:54:14.1032364","ExternalPackageUrl":"https://www.myget.org/F/dsharpplus-nightly/api/v2/package/DSharpPlus.Interactivity/4.0.0-nightly-00539","IsListed":true,"IsPinned":false,"IsMirrored":true,"MinClientVersion":null,"FeedIdentifier":null,"Id":"DSharpPlus.Interactivity","Version":"4.0.0-nightly-00539","Title":"DSharpPlus.Interactivity","Prerelease":null,"Metadata":null,"IconUrl":"https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png","PackageType":"nuget"},{"Authors":"Naamloos afroraydude DrCreo Death TiaqoY0 Axiom Emzi0767 contributors","Description":"Lavalink implementation for DSharpPlus. Lavalink is an easy and lightweight method of streaming audio to Discord.","IsLatestVersion":true,"IsIncluded":false,"PackageSize":155936,"VersionDownloadCount":0,"LastUpdated":"2018-09-28T16:54:18.6589408","ExternalPackageUrl":"https://www.myget.org/F/dsharpplus-nightly/api/v2/package/DSharpPlus.Lavalink/4.0.0-nightly-00539","IsListed":true,"IsPinned":false,"IsMirrored":true,"MinClientVersion":null,"FeedIdentifier":null,"Id":"DSharpPlus.Lavalink","Version":"4.0.0-nightly-00539","Title":"DSharpPlus.Lavalink","Prerelease":null,"Metadata":null,"IconUrl":"https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png","PackageType":"nuget"},{"Authors":"Naamloos afroraydude DrCreo Death TiaqoY0 Axiom Emzi0767 contributors","Description":"A Rest-only client for DSharpPlus.","IsLatestVersion":true,"IsIncluded":false,"PackageSize":99085,"VersionDownloadCount":0,"LastUpdated":"2018-09-28T16:54:21.5207875","ExternalPackageUrl":"https://www.myget.org/F/dsharpplus-nightly/api/v2/package/DSharpPlus.Rest/4.0.0-nightly-00539","IsListed":true,"IsPinned":false,"IsMirrored":true,"MinClientVersion":null,"FeedIdentifier":null,"Id":"DSharpPlus.Rest","Version":"4.0.0-nightly-00539","Title":"DSharpPlus.Rest","Prerelease":null,"Metadata":null,"IconUrl":"https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png","PackageType":"nuget"},{"Authors":"Naamloos afroraydude DrCreo Death TiaqoY0 Axiom Emzi0767 contributors","Description":"Voice implementation for DSharpPlus.","IsLatestVersion":true,"IsIncluded":false,"PackageSize":153342,"VersionDownloadCount":0,"LastUpdated":"2018-09-28T16:54:26.5926688","ExternalPackageUrl":"https://www.myget.org/F/dsharpplus-nightly/api/v2/package/DSharpPlus.VoiceNext/4.0.0-nightly-00539","IsListed":true,"IsPinned":false,"IsMirrored":true,"MinClientVersion":null,"FeedIdentifier":null,"Id":"DSharpPlus.VoiceNext","Version":"4.0.0-nightly-00539","Title":"DSharpPlus.VoiceNext","Prerelease":null,"Metadata":null,"IconUrl":"https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png","PackageType":"nuget"},{"Authors":"Naamloos afroraydude DrCreo Death TiaqoY0 Axiom Emzi0767 contributors","Description":"NOTE: This is an optional package. Do not install, unless you\'re targeting .NETFX on Windows 7.\n\n      A WebSocket4Net WebSocket client for DSharpPlus, for platforms that do not support native .NET WebSockets, such as Windows 7 or Mono.","IsLatestVersion":true,"IsIncluded":false,"PackageSize":19713,"VersionDownloadCount":0,"LastUpdated":"2018-09-28T16:54:31.8525553","ExternalPackageUrl":"https://www.myget.org/F/dsharpplus-nightly/api/v2/package/DSharpPlus.WebSocket.WebSocket4Net/4.0.0-nightly-00539","IsListed":true,"IsPinned":false,"IsMirrored":true,"MinClientVersion":null,"FeedIdentifier":null,"Id":"DSharpPlus.WebSocket.WebSocket4Net","Version":"4.0.0-nightly-00539","Title":"DSharpPlus.WebSocket.WebSocket4Net","Prerelease":null,"Metadata":null,"IconUrl":"https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png","PackageType":"nuget"},{"Authors":"Naamloos afroraydude DrCreo Death TiaqoY0 Axiom Emzi0767 contributors","Description":"NOTE: This is an optional package. Do not install, unless you\'re targeting .NET Core on Windows 7.\n\n      A WebSocket4Net WebSocket client for DSharpPlus, for Windows 7.","IsLatestVersion":true,"IsIncluded":false,"PackageSize":13973,"VersionDownloadCount":0,"LastUpdated":"2018-09-28T16:54:36.8901073","ExternalPackageUrl":"https://www.myget.org/F/dsharpplus-nightly/api/v2/package/DSharpPlus.WebSocket.WebSocket4NetCore/4.0.0-nightly-00539","IsListed":true,"IsPinned":false,"IsMirrored":true,"MinClientVersion":null,"FeedIdentifier":null,"Id":"DSharpPlus.WebSocket.WebSocket4NetCore","Version":"4.0.0-nightly-00539","Title":"DSharpPlus.WebSocket.WebSocket4NetCore","Prerelease":null,"Metadata":null,"IconUrl":"https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png","PackageType":"nuget"},{"Authors":"Naamloos afroraydude DrCreo Death TiaqoY0 Axiom Emzi0767 contributors","Description":"NOTE: This is an optional package. Do not install, unless you\'re targeting Mono.\n\n      A WebSocket# WebSocket client for DSharpPlus, for platforms that do not support native .NET WebSockets, such as Windows 7 or Mono.","IsLatestVersion":true,"IsIncluded":false,"PackageSize":19331,"VersionDownloadCount":0,"LastUpdated":"2018-09-28T16:54:41.6997311","ExternalPackageUrl":"https://www.myget.org/F/dsharpplus-nightly/api/v2/package/DSharpPlus.WebSocket.WebSocketSharp/4.0.0-nightly-00539","IsListed":true,"IsPinned":false,"IsMirrored":true,"MinClientVersion":null,"FeedIdentifier":null,"Id":"DSharpPlus.WebSocket.WebSocketSharp","Version":"4.0.0-nightly-00539","Title":"DSharpPlus.WebSocket.WebSocketSharp","Prerelease":null,"Metadata":null,"IconUrl":"https://raw.githubusercontent.com/NaamloosDT/DSharpPlus/master/logo/dsharpplus.png","PackageType":"nuget"}]);
+        });
+    </script>
+
+</body>
+</html>
