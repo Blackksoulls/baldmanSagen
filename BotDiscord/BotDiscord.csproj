@@ -76,13 +76,13 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="python $(SolutionDir)\deploy.py&#xD;&#xA;" />
+    <Exec Command="python $(SolutionDir)\\deploy.py&#xD;&#xA;" />
   </Target>
 
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="python $(SolutionDir)\preBuild.py&#xD;&#xA;" />
+    <Exec Command="python $(SolutionDir)\\preBuild.py&#xD;&#xA;" />
   </Target>
 
 </Project>

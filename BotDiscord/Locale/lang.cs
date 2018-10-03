@@ -27,6 +27,8 @@ namespace BotDiscord.Locale
                 case "en":
                     str = $"{dm.DisplayName} is dead, he was";
                     break;
+                default:
+                    break;
             }
 
             return str;
