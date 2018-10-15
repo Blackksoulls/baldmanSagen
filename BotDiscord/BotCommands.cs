@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using BotDiscord.Env;
@@ -44,7 +46,7 @@ namespace BotDiscord
 
         private async Task NewGuildMember(GuildMemberAddEventArgs e)
         {
-            await e.Member.GrantRoleAsync(Global.Roles[CustomRoles.Spectator]);
+            await e.Member.GrantRoleAsync(Global.Roles[PublicRole.Spectator]);
         }
 
         private async Task StartMember(GuildMemberAddEventArgs e)

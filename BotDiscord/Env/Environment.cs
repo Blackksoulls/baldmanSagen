@@ -1,25 +1,31 @@
-using BotDiscord.Env.Enum;
-using BotDiscord.Env.Extentions;
-using BotDiscord.Roles;
-using DSharpPlus;
-using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
+using BotDiscord.Env.Enum;
+using BotDiscord.Env.Extentions;
+using BotDiscord.Locale;
+using BotDiscord.Roles;
+using DSharpPlus;
+using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
+using Newtonsoft.Json;
 
 namespace BotDiscord.Env
 {
     public static class Global
     {
         public static Game Game { get; set; }
-        public static Dictionary<CustomRoles, DiscordRole> Roles { get; set; }
+        public static Dictionary<PublicRole, DiscordRole> Roles { get; set; }
 
         public static DiscordClient Client { get; set; }
-
+        public static GameConfig Config { get; set; } = JsonConvert.DeserializeObject<GameConfig>(
+                                                        File.ReadAllText
+                                                        ($@"..//Config//game-settings.json",
+                                                            Encoding.UTF8));
         public static bool InGame = false;
     }
 
@@ -206,7 +212,7 @@ namespace BotDiscord.Env
         {
             #region Roles
 
-            Global.Roles = new Dictionary<CustomRoles, DiscordRole>();
+            Global.Roles = new Dictionary<PublicRole, DiscordRole>();
             Game.WriteDebug(Global.Roles);
             Game.WriteDebug(Global.Game);
             Game.WriteDebug(Global.Game.Guild);
@@ -215,7 +221,7 @@ namespace BotDiscord.Env
 
             var adminRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.DiscordRoles.BotName,
                 Permissions.Administrator, Color.AdminColor, true, true, "GameRole Bot");
-            Global.Roles.Add(CustomRoles.Admin, adminRole);
+            Global.Roles.Add(PublicRole.Admin, adminRole);
 
 
             var playerPerms = CreatePerms(Permissions.SendMessages, Permissions.ReadMessageHistory,
@@ -223,7 +229,7 @@ namespace BotDiscord.Env
 
             var playerRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.DiscordRoles.Player, playerPerms,
                 Color.PlayerColor, true, true, "GameRole Joueur");
-            Global.Roles.Add(CustomRoles.Player, playerRole);
+            Global.Roles.Add(PublicRole.Player, playerRole);
 
 
             var spectPerms = CreatePerms(Permissions.AccessChannels, Permissions.ReadMessageHistory);
@@ -231,7 +237,7 @@ namespace BotDiscord.Env
             var spectRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.DiscordRoles.Spectator,
                 spectPerms, Color.SpectColor, true, false, "GameRole spectateur");
 
-            Global.Roles.Add(CustomRoles.Spectator, spectRole);
+            Global.Roles.Add(PublicRole.Spectator, spectRole);
 
 
             await Global.Game.Guild.EveryoneRole.ModifyAsync(x => x.Permissions = Permissions.None);
@@ -243,7 +249,7 @@ namespace BotDiscord.Env
 
         public static async Task Spectator_ReactionAdd(MessageReactionAddEventArgs e)
         {
-            if (e.User.GetMember().Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+            if (e.User.GetMember().Roles.Contains(Global.Roles[PublicRole.Spectator]))
             {
                 await e.Message.DeleteReactionAsync(e.Emoji, e.User, $"Spectator {e.User.Username} can't vote");
             }
@@ -251,7 +257,7 @@ namespace BotDiscord.Env
         }
         public static async Task Spectator_ReactionRem(MessageReactionRemoveEventArgs e)
         {
-            if (e.User.GetMember().Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+            if (e.User.GetMember().Roles.Contains(Global.Roles[PublicRole.Spectator]))
             {
                 await e.Message.DeleteReactionAsync(e.Emoji, e.User, $"Spectator {e.User.Username} can't vote");
             }

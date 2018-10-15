@@ -129,6 +129,24 @@
             </summary>
             <param name="client">Discord client to initialize for.</param>
         </member>
+        <member name="M:DSharpPlus.DebugLogger.LogMessage(DSharpPlus.LogLevel,System.String,System.String,System.DateTime)">
+            <summary>
+            Logs a message to this DebugLogger
+            </summary>
+            <param name="level">Log level (severity of this message)</param>
+            <param name="application">What this message applies to</param>
+            <param name="message">Message to log</param>
+            <param name="timestamp">When this message was sent</param>
+        </member>
+        <member name="M:DSharpPlus.DebugLogger.LogTaskFault(System.Threading.Tasks.Task,DSharpPlus.LogLevel,System.String,System.String)">
+            <summary>
+            Logs a task fault
+            </summary>
+            <param name="task">Task that borked</param>
+            <param name="level">Log level (severity of this failure)</param>
+            <param name="application">What this failure applies to</param>
+            <param name="message">Message to attach</param>
+        </member>
         <member name="T:DSharpPlus.EventArgs.DebugLogMessageEventArgs">
             <summary>
             Represents arguments for <see cref="E:DSharpPlus.DebugLogger.LogMessageReceived"/> event.
@@ -2445,6 +2463,11 @@
             Gets the description of channel's topic change.
             </summary>
         </member>
+        <member name="P:DSharpPlus.Entities.DiscordAuditLogChannelEntry.PerUserRateLimitChange">
+            <summary>
+            Gets the description of channel's slow mode timeout change.
+            </summary>
+        </member>
         <member name="P:DSharpPlus.Entities.DiscordAuditLogOverwriteEntry.Target">
             <summary>
             Gets the affected overwrite.
@@ -2898,6 +2921,12 @@
         <member name="P:DSharpPlus.Entities.DiscordChannel.UserLimit">
             <summary>
             Gets this channel's user limit. This is applicable to voice channels only.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Entities.DiscordChannel.PerUserRateLimit">
+            <summary>
+            <para>Gets the slow mode delay configured for this channel.</para>
+            <para>All bots, as well as users with <see cref="F:DSharpPlus.Permissions.ManageChannels"/> or <see cref="F:DSharpPlus.Permissions.ManageMessages"/> permissions in the channel are exempt from slow mode.</para>
             </summary>
         </member>
         <member name="P:DSharpPlus.Entities.DiscordChannel.Mention">
@@ -4298,7 +4327,7 @@
             </summary>
             <returns>Collection of bans in this guild.</returns>
         </member>
-        <member name="M:DSharpPlus.Entities.DiscordGuild.CreateTextChannelAsync(System.String,DSharpPlus.Entities.DiscordChannel,System.Collections.Generic.IEnumerable{DSharpPlus.Entities.DiscordOverwriteBuilder},System.Nullable{System.Boolean},System.String)">
+        <member name="M:DSharpPlus.Entities.DiscordGuild.CreateTextChannelAsync(System.String,DSharpPlus.Entities.DiscordChannel,System.Collections.Generic.IEnumerable{DSharpPlus.Entities.DiscordOverwriteBuilder},System.Nullable{System.Boolean},DSharpPlus.Entities.Optional{System.Nullable{System.Int32}},System.String)">
             <summary>
             Creates a new text channel in this guild.
             </summary>
@@ -4307,6 +4336,7 @@
             <param name="overwrites">Permission overwrites for this channel.</param>
             <param name="nsfw">Whether the channel is to be flagged as not safe for work.</param>
             <param name="reason">Reason for audit logs.</param>
+            <param name="perUserRateLimit">Slow mode timeout for users.</param>
             <returns>The newly-created channel.</returns>
         </member>
         <member name="M:DSharpPlus.Entities.DiscordGuild.CreateChannelCategoryAsync(System.String,System.Collections.Generic.IEnumerable{DSharpPlus.Entities.DiscordOverwriteBuilder},System.String)">
@@ -4330,7 +4360,7 @@
             <param name="reason">Reason for audit logs.</param>
             <returns>The newly-created channel.</returns>
         </member>
-        <member name="M:DSharpPlus.Entities.DiscordGuild.CreateChannelAsync(System.String,DSharpPlus.ChannelType,DSharpPlus.Entities.DiscordChannel,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Collections.Generic.IEnumerable{DSharpPlus.Entities.DiscordOverwriteBuilder},System.Nullable{System.Boolean},System.String)">
+        <member name="M:DSharpPlus.Entities.DiscordGuild.CreateChannelAsync(System.String,DSharpPlus.ChannelType,DSharpPlus.Entities.DiscordChannel,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Collections.Generic.IEnumerable{DSharpPlus.Entities.DiscordOverwriteBuilder},System.Nullable{System.Boolean},DSharpPlus.Entities.Optional{System.Nullable{System.Int32}},System.String)">
             <summary>
             Creates a new channel in this guild.
             </summary>
@@ -4338,10 +4368,11 @@
             <param name="type">Type of the new channel.</param>
             <param name="parent">Category to put this channel in.</param>
             <param name="bitrate">Bitrate of the channel. Applies to voice only.</param>
-            <param name="user_limit">Maximum number of users in the channel. Applies to voice only.</param>
+            <param name="userLimit">Maximum number of users in the channel. Applies to voice only.</param>
             <param name="overwrites">Permission overwrites for this channel.</param>
             <param name="nsfw">Whether the channel is to be flagged as not safe for work. Applies to text only.</param>
             <param name="reason">Reason for audit logs.</param>
+            <param name="perUserRateLimit">Slow mode timeout for users.</param>
             <returns>The newly-created channel.</returns>
         </member>
         <member name="M:DSharpPlus.Entities.DiscordGuild.DeleteAllChannelsAsync">
@@ -6726,13 +6757,170 @@
             <param name="url">Uri to which this request is going to be sent to.</param>
             <param name="method">Method to use for this request,</param>
             <param name="headers">Additional headers for this request.</param>
-            <param name="ratelimit_wait_override">Override for ratelimit bucket wait time.</param>
+            <param name="ratelimitWaitOverride">Override for ratelimit bucket wait time.</param>
         </member>
         <member name="M:DSharpPlus.Net.BaseRestRequest.WaitForCompletionAsync">
             <summary>
             Asynchronously waits for this request to complete.
             </summary>
             <returns>HTTP response to this request.</returns>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.BaseEditModel.AuditLogReason">
+            <summary>
+            Reason given in audit logs
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.ChannelEditModel.Name">
+            <summary>
+            Sets the channel's new name.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.ChannelEditModel.Position">
+            <summary>
+            Sets the channel's new position.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.ChannelEditModel.Topic">
+            <summary>
+            Sets the channel's new topic.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.ChannelEditModel.Nsfw">
+            <summary>
+            Sets whether the channel is to be marked as NSFW.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.ChannelEditModel.Parent">
+            <summary>
+            <para>Sets the parent of this channel.</para>
+            <para>This should be channel with <see cref="P:DSharpPlus.Entities.DiscordChannel.Type"/> set to <see cref="F:DSharpPlus.ChannelType.Category"/>.</para>
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.ChannelEditModel.Bitrate">
+            <summary>
+            Sets the voice channel's new bitrate.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.ChannelEditModel.Userlimit">
+            <summary>
+            Sets the voice channel's new bitrate.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.ChannelEditModel.PerUserRateLimit">
+            <summary>
+            <para>Sets the channel's new slow mode timeout.</para>
+            <para>Setting this to null or 0 will disable slow mode.</para>
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.Name">
+            <summary>
+            New guild name
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.Region">
+            <summary>
+            New guild voice region
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.Icon">
+            <summary>
+            New guild icon
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.VerificationLevel">
+            <summary>
+            New guild verification level
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.DefaultMessageNotifications">
+            <summary>
+            New guild default message notification level
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.MfaLevel">
+            <summary>
+            New guild MFA level
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.ExplicitContentFilter">
+            <summary>
+            New guild explicit content filter level
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.AfkChannel">
+            <summary>
+            New AFK voice channel
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.AfkTimeout">
+            <summary>
+            New AFK timeout time in seconds
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.Owner">
+            <summary>
+            New guild owner
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.Splash">
+            <summary>
+            New guild splash
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.GuildEditModel.SystemChannel">
+            <summary>
+            New guild system channel
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.MemberEditModel.Nickname">
+            <summary>
+            New nickname
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.MemberEditModel.Roles">
+            <summary>
+            New roles
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.MemberEditModel.Muted">
+            <summary>
+            Whether this user should be muted
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.MemberEditModel.Deafened">
+            <summary>
+            Whether this user should be deafened
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.MemberEditModel.VoiceChannel">
+            <summary>
+            Voice channel to move this user to
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.RoleEditModel.Name">
+            <summary>
+            New role name
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.RoleEditModel.Permissions">
+            <summary>
+            New role permissions
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.RoleEditModel.Color">
+            <summary>
+            New role color
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.RoleEditModel.Hoist">
+            <summary>
+            Whether new role should be hoisted
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.Models.RoleEditModel.Mentionable">
+            <summary>
+            Whether new role should be mentionable
+            </summary>
         </member>
         <member name="T:DSharpPlus.Net.MultipartWebRequest">
             <summary>
@@ -7612,7 +7800,7 @@
         </member>
         <member name="F:DSharpPlus.TokenType.Bearer">
             <summary>
-            Bearer token type
+            Bearer token type (used for oAuth)
             </summary>
         </member>
         <member name="T:DSharpPlus.Exceptions.BadRequestException">

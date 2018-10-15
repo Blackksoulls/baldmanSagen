@@ -1,4 +1,11 @@
-﻿using BotDiscord.Env.Enum;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection.PortableExecutable;
+using System.Text;
+using System.Threading.Tasks;
+using BotDiscord.Env.Enum;
 using BotDiscord.Locale;
 using BotDiscord.Roles;
 using DSharpPlus;
@@ -7,12 +14,6 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Exceptions;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BotDiscord.Env
 {
@@ -53,12 +54,12 @@ namespace BotDiscord.Env
             {
                 if (Global.InGame)
                 {
-                    var embed = new DiscordEmbedBuilder()
+                    var embed = new DiscordEmbedBuilder
                     {
                         Color = Color.InfoColor,
-                        Title = this.Texts.Errors.AnotherGameIsPlaying
+                        Title = Texts.Errors.AnotherGameIsPlaying
                     };
-                    await e.Channel.SendMessageAsync(embed: embed);
+                    await e.Channel.SendMessageAsync(embed: embed.Build());
                 }
                 else
                 {
@@ -81,7 +82,7 @@ namespace BotDiscord.Env
                         Console.WriteLine(exception);
                     }
 
-                    Console.WriteLine(File.ReadAllText($@"..//Locale/fr/lang.json", Encoding.UTF8));
+                    Console.WriteLine(File.ReadAllText(@"..//Locale/fr/lang.json", Encoding.UTF8));
                     while (Guild == null)
                     {
                         try
@@ -103,14 +104,12 @@ namespace BotDiscord.Env
 
                     await GameBuilder.CreateDiscordRoles(); // Role Admin, Joueur, Spectateur
                     WriteDebug("2");
-                    await Global.Client.CurrentUser.GetMember().GrantRoleAsync(Global.Roles[CustomRoles.Admin]);
+                    await Global.Client.CurrentUser.GetMember().GrantRoleAsync(Global.Roles[PublicRole.Admin]);
                     WriteDebug("3");
                     await (await Guild.GetAllMembersAsync()).First().ModifyAsync(m => m.Nickname = Texts.DiscordRoles.BotName);
                     WriteDebug("4");
                     Console.WriteLine("Guild Created");
                     DiscordChannels = new Dictionary<GameChannel, DiscordChannel>();
-
-                    Console.WriteLine("Delatation faite");
 
                     await e.TriggerTypingAsync();
 
@@ -143,21 +142,52 @@ namespace BotDiscord.Env
 
                     try
                     {
-                        const int timeToJoin = 30;
-                        await Task.Delay(timeToJoin * 1000);
+                        await Task.Delay(Global.Config.JoinTime);
 
-                        var users = await (await Guild.GetDefaultChannel().GetMessageAsync(askMessage.Id))
-                            .GetReactionsAsync(emoji);
+                        var users = await (await Guild.GetDefaultChannel().GetMessageAsync(askMessage.Id)).GetReactionsAsync(emoji);
+                       /*
+ 
+                        if (!users..Equals(botVChannel.Users.ToArray()))
+                        {
+                            await Task.Delay(Global.Config.JoinTime);
+                        }
+                       */
+
+                        bool pb;
+
+                        do
+                        {
+                            pb = false;
+
+                            foreach (var usr in users)
+                            {
+                                if (botVChannel.Users.Count() == users.Count - 1 && !usr.IsBot && !botVChannel.Users.Contains(usr.GetMember()))
+                                {
+                                    pb = true;
+                                }
+                            }
+                            
+                            if(pb)
+                            {
+                                await Task.Delay(1000);
+                            }
+
+
+                        } while (pb);
+
+                     
+
 
                         foreach (var usr in users)
+                        {
                             if (!usr.IsBot)
                             {
                                 var dm = await Guild.GetMemberAsync(usr.Id);
-                                await dm.RevokeRoleAsync(Global.Roles[CustomRoles.Spectator]);
-                                await dm.GrantRoleAsync(Global.Roles[CustomRoles.Player]);
+                                await dm.RevokeRoleAsync(Global.Roles[PublicRole.Spectator]);
+                                await dm.GrantRoleAsync(Global.Roles[PublicRole.Player]);
                                 players.Add(dm);
                             }
-
+                        }
 
                         e.Client.GuildMemberAdded -= StartMember;
                         Global.Client.MessageReactionAdded += GameBuilder.Spectator_ReactionAdd;
@@ -269,13 +299,13 @@ namespace BotDiscord.Env
                 var graveyardVChannel = await Guild.CreateChannelAsync(Texts.Channels.GraveyardChannel,
                     ChannelType.Voice, graveyardGrpChannel);
 
-                await graveyardTChannel.AddOverwriteAsync(Global.Roles[CustomRoles.Spectator], GameBuilder.UsrPerms);
+                await graveyardTChannel.AddOverwriteAsync(Global.Roles[PublicRole.Spectator], GameBuilder.UsrPerms);
 
                 DiscordChannels.Add(GameChannel.GraveyardText, graveyardTChannel);
                 DiscordChannels.Add(GameChannel.GraveyardVoice, graveyardVChannel);
 
                 foreach (var discordMember in Guild.Members)
-                    if (discordMember.Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+                    if (discordMember.Roles.Contains(Global.Roles[PublicRole.Spectator]))
                         await graveyardVChannel.AddOverwriteAsync(discordMember,
                             GameBuilder.CreatePerms(Permissions.UseVoiceDetection, Permissions.UseVoice,
                                 Permissions.Speak));
@@ -296,7 +326,7 @@ namespace BotDiscord.Env
 
         private static async Task NewGuildMember(GuildMemberAddEventArgs e)
         {
-            await e.Member.GrantRoleAsync(Global.Roles[CustomRoles.Spectator]);
+            await e.Member.GrantRoleAsync(Global.Roles[PublicRole.Spectator]);
         }
 
         private async Task StartMember(GuildMemberAddEventArgs e)
@@ -403,7 +433,7 @@ namespace BotDiscord.Env
                             break;
 
                         case Moment.HunterDead:
-                            await BotFunctions.HunterDeath();
+                            await Hunter.HunterDeath();
                             break;
 
                         case Moment.EndNight:
@@ -413,13 +443,13 @@ namespace BotDiscord.Env
 
                         case Moment.NightPhase1:
                             await BotFunctions.NightAnnoucement();
-                            await BotFunctions.WolfVote();
-                            await BotFunctions.SeerAction();
-                            await BotFunctions.LittleGirlAction();
+                            await Wolf.WolfVote();
+                            await Seer.SeerAction();
+                            await LittleGirl.LittleGirlAction();
                             break;
 
                         case Moment.NightPhase2:
-                            await BotFunctions.WitchMoment();
+                            await Witch.WitchMoment();
                             break;
 
                         case Moment.Election:
@@ -427,7 +457,7 @@ namespace BotDiscord.Env
                             break;
 
                         case Moment.Cupid:
-                            await BotFunctions.CupidonChoice();
+                            await Cupidon.CupidonChoice();
                             break;
 
                         case Moment.End:
@@ -452,7 +482,7 @@ namespace BotDiscord.Env
             {
                 p.Alive = false;
                 await p.Me.PlaceInAsync(DiscordChannels[GameChannel.GraveyardVoice]);
-                var embed = new DiscordEmbedBuilder()
+                var embed = new DiscordEmbedBuilder
                 {
                     Color = Color.DeadColor,
                     Title = $"{p.GotKilled()}"
@@ -460,7 +490,7 @@ namespace BotDiscord.Env
 
                 await DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
 
-                embed = new DiscordEmbedBuilder()
+                embed = new DiscordEmbedBuilder
                 {
                     Title = Global.Game.Texts.Annoucement.DeadMessagePrivate,
                     Color = Color.InfoColor
@@ -470,8 +500,8 @@ namespace BotDiscord.Env
                 foreach (var discordChannel in DiscordChannels.Values)
                     await discordChannel.AddOverwriteAsync(p.Me, Permissions.AccessChannels, Permissions.ManageEmojis);
                     
-                await p.Me.RevokeRoleAsync(Global.Roles[CustomRoles.Player]);
-                await p.Me.GrantRoleAsync(Global.Roles[CustomRoles.Spectator]);
+                await p.Me.RevokeRoleAsync(Global.Roles[PublicRole.Player]);
+                await p.Me.GrantRoleAsync(Global.Roles[PublicRole.Spectator]);
             }
             catch (Exception e)
             {

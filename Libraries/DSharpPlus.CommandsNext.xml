@@ -547,7 +547,7 @@
             <summary>
             <para>Represents a delegate for a function that takes a message, and returns the position of the start of command invocation in the message. It has to return -1 if prefix is not present.</para>
             <para>
-            It is recommended that helper methods <see cref="M:DSharpPlus.CommandsNext.CommandsNextUtilities.GetStringPrefixLength(DSharpPlus.Entities.DiscordMessage,System.String)"/> and <see cref="M:DSharpPlus.CommandsNext.CommandsNextUtilities.GetMentionPrefixLength(DSharpPlus.Entities.DiscordMessage,DSharpPlus.Entities.DiscordUser)"/>
+            It is recommended that helper methods <see cref="M:DSharpPlus.CommandsNext.CommandsNextUtilities.GetStringPrefixLength(DSharpPlus.Entities.DiscordMessage,System.String,System.StringComparison)"/> and <see cref="M:DSharpPlus.CommandsNext.CommandsNextUtilities.GetMentionPrefixLength(DSharpPlus.Entities.DiscordMessage,DSharpPlus.Entities.DiscordUser)"/>
             be used internally for checking. Their output can be passed through.
             </para>
             </summary>
@@ -579,7 +579,8 @@
         </member>
         <member name="P:DSharpPlus.CommandsNext.CommandsNextConfiguration.CaseSensitive">
             <summary>
-            <para>Sets whether the commands should be case-sensitive.</para>
+            <para>Sets whether strings should be matched in a case-sensitive manner.</para>
+            <para>This switch affects the behaviour of default prefix resolver, command searching, and argument conversion.</para>
             <para>Defaults to false.</para>
             </summary>
         </member>
@@ -716,6 +717,12 @@
             </summary>
             <param name="t">Type of the class which holds commands to register.</param>
         </member>
+        <member name="M:DSharpPlus.CommandsNext.CommandsNextExtension.RegisterCommands(DSharpPlus.CommandsNext.Builders.CommandBuilder[])">
+            <summary>
+            Builds and registers all supplied commands.
+            </summary>
+            <param name="cmds">Commands to build and register.</param>
+        </member>
         <member name="M:DSharpPlus.CommandsNext.CommandsNextExtension.UnregisterCommands(DSharpPlus.CommandsNext.Command[])">
             <summary>
             Unregisters specified commands from CommandsNext.
@@ -794,12 +801,13 @@
             Various CommandsNext-related utilities.
             </summary>
         </member>
-        <member name="M:DSharpPlus.CommandsNext.CommandsNextUtilities.GetStringPrefixLength(DSharpPlus.Entities.DiscordMessage,System.String)">
+        <member name="M:DSharpPlus.CommandsNext.CommandsNextUtilities.GetStringPrefixLength(DSharpPlus.Entities.DiscordMessage,System.String,System.StringComparison)">
             <summary>
             Checks whether the message has a specified string prefix.
             </summary>
             <param name="msg">Message to check.</param>
             <param name="str">String to check for.</param>
+            <param name="comparisonType">Method of string comparison for the purposes of finding prefixes.</param>
             <returns>Positive number if the prefix is present, -1 otherwise.</returns>
         </member>
         <member name="M:DSharpPlus.CommandsNext.CommandsNextUtilities.GetMentionPrefixLength(DSharpPlus.Entities.DiscordMessage,DSharpPlus.Entities.DiscordUser)">
@@ -1255,6 +1263,11 @@
             Gets this argument's type.
             </summary>
         </member>
+        <member name="P:DSharpPlus.CommandsNext.CommandArgument.IsArray">
+            <summary>
+            Gets or sets whether this argument is an array argument.
+            </summary>
+        </member>
         <member name="P:DSharpPlus.CommandsNext.CommandArgument.IsOptional">
             <summary>
             Gets whether this argument is optional.
@@ -1273,6 +1286,11 @@
         <member name="P:DSharpPlus.CommandsNext.CommandArgument.Description">
             <summary>
             Gets this argument's description.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.CommandsNext.CommandArgument.CustomAttributes">
+            <summary>
+            Gets the custom attributes attached to this argument.
             </summary>
         </member>
         <member name="T:DSharpPlus.CommandsNext.CommandGroup">
@@ -1648,6 +1666,71 @@
         <member name="M:DSharpPlus.CommandsNext.Exceptions.DuplicateCommandException.ToString">
             <summary>
             Returns a string representation of this <see cref="T:DSharpPlus.CommandsNext.Exceptions.DuplicateCommandException"/>.
+            </summary>
+            <returns>A string representation.</returns>
+        </member>
+        <member name="T:DSharpPlus.CommandsNext.Exceptions.DuplicateOverloadException">
+            <summary>
+            Indicates that given argument set already exists as an overload for specified command.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.CommandsNext.Exceptions.DuplicateOverloadException.CommandName">
+            <summary>
+            Gets the name of the command that already has the overload.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.CommandsNext.Exceptions.DuplicateOverloadException.ArgumentTypes">
+            <summary>
+            Gets the ordered collection of argument types for the specified overload.
+            </summary>
+        </member>
+        <member name="M:DSharpPlus.CommandsNext.Exceptions.DuplicateOverloadException.#ctor(System.String,System.Collections.Generic.IList{System.Type},System.String)">
+            <summary>
+            Creates a new exception indicating given argument set already exists as an overload for specified command.
+            </summary>
+            <param name="name">Name of the command with duplicated argument sets.</param>
+            <param name="argumentTypes">Collection of ordered argument types for the command.</param>
+            <param name="argumentSetKey">Overload identifier.</param>
+        </member>
+        <member name="M:DSharpPlus.CommandsNext.Exceptions.DuplicateOverloadException.ToString">
+            <summary>
+            Returns a string representation of this <see cref="T:DSharpPlus.CommandsNext.Exceptions.DuplicateOverloadException"/>.
+            </summary>
+            <returns>A string representation.</returns>
+        </member>
+        <member name="T:DSharpPlus.CommandsNext.Exceptions.InvalidOverloadException">
+            <summary>
+            Thrown when the command service fails to build a command due to a problem with its overload.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.CommandsNext.Exceptions.InvalidOverloadException.Method">
+            <summary>
+            Gets the method that caused this exception.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.CommandsNext.Exceptions.InvalidOverloadException.Parameter">
+            <summary>
+            Gets or sets the argument that caused the problem. This can be null.
+            </summary>
+        </member>
+        <member name="M:DSharpPlus.CommandsNext.Exceptions.InvalidOverloadException.#ctor(System.String,System.Reflection.MethodInfo,System.Reflection.ParameterInfo)">
+            <summary>
+            Creates a new <see cref="T:DSharpPlus.CommandsNext.Exceptions.InvalidOverloadException"/>.
+            </summary>
+            <param name="message">Exception message.</param>
+            <param name="method">Method that caused the problem.</param>
+            <param name="parameter">Method argument that caused the problem.</param>
+        </member>
+        <member name="M:DSharpPlus.CommandsNext.Exceptions.InvalidOverloadException.#ctor(System.String,System.Reflection.MethodInfo)">
+            <summary>
+            Creates a new <see cref="T:DSharpPlus.CommandsNext.Exceptions.InvalidOverloadException"/>.
+            </summary>
+            <param name="message">Exception message.</param>
+            <param name="method">Method that caused the problem.</param>
+        </member>
+        <member name="M:DSharpPlus.CommandsNext.Exceptions.InvalidOverloadException.ToString">
+            <summary>
+            Returns a string representation of this <see cref="T:DSharpPlus.CommandsNext.Exceptions.InvalidOverloadException"/>.
             </summary>
             <returns>A string representation.</returns>
         </member>
