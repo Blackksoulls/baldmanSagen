@@ -15,6 +15,9 @@
 #include <setjmp.h>
 #include <signal.h>
 #include <dlfcn.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
 #undef LANGUAGE_C
 #undef MIPSEB
 #undef MIPSEL
@@ -340,6 +343,10 @@ tyObject_CallbackList_tKSBWiaJMWD3JZxwqg7UFQ* next;
 struct tyObject_KeyError_ifYAhUumNzWR9c9cN9amyJLtg {
   tyObject_ValueError_Gi06FkNeykJn7mrqRZYrkA Sup;
 };
+typedef NU8 tyEnum_FileMode_fVUBHvW79bXUw1j55Oo9avSQ;
+typedef NimStringDesc* tyArray_7JTpIvL6tqeRI2Pp9asvFCA[5];
+typedef NIM_CHAR tyArray_PbS9a6gkxCuxWEnFq4lOU9aw[24];
+typedef NIM_CHAR tyArray_hToc9cajraNwyrQdTvLCS3A[116];
 typedef NIM_CHAR tyArray_eVNFTutn6un5gcq48fQLdg[65];
 struct GcFrameHeader {
 NI len;
@@ -570,6 +577,25 @@ N_LIB_PRIVATE N_NIMCALL(void, add_XyS0BXa1E5ylXzhvUQlY9cg)(NimStringDesc** x, NC
 N_NIMCALL(NimStringDesc*, addChar)(NimStringDesc* s, NIM_CHAR c);
 N_NIMCALL(NimStringDesc*, nimIntToStr)(NI x);
 static N_NIMCALL(void, Marker_tyRef_axqhRnwd09cVJkRcojfw6mA)(void* p, NI op);
+N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, open_sEp0GH2306oGo9bqBpj5oTQ)(FILE** f, NimStringDesc* filename, tyEnum_FileMode_fVUBHvW79bXUw1j55Oo9avSQ mode, NI bufSize);
+N_LIB_PRIVATE N_NIMCALL(int, getFileHandle_bZ9c2yojtXoDTUpfyl8h8Rg)(FILE* f);
+N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, S_ISDIR_d3VjrxKEcTiZFt3rBmmjcA)(mode_t m);
+N_LIB_PRIVATE N_NIMCALL(void, close_BWnr8V7RERYno9bIdPmw8Hw_2)(FILE* f);
+static N_INLINE(void, pushSafePoint)(TSafePoint* s);
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, readAll_y7iEIBoIrYlvsLCqA1SrwQ)(FILE* file);
+N_LIB_PRIVATE N_NIMCALL(NI64, rawFileSize_5kVjkAwDdtJJYVgsQusRMw)(FILE* file);
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, readAllFile_fcBYWWlGnMMlgQjz7Ax9bzA)(FILE* file, NI64 len);
+N_LIB_PRIVATE N_NIMCALL(NI, readBuffer_1qjbrvfnPD4PaIieHVDvhw)(FILE* f, void* buffer, NI len);
+N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, endOfFile_OpxMRqWNQzmofyVQsNQqVA)(FILE* f);
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, readAllBuffer_QygGtYi2d8AILktDeUIkvQ)(FILE* file);
+static N_INLINE(void, popSafePoint)(void);
+N_NIMCALL(void, reraiseException)(void);
+static N_INLINE(void, sysFatal_p4l3kdztdOPD3nsQRAEDqwsystem)(NimStringDesc* message, NimStringDesc* arg) __attribute__((noreturn));
+static N_INLINE(void, asgnRefNoCycle)(void** dest, void* src);
+static N_INLINE(void, addEscapedChar_idr49a9aRlvTkf40D5KCA29bgsystem)(NimStringDesc** s, NIM_CHAR c);
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, dollar__ch0e5PgaoEZEQHhvsLrGJQ)(tySequence_sM4lkSb7zS6F7OVMvW9cffQ* x);
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, collectionToString_mjjEWNS1Mkj3eJ84Bka89aA)(tySequence_sM4lkSb7zS6F7OVMvW9cffQ* x, NimStringDesc* prefix, NimStringDesc* separator, NimStringDesc* suffix);
+N_LIB_PRIVATE N_NIMCALL(void, addQuoted_KHwyPEV6PV8Q9aS88ENydhw)(NimStringDesc** s, NimStringDesc* x);
 NIM_BOOL nimvm_IAxmsqnME4Jmed24hOgrFQ;
 NI nim_program_result;
 tyProc_hgOQFBQi19biNdOUUkFOOxA globalRaiseHook_JbO1ti4ULxrw54m4zNPbpA;
@@ -650,6 +676,7 @@ TNimType NTI_z13IuT5fxs5GL9aZs6CftBw_;
 TNimType NTI_P6gYL22cCr5PoMFeuBNXwA_;
 TNimType NTI_ifYAhUumNzWR9c9cN9amyJLtg_;
 TNimType NTI_axqhRnwd09cVJkRcojfw6mA_;
+TNimType NTI_fDPWIvoOCLPRBPCOH9aIgEg_;
 TNimType NTI_Aav8dQoMlCFnZRxA0IhTHQ_;
 NIM_CONST tyArray_mkmEeKAWtk2yS9bBb1lUWXA fsLookupTable_Gn52IZvqY4slyBTOYwGNRQ = {((NI8) -1),
 ((NI8) 0),
@@ -931,9 +958,31 @@ STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_33, "]]\012", 3);
 STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_34, "", 0);
 STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_35, "No stack traceback available\012", 29);
 STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_36, " (invalid data!)", 16);
-STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_37, "nan", 3);
-STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_38, "-inf", 4);
-STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_39, "inf", 3);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_37, "rb", 2);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_38, "wb", 2);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_39, "w+b", 3);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_40, "r+b", 3);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_41, "ab", 2);
+NIM_CONST tyArray_7JTpIvL6tqeRI2Pp9asvFCA FormatOpen_129cS4U5eK4wWqE9bNeKN1Aw = {((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_37),
+((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_38),
+((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_39),
+((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_40),
+((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_41)}
+;
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_43, "cannot open: ", 13);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_44, "\"", 1);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_45, "\\x", 2);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_46, "0123456789ABCDEF", 16);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_47, "\\\\", 2);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_48, "\\\'", 2);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_49, "\\\"", 2);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_50, "nil", 3);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_51, "@[", 2);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_52, ", ", 2);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_53, "]", 1);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_54, "nan", 3);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_55, "-inf", 4);
+STRING_LITERAL(TM_Q5wkpxktOdTGvlSRo9bzt9aw_56, "inf", 3);
 
 N_LIB_PRIVATE N_NIMCALL(tyObject_GcStack_7fytPA5bBsob6See21YMRA*, getActiveStack_2XtoPjgvlHPkHLitAW2flw)(tyObject_GcHeap_1TRH1TZMaVZTnLNcIHuNFQ* gch) {
 	tyObject_GcStack_7fytPA5bBsob6See21YMRA* result;
@@ -5665,6 +5714,437 @@ static N_NIMCALL(void, Marker_tyRef_axqhRnwd09cVJkRcojfw6mA)(void* p, NI op) {
 	nimGCvisit((void*)(*a).Sup.Sup.up, op);
 }
 
+N_LIB_PRIVATE N_NIMCALL(int, getFileHandle_bZ9c2yojtXoDTUpfyl8h8Rg)(FILE* f) {
+	int result;
+	result = (int)0;
+	result = fileno(f);
+	return result;
+}
+
+N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, S_ISDIR_d3VjrxKEcTiZFt3rBmmjcA)(mode_t m) {
+	NIM_BOOL result;
+	result = (NIM_BOOL)0;
+	result = ((NI32)(m & ((NI32) 61440)) == ((NI32) 16384));
+	return result;
+}
+
+N_LIB_PRIVATE N_NIMCALL(void, close_BWnr8V7RERYno9bIdPmw8Hw_2)(FILE* f) {
+	int T1_;
+	T1_ = (int)0;
+	T1_ = fclose(f);
+	T1_;
+}
+
+N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, open_sEp0GH2306oGo9bqBpj5oTQ)(FILE** f, NimStringDesc* filename, tyEnum_FileMode_fVUBHvW79bXUw1j55Oo9avSQ mode, NI bufSize) {
+	NIM_BOOL result;
+	void* p;
+{	result = (NIM_BOOL)0;
+	p = fopen(filename->data, FormatOpen_129cS4U5eK4wWqE9bNeKN1Aw[(mode)- 0]->data);
+	{
+		FILE* f2;
+		struct stat res;
+		if (!!((p == NIM_NIL))) goto LA3_;
+		f2 = ((FILE*) (p));
+		memset((void*)(&res), 0, sizeof(res));
+		{
+			NIM_BOOL T7_;
+			int T8_;
+			int T9_;
+			T7_ = (NIM_BOOL)0;
+			T8_ = (int)0;
+			T8_ = getFileHandle_bZ9c2yojtXoDTUpfyl8h8Rg(f2);
+			T9_ = (int)0;
+			T9_ = fstat(T8_, (&res));
+			T7_ = (((NI32) 0) <= T9_);
+			if (!(T7_)) goto LA10_;
+			T7_ = S_ISDIR_d3VjrxKEcTiZFt3rBmmjcA(res.st_mode);
+			LA10_: ;
+			if (!T7_) goto LA11_;
+			close_BWnr8V7RERYno9bIdPmw8Hw_2(f2);
+			result = NIM_FALSE;
+			goto BeforeRet_;
+		}
+		LA11_: ;
+		result = NIM_TRUE;
+		(*f) = ((FILE*) (p));
+		{
+			NIM_BOOL T15_;
+			int T19_;
+			T15_ = (NIM_BOOL)0;
+			T15_ = (((NI) 0) < bufSize);
+			if (!(T15_)) goto LA16_;
+			T15_ = (bufSize <= ((NI) 2147483647));
+			LA16_: ;
+			if (!T15_) goto LA17_;
+			T19_ = (int)0;
+			T19_ = setvbuf((*f), NIM_NIL, _IOFBF, ((size_t) (((int) (bufSize)))));
+			T19_;
+		}
+		goto LA13_;
+		LA17_: ;
+		{
+			int T23_;
+			if (!(bufSize == ((NI) 0))) goto LA21_;
+			T23_ = (int)0;
+			T23_ = setvbuf((*f), NIM_NIL, _IONBF, ((NI) 0));
+			T23_;
+		}
+		goto LA13_;
+		LA21_: ;
+		LA13_: ;
+	}
+	LA3_: ;
+	}BeforeRet_: ;
+	return result;
+}
+
+static N_INLINE(void, pushSafePoint)(TSafePoint* s) {
+	(*s).hasRaiseAction = NIM_FALSE;
+	(*s).prev = excHandler_rqLlY5bs9atDw2OXYqJEn5g;
+	excHandler_rqLlY5bs9atDw2OXYqJEn5g = s;
+}
+
+N_LIB_PRIVATE N_NIMCALL(NI64, rawFileSize_5kVjkAwDdtJJYVgsQusRMw)(FILE* file) {
+	NI64 result;
+	NI64 oldPos;
+	int T1_;
+	int T2_;
+	result = (NI64)0;
+	oldPos = ftello(file);
+	T1_ = (int)0;
+	T1_ = fseeko(file, IL64(0), ((int) 2));
+	T1_;
+	result = ftello(file);
+	T2_ = (int)0;
+	T2_ = fseeko(file, oldPos, ((int) 0));
+	T2_;
+	return result;
+}
+
+N_LIB_PRIVATE N_NIMCALL(NI, readBuffer_1qjbrvfnPD4PaIieHVDvhw)(FILE* f, void* buffer, NI len) {
+	NI result;
+	result = (NI)0;
+	result = fread(buffer, ((NI) 1), ((size_t) (len)), f);
+	{
+		if (!!((result == ((NI) (len))))) goto LA3_;
+		checkErr_BWnr8V7RERYno9bIdPmw8Hw(f);
+	}
+	LA3_: ;
+	return result;
+}
+
+N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, endOfFile_OpxMRqWNQzmofyVQsNQqVA)(FILE* f) {
+	NIM_BOOL result;
+	int c;
+	int T1_;
+{	result = (NIM_BOOL)0;
+	c = fgetc(f);
+	T1_ = (int)0;
+	T1_ = ungetc(c, f);
+	T1_;
+	result = (c < ((NI32) 0));
+	goto BeforeRet_;
+	}BeforeRet_: ;
+	return result;
+}
+
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, readAllBuffer_QygGtYi2d8AILktDeUIkvQ)(FILE* file) {
+	NimStringDesc* result;
+	NimStringDesc* buffer;
+	result = (NimStringDesc*)0;
+	result = copyString(((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_34));
+	buffer = mnewString(((NI) 4000));
+	{
+		while (1) {
+			NI bytesRead;
+			bytesRead = readBuffer_1qjbrvfnPD4PaIieHVDvhw(file, ((void*) ((&buffer->data[((NI) 0)]))), ((NI) 4000));
+			{
+				if (!(bytesRead == ((NI) 4000))) goto LA5_;
+				result = resizeString(result, buffer->Sup.len + 0);
+appendString(result, buffer);
+			}
+			goto LA3_;
+			LA5_: ;
+			{
+				buffer = setLengthStr(buffer, ((NI) (bytesRead)));
+				result = resizeString(result, buffer->Sup.len + 0);
+appendString(result, buffer);
+				goto LA1;
+			}
+			LA3_: ;
+		}
+	} LA1: ;
+	return result;
+}
+
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, readAllFile_fcBYWWlGnMMlgQjz7Ax9bzA)(FILE* file, NI64 len) {
+	NimStringDesc* result;
+	NI bytes;
+	result = (NimStringDesc*)0;
+	result = mnewString(((NI) (len)));
+	bytes = readBuffer_1qjbrvfnPD4PaIieHVDvhw(file, ((void*) ((&result->data[((NI) 0)]))), ((NI) (len)));
+	{
+		NIM_BOOL T3_;
+		T3_ = (NIM_BOOL)0;
+		T3_ = endOfFile_OpxMRqWNQzmofyVQsNQqVA(file);
+		if (!T3_) goto LA4_;
+		{
+			if (!(((NI64) (bytes)) < len)) goto LA8_;
+			result = setLengthStr(result, ((NI) (bytes)));
+		}
+		LA8_: ;
+	}
+	goto LA1_;
+	LA4_: ;
+	{
+		NimStringDesc* T11_;
+		T11_ = (NimStringDesc*)0;
+		T11_ = readAllBuffer_QygGtYi2d8AILktDeUIkvQ(file);
+		result = resizeString(result, T11_->Sup.len + 0);
+appendString(result, T11_);
+	}
+	LA1_: ;
+	return result;
+}
+
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, readAll_y7iEIBoIrYlvsLCqA1SrwQ)(FILE* file) {
+	NimStringDesc* result;
+	NI64 len;
+	result = (NimStringDesc*)0;
+	{
+		if (!!((file == stdin))) goto LA3_;
+		len = rawFileSize_5kVjkAwDdtJJYVgsQusRMw(file);
+	}
+	goto LA1_;
+	LA3_: ;
+	{
+		len = IL64(-1);
+	}
+	LA1_: ;
+	{
+		if (!(IL64(0) < len)) goto LA8_;
+		result = readAllFile_fcBYWWlGnMMlgQjz7Ax9bzA(file, len);
+	}
+	goto LA6_;
+	LA8_: ;
+	{
+		result = readAllBuffer_QygGtYi2d8AILktDeUIkvQ(file);
+	}
+	LA6_: ;
+	return result;
+}
+
+static N_INLINE(void, popSafePoint)(void) {
+	excHandler_rqLlY5bs9atDw2OXYqJEn5g = (*excHandler_rqLlY5bs9atDw2OXYqJEn5g).prev;
+}
+
+static N_INLINE(void, asgnRefNoCycle)(void** dest, void* src) {
+	{
+		tyObject_Cell_1zcF9cV8XIAtbN8h5HRUB8g* c;
+		if (!!((src == NIM_NIL))) goto LA3_;
+		c = usrToCell_yB9aH5WIlwd0xkYrcdPeXrQsystem(src);
+		(*c).refcount += ((NI) 8);
+	}
+	LA3_: ;
+	{
+		tyObject_Cell_1zcF9cV8XIAtbN8h5HRUB8g* c_2;
+		if (!!(((*dest) == NIM_NIL))) goto LA7_;
+		c_2 = usrToCell_yB9aH5WIlwd0xkYrcdPeXrQsystem((*dest));
+		{
+			(*c_2).refcount -= ((NI) 8);
+			if (!((NU64)((*c_2).refcount) < (NU64)(((NI) 8)))) goto LA11_;
+			rtlAddZCT_MV4BBk6J1qu70IbBxwEn4w_2system(c_2);
+		}
+		LA11_: ;
+	}
+	LA7_: ;
+	(*dest) = src;
+}
+
+static N_INLINE(void, sysFatal_p4l3kdztdOPD3nsQRAEDqwsystem)(NimStringDesc* message, NimStringDesc* arg) {
+	tyObject_IOError_9czoZw3pzPyrBmb5zTHY1OQ* e;
+	NimStringDesc* T1_;
+	e = (tyObject_IOError_9czoZw3pzPyrBmb5zTHY1OQ*)0;
+	e = (tyObject_IOError_9czoZw3pzPyrBmb5zTHY1OQ*) newObj((&NTI_HX2M9cQhE3jaovp9aYJDdslA_), sizeof(tyObject_IOError_9czoZw3pzPyrBmb5zTHY1OQ));
+	(*e).Sup.Sup.Sup.m_type = (&NTI_9czoZw3pzPyrBmb5zTHY1OQ_);
+	T1_ = (NimStringDesc*)0;
+	T1_ = rawNewString(message->Sup.len + arg->Sup.len + 0);
+appendString(T1_, message);
+appendString(T1_, arg);
+	asgnRefNoCycle((void**) (&(*e).Sup.Sup.message), T1_);
+	raiseException((Exception*)e, "IOError");
+}
+
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, readFile_T9cm5LIRX2tKEH9aREBZ8A0w)(NimStringDesc* filename) {
+	NimStringDesc* volatile result;
+	FILE* f;
+	result = (NimStringDesc*)0;
+	f = (FILE*)0;
+	{
+		NIM_BOOL T3_;
+		TSafePoint TM_Q5wkpxktOdTGvlSRo9bzt9aw_42;
+		T3_ = (NIM_BOOL)0;
+		T3_ = open_sEp0GH2306oGo9bqBpj5oTQ(&f, filename, ((tyEnum_FileMode_fVUBHvW79bXUw1j55Oo9avSQ) 0), ((NI) -1));
+		if (!T3_) goto LA4_;
+		pushSafePoint(&TM_Q5wkpxktOdTGvlSRo9bzt9aw_42);
+		TM_Q5wkpxktOdTGvlSRo9bzt9aw_42.status = setjmp(TM_Q5wkpxktOdTGvlSRo9bzt9aw_42.context);
+		if (TM_Q5wkpxktOdTGvlSRo9bzt9aw_42.status == 0) {
+			result = readAll_y7iEIBoIrYlvsLCqA1SrwQ(f);
+			popSafePoint();
+		}
+		else {
+			popSafePoint();
+		}
+		{
+			close_BWnr8V7RERYno9bIdPmw8Hw_2(f);
+		}
+		if (TM_Q5wkpxktOdTGvlSRo9bzt9aw_42.status != 0) reraiseException();
+	}
+	goto LA1_;
+	LA4_: ;
+	{
+		sysFatal_p4l3kdztdOPD3nsQRAEDqwsystem(((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_43), filename);
+	}
+	LA1_: ;
+	return result;
+}
+
+static N_INLINE(void, addEscapedChar_idr49a9aRlvTkf40D5KCA29bgsystem)(NimStringDesc** s, NIM_CHAR c) {
+	switch (((NU8)(c))) {
+	case 0 ... 31:
+	case 127 ... 255:
+	{
+		NI n;
+		(*s) = resizeString((*s), 2);
+appendString((*s), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_45));
+		n = ((NU8)(c));
+		(*s) = addChar((*s), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_46)->data[(NI)((NU64)((NI)(n & ((NI) 240))) >> (NU64)(((NI) 4)))]);
+		(*s) = addChar((*s), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_46)->data[(NI)(n & ((NI) 15))]);
+	}
+	break;
+	case 92:
+	{
+		(*s) = resizeString((*s), 2);
+appendString((*s), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_47));
+	}
+	break;
+	case 39:
+	{
+		(*s) = resizeString((*s), 2);
+appendString((*s), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_48));
+	}
+	break;
+	case 34:
+	{
+		(*s) = resizeString((*s), 2);
+appendString((*s), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_49));
+	}
+	break;
+	default:
+	{
+		(*s) = addChar((*s), c);
+	}
+	break;
+	}
+}
+
+N_LIB_PRIVATE N_NIMCALL(void, addQuoted_KHwyPEV6PV8Q9aS88ENydhw)(NimStringDesc** s, NimStringDesc* x) {
+	(*s) = resizeString((*s), 1);
+appendString((*s), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_44));
+	{
+		NIM_CHAR c;
+		NI i;
+		NI L;
+		c = (NIM_CHAR)0;
+		i = ((NI) 0);
+		L = (x ? x->Sup.len : 0);
+		{
+			while (1) {
+				if (!(i < L)) goto LA3;
+				c = x->data[i];
+				addEscapedChar_idr49a9aRlvTkf40D5KCA29bgsystem(s, c);
+				i += ((NI) 1);
+			} LA3: ;
+		}
+	}
+	(*s) = resizeString((*s), 1);
+appendString((*s), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_44));
+}
+
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, collectionToString_mjjEWNS1Mkj3eJ84Bka89aA)(tySequence_sM4lkSb7zS6F7OVMvW9cffQ* x, NimStringDesc* prefix, NimStringDesc* separator, NimStringDesc* suffix) {
+	NimStringDesc* result;
+	NIM_BOOL firstElement;
+	result = (NimStringDesc*)0;
+	result = copyString(prefix);
+	firstElement = NIM_TRUE;
+	{
+		NimStringDesc* value;
+		NI i;
+		NI L;
+		NI T2_;
+		value = (NimStringDesc*)0;
+		i = ((NI) 0);
+		T2_ = (x ? x->Sup.len : 0);
+		L = T2_;
+		{
+			while (1) {
+				if (!(i < L)) goto LA4;
+				value = x->data[i];
+				{
+					if (!firstElement) goto LA7_;
+					firstElement = NIM_FALSE;
+				}
+				goto LA5_;
+				LA7_: ;
+				{
+					result = resizeString(result, separator->Sup.len + 0);
+appendString(result, separator);
+				}
+				LA5_: ;
+				{
+					if (!(value == 0)) goto LA12_;
+					result = resizeString(result, 3);
+appendString(result, ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_50));
+				}
+				goto LA10_;
+				LA12_: ;
+				{
+					addQuoted_KHwyPEV6PV8Q9aS88ENydhw((&result), value);
+				}
+				LA10_: ;
+				i += ((NI) 1);
+			} LA4: ;
+		}
+	}
+	result = resizeString(result, suffix->Sup.len + 0);
+appendString(result, suffix);
+	return result;
+}
+
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, dollar__ch0e5PgaoEZEQHhvsLrGJQ)(tySequence_sM4lkSb7zS6F7OVMvW9cffQ* x) {
+	NimStringDesc* result;
+	result = (NimStringDesc*)0;
+	{
+		if (!(x == 0)) goto LA3_;
+		result = copyString(((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_50));
+	}
+	goto LA1_;
+	LA3_: ;
+	{
+		result = collectionToString_mjjEWNS1Mkj3eJ84Bka89aA(x, ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_51), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_52), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_53));
+	}
+	LA1_: ;
+	return result;
+}
+
+N_LIB_PRIVATE N_NIMCALL(void, addQuoted_iFcuOX1Mlpkt1duTcalbSA)(NimStringDesc** s, tySequence_sM4lkSb7zS6F7OVMvW9cffQ* x) {
+	NimStringDesc* T1_;
+	T1_ = (NimStringDesc*)0;
+	T1_ = dollar__ch0e5PgaoEZEQHhvsLrGJQ(x);
+	(*s) = resizeString((*s), T1_->Sup.len + 0);
+appendString((*s), T1_);
+}
+
 N_LIB_PRIVATE N_NIMCALL(void, add_A9bDQDKw5SEqD3OvtOnC1bg)(NimStringDesc** result, NF x) {
 	tyArray_eVNFTutn6un5gcq48fQLdg buf;
 	NI n;
@@ -5715,7 +6195,7 @@ N_LIB_PRIVATE N_NIMCALL(void, add_A9bDQDKw5SEqD3OvtOnC1bg)(NimStringDesc** resul
 	{
 		if (!(((NU8)(buf[((NI)(n - ((NI) 1)))- 0])) == ((NU8)(110)) || ((NU8)(buf[((NI)(n - ((NI) 1)))- 0])) == ((NU8)(78)) || ((NU8)(buf[((NI)(n - ((NI) 1)))- 0])) == ((NU8)(68)) || ((NU8)(buf[((NI)(n - ((NI) 1)))- 0])) == ((NU8)(100)))) goto LA18_;
 		(*result) = resizeString((*result), 3);
-appendString((*result), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_37));
+appendString((*result), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_54));
 	}
 	goto LA16_;
 	LA18_: ;
@@ -5724,13 +6204,13 @@ appendString((*result), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_37));
 		{
 			if (!((NU8)(buf[(((NI) 0))- 0]) == (NU8)(45))) goto LA25_;
 			(*result) = resizeString((*result), 4);
-appendString((*result), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_38));
+appendString((*result), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_55));
 		}
 		goto LA23_;
 		LA25_: ;
 		{
 			(*result) = resizeString((*result), 3);
-appendString((*result), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_39));
+appendString((*result), ((NimStringDesc*) &TM_Q5wkpxktOdTGvlSRo9bzt9aw_56));
 		}
 		LA23_: ;
 	}
@@ -6223,6 +6703,10 @@ NTI_axqhRnwd09cVJkRcojfw6mA_.size = sizeof(tyObject_KeyError_ifYAhUumNzWR9c9cN9a
 NTI_axqhRnwd09cVJkRcojfw6mA_.kind = 22;
 NTI_axqhRnwd09cVJkRcojfw6mA_.base = (&NTI_ifYAhUumNzWR9c9cN9amyJLtg_);
 NTI_axqhRnwd09cVJkRcojfw6mA_.marker = Marker_tyRef_axqhRnwd09cVJkRcojfw6mA;
+NTI_fDPWIvoOCLPRBPCOH9aIgEg_.size = sizeof(NI);
+NTI_fDPWIvoOCLPRBPCOH9aIgEg_.kind = 31;
+NTI_fDPWIvoOCLPRBPCOH9aIgEg_.base = 0;
+NTI_fDPWIvoOCLPRBPCOH9aIgEg_.flags = 3;
 NTI_Aav8dQoMlCFnZRxA0IhTHQ_.size = sizeof(NI64);
 NTI_Aav8dQoMlCFnZRxA0IhTHQ_.kind = 35;
 NTI_Aav8dQoMlCFnZRxA0IhTHQ_.base = 0;

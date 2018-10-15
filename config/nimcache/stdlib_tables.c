@@ -334,6 +334,11 @@ static N_INLINE(void, incRef_9cAA5YuQAAC3MVbnGeV86swsystem)(tyObject_Cell_1zcF9c
 static N_INLINE(void, decRef_MV4BBk6J1qu70IbBxwEn4wsystem)(tyObject_Cell_1zcF9cV8XIAtbN8h5HRUB8g* c);
 N_NIMCALL(void, raiseException)(Exception* e, NCSTRING ename);
 static N_NIMCALL(void, Marker_tySequence_MlAD6nAPq9bHKla9cWiIZP0g)(void* p, NI op);
+N_LIB_PRIVATE N_NIMCALL(NI, len_gPutmFMjF2dpNdfOqcokuQ)(tyObject_Table_LLQadDAXEvd71UDdEc3lDA* t);
+N_NIMCALL(NimStringDesc*, copyString)(NimStringDesc* src);
+N_NIMCALL(NimStringDesc*, resizeString)(NimStringDesc* dest, NI addlen);
+N_LIB_PRIVATE N_NIMCALL(void, addQuoted_KHwyPEV6PV8Q9aS88ENydhw)(NimStringDesc** s, NimStringDesc* x);
+N_LIB_PRIVATE N_NIMCALL(void, addQuoted_iFcuOX1Mlpkt1duTcalbSA)(NimStringDesc** s, tySequence_sM4lkSb7zS6F7OVMvW9cffQ* x);
 N_LIB_PRIVATE N_NIMCALL(NI, rawGet_ejrpxsNAZJyHhQhopPiwJA)(tyObject_OrderedTable_AF39bJ7XDr6gpANuGpxkHrw* t, NimStringDesc* key, NI* hc);
 N_LIB_PRIVATE N_NIMCALL(void, enlarge_eOZs9auXoZM0glvDlTLHszQ)(tyObject_OrderedTable_AF39bJ7XDr6gpANuGpxkHrw* t);
 N_LIB_PRIVATE N_NIMCALL(void, rawInsert_PJEZeDCLfp6559cI0Hhn8lg)(tyObject_OrderedTable_AF39bJ7XDr6gpANuGpxkHrw* t, tySequence_MlAD6nAPq9bHKla9cWiIZP0g** data, NimStringDesc* key, tyObject_JsonNodeObj_df9bshXB7C9cTiWPIOtX3j1Q* val, NI hc, NI h);
@@ -353,6 +358,11 @@ TNimType NTI_awOivLjlO76sGdHY7nQUjQ_;
 extern TNimType NTI_zfzzuQ8txrdZAYK0WGWpHg_;
 TNimType NTI_MlAD6nAPq9bHKla9cWiIZP0g_;
 STRING_LITERAL(TM_4SoG2KRQy3oMm9aUzSLtGrA_4, "key not found: ", 15);
+STRING_LITERAL(TM_4SoG2KRQy3oMm9aUzSLtGrA_7, "{:}", 3);
+STRING_LITERAL(TM_4SoG2KRQy3oMm9aUzSLtGrA_8, "{", 1);
+STRING_LITERAL(TM_4SoG2KRQy3oMm9aUzSLtGrA_9, ", ", 2);
+STRING_LITERAL(TM_4SoG2KRQy3oMm9aUzSLtGrA_10, ": ", 2);
+STRING_LITERAL(TM_4SoG2KRQy3oMm9aUzSLtGrA_11, "}", 1);
 static N_NIMCALL(void, Marker_tySequence_JiteSJxrvz63iP2o9bcn2Sg)(void* p, NI op) {
 	tySequence_JiteSJxrvz63iP2o9bcn2Sg* a;
 	NI T1_;
@@ -821,6 +831,70 @@ static N_NIMCALL(void, Marker_tySequence_MlAD6nAPq9bHKla9cWiIZP0g)(void* p, NI o
 	nimGCvisit((void*)a->data[T1_].Field2, op);
 	nimGCvisit((void*)a->data[T1_].Field3, op);
 	}
+}
+
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, dollar__gqdUdur9ancraXE7H0hbi5w)(tyObject_Table_LLQadDAXEvd71UDdEc3lDA* t) {
+	NimStringDesc* result;
+	result = (NimStringDesc*)0;
+	{
+		NI T3_;
+		T3_ = (NI)0;
+		T3_ = len_gPutmFMjF2dpNdfOqcokuQ(t);
+		if (!(T3_ == ((NI) 0))) goto LA4_;
+		result = copyString(((NimStringDesc*) &TM_4SoG2KRQy3oMm9aUzSLtGrA_7));
+	}
+	goto LA1_;
+	LA4_: ;
+	{
+		result = copyString(((NimStringDesc*) &TM_4SoG2KRQy3oMm9aUzSLtGrA_8));
+		{
+			NimStringDesc* key;
+			tySequence_sM4lkSb7zS6F7OVMvW9cffQ* val;
+			key = (NimStringDesc*)0;
+			val = (tySequence_sM4lkSb7zS6F7OVMvW9cffQ*)0;
+			{
+				NI h;
+				NI colontmp_;
+				NI T9_;
+				NI res;
+				h = (NI)0;
+				colontmp_ = (NI)0;
+				T9_ = ((*t).data ? ((*t).data->Sup.len-1) : -1);
+				colontmp_ = T9_;
+				res = ((NI) 0);
+				{
+					while (1) {
+						if (!(res <= colontmp_)) goto LA11;
+						h = res;
+						{
+							NIM_BOOL T14_;
+							T14_ = (NIM_BOOL)0;
+							T14_ = isFilled_IxXD1UAPoEehVDW9cv9cRaewtables((*t).data->data[h].Field0);
+							if (!T14_) goto LA15_;
+							key = (*t).data->data[h].Field1;
+							val = (*t).data->data[h].Field2;
+							{
+								if (!(((NI) 1) < (result ? result->Sup.len : 0))) goto LA19_;
+								result = resizeString(result, 2);
+appendString(result, ((NimStringDesc*) &TM_4SoG2KRQy3oMm9aUzSLtGrA_9));
+							}
+							LA19_: ;
+							addQuoted_KHwyPEV6PV8Q9aS88ENydhw((&result), key);
+							result = resizeString(result, 2);
+appendString(result, ((NimStringDesc*) &TM_4SoG2KRQy3oMm9aUzSLtGrA_10));
+							addQuoted_iFcuOX1Mlpkt1duTcalbSA((&result), val);
+						}
+						LA15_: ;
+						res += ((NI) 1);
+					} LA11: ;
+				}
+			}
+		}
+		result = resizeString(result, 1);
+appendString(result, ((NimStringDesc*) &TM_4SoG2KRQy3oMm9aUzSLtGrA_11));
+	}
+	LA1_: ;
+	return result;
 }
 
 N_LIB_PRIVATE N_NIMCALL(void, initOrderedTable_PHRF9cHqhXGiWC9cIiRW9bTWw)(NI initialSize, tyObject_OrderedTable_AF39bJ7XDr6gpANuGpxkHrw* Result) {

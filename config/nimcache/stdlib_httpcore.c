@@ -275,6 +275,7 @@ static N_INLINE(NIM_BOOL, equalMem_fmeFeLBvgmAHG9bC8ETS9bYQasyncnet)(void* a, vo
 N_LIB_PRIVATE N_NIMCALL(tySequence_sM4lkSb7zS6F7OVMvW9cffQ**, X5BX5D__Q3d9cok5U8i0JCsF7VnnIJw)(tyObject_Table_LLQadDAXEvd71UDdEc3lDA* t, NimStringDesc* key);
 N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, hasKey_T0KkqFbqlm8065Ws4h4NSg)(tyObject_HttpHeaderscolonObjectType__GM611pWlOrQ7hvMPcuAACA* headers, NimStringDesc* key);
 N_LIB_PRIVATE N_NIMCALL(tySequence_sM4lkSb7zS6F7OVMvW9cffQ*, X5BX5D__2I7W00Lgs3jqrdJTli4b9cA)(tyObject_HttpHeaderscolonObjectType__GM611pWlOrQ7hvMPcuAACA* headers, NimStringDesc* key);
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, dollar__gqdUdur9ancraXE7H0hbi5w)(tyObject_Table_LLQadDAXEvd71UDdEc3lDA* t);
 TNimType NTI_wfZHspwVKQPl9aWhkIcMrAA_;
 TNimType NTI_GM611pWlOrQ7hvMPcuAACA_;
 extern TNimType NTI_Exo1CrLCLUIZQ4IUZ9aXEGg_;
@@ -961,6 +962,15 @@ N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, eqeq__UuvD8G9cNX019aF41qsh5CHQ)(tyTuple_kN8up2
 	T4_ = (protocol.Field2 == minor);
 	LA5_: ;
 	result = T4_;
+	return result;
+}
+
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, dollar__pVKvaLpEpfXUur6sIPFCxQ)(tyObject_HttpHeaderscolonObjectType__GM611pWlOrQ7hvMPcuAACA* headers) {
+	NimStringDesc* result;
+{	result = (NimStringDesc*)0;
+	result = dollar__gqdUdur9ancraXE7H0hbi5w((*headers).table);
+	goto BeforeRet_;
+	}BeforeRet_: ;
 	return result;
 }
 NIM_EXTERNC N_NOINLINE(void, stdlib_httpcoreInit000)(void) {
