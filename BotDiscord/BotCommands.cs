@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using DiscordRole = BotDiscord.Env.Enum.DiscordRole;
 
 namespace BotDiscord
 {
@@ -44,7 +45,7 @@ namespace BotDiscord
 
         private async Task NewGuildMember(GuildMemberAddEventArgs e)
         {
-            await e.Member.GrantRoleAsync(Global.Roles[CustomRoles.Spectator]);
+            await e.Member.GrantRoleAsync(Global.Roles[DiscordRole.Spectator]);
         }
 
         private async Task StartMember(GuildMemberAddEventArgs e)

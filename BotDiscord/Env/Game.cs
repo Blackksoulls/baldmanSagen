@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DiscordRole = BotDiscord.Env.Enum.DiscordRole;
 
 namespace BotDiscord.Env
 {
@@ -103,7 +104,7 @@ namespace BotDiscord.Env
 
                     await GameBuilder.CreateDiscordRoles(); // Role Admin, Joueur, Spectateur
                     WriteDebug("2");
-                    await Global.Client.CurrentUser.GetMember().GrantRoleAsync(Global.Roles[CustomRoles.Admin]);
+                    await Global.Client.CurrentUser.GetMember().GrantRoleAsync(Global.Roles[DiscordRole.Admin]);
                     WriteDebug("3");
                     await (await Guild.GetAllMembersAsync()).First().ModifyAsync(m => m.Nickname = Texts.DiscordRoles.BotName);
                     WriteDebug("4");
@@ -153,8 +154,8 @@ namespace BotDiscord.Env
                             if (!usr.IsBot)
                             {
                                 var dm = await Guild.GetMemberAsync(usr.Id);
-                                await dm.RevokeRoleAsync(Global.Roles[CustomRoles.Spectator]);
-                                await dm.GrantRoleAsync(Global.Roles[CustomRoles.Player]);
+                                await dm.RevokeRoleAsync(Global.Roles[DiscordRole.Spectator]);
+                                await dm.GrantRoleAsync(Global.Roles[DiscordRole.Player]);
                                 players.Add(dm);
                             }
 
@@ -269,13 +270,13 @@ namespace BotDiscord.Env
                 var graveyardVChannel = await Guild.CreateChannelAsync(Texts.Channels.GraveyardChannel,
                     ChannelType.Voice, graveyardGrpChannel);
 
-                await graveyardTChannel.AddOverwriteAsync(Global.Roles[CustomRoles.Spectator], GameBuilder.UsrPerms);
+                await graveyardTChannel.AddOverwriteAsync(Global.Roles[DiscordRole.Spectator], GameBuilder.UsrPerms);
 
                 DiscordChannels.Add(GameChannel.GraveyardText, graveyardTChannel);
                 DiscordChannels.Add(GameChannel.GraveyardVoice, graveyardVChannel);
 
                 foreach (var discordMember in Guild.Members)
-                    if (discordMember.Roles.Contains(Global.Roles[CustomRoles.Spectator]))
+                    if (discordMember.Roles.Contains(Global.Roles[DiscordRole.Spectator]))
                         await graveyardVChannel.AddOverwriteAsync(discordMember,
                             GameBuilder.CreatePerms(Permissions.UseVoiceDetection, Permissions.UseVoice,
                                 Permissions.Speak));
@@ -296,7 +297,7 @@ namespace BotDiscord.Env
 
         private static async Task NewGuildMember(GuildMemberAddEventArgs e)
         {
-            await e.Member.GrantRoleAsync(Global.Roles[CustomRoles.Spectator]);
+            await e.Member.GrantRoleAsync(Global.Roles[DiscordRole.Spectator]);
         }
 
         private async Task StartMember(GuildMemberAddEventArgs e)
@@ -470,8 +471,8 @@ namespace BotDiscord.Env
                 foreach (var discordChannel in DiscordChannels.Values)
                     await discordChannel.AddOverwriteAsync(p.Me, Permissions.AccessChannels, Permissions.ManageEmojis);
                     
-                await p.Me.RevokeRoleAsync(Global.Roles[CustomRoles.Player]);
-                await p.Me.GrantRoleAsync(Global.Roles[CustomRoles.Spectator]);
+                await p.Me.RevokeRoleAsync(Global.Roles[DiscordRole.Player]);
+                await p.Me.GrantRoleAsync(Global.Roles[DiscordRole.Spectator]);
             }
             catch (Exception e)
             {
