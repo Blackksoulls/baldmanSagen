@@ -21,7 +21,7 @@ proc main(req: Request) {.async.} =
                     var content = readFile("./libs/tailwind.min.css")
                     await req.respond(Http200, content)
                 else:
-                    await req.respond(Http300, """<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=http://0.0.0.0:4242/"/></head></html>>""")
+                    await req.respond(Http300, """<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=http://127.0.0.1:4242/"/></head></html>>""")
         of HttpPost:
             case req.url.path:
                 of "/validate":
@@ -45,6 +45,6 @@ proc main(req: Request) {.async.} =
         else:
             await req.respond(Http403, "Access Denied!")
 
-openDefaultBrowser("http://0.0.0.0:4242")
+openDefaultBrowser("http://127.0.0.1:4242")
 
 waitFor server.serve(Port(4242), main)
