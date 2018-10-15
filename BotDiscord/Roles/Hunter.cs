@@ -1,8 +1,8 @@
 using System.Linq;
-using BotDiscord.Env;
-using DSharpPlus.Entities;
 using System.Threading.Tasks;
+using BotDiscord.Env;
 using BotDiscord.Env.Enum;
+using DSharpPlus.Entities;
 
 namespace BotDiscord.Roles
 {
@@ -39,12 +39,12 @@ namespace BotDiscord.Roles
                 await message.CreateReactionAsync(emoji);
             }
 
-            await Task.Delay(Global.Config.TimeToVote * 1000);
+            await Task.Delay(Global.Config.DayVoteTime);
 
             var react = message.Reactions.First(reaction => reaction.Count == message.Reactions.Max(x => x.Count));
             var target = Global.Game.PersonnagesList.Find(p => p.Emoji.Id == react.Emoji.Id);
             await Global.Game.Kill(target);
-            var embed = new DiscordEmbedBuilder()
+            var embed = new DiscordEmbedBuilder
             {
                 Title =
                     $"{hunter.Me.Username} {Global.Game.Texts.Annoucement.PublicHunterMessage} {target.Me.Username}",

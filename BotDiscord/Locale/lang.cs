@@ -27,8 +27,6 @@ namespace BotDiscord.Locale
                 case "en":
                     str = $"{dm.DisplayName} is dead, he was";
                     break;
-                default:
-                    break;
             }
 
             return str;
@@ -61,7 +59,7 @@ namespace BotDiscord.Locale
 
     }
 
-    public partial class Errors
+    public class Errors
     {
         public string NotEnoughPlayer { get; set; }
 		public string AnotherGameIsPlaying { get; set; } 

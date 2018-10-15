@@ -1,20 +1,19 @@
 using BotDiscord.Env;
+using BotDiscord.Env.Enum;
 using BotDiscord.Locale;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using System.Linq;
 using System.Threading.Tasks;
-using BotDiscord.Env.Enum;
-using DiscordRole = DSharpPlus.Entities.DiscordRole;
 
 namespace BotDiscord.Roles
 {
     public class Cupidon : Citizen
     {
-        public static object DailyVotingMessage { get; private set; }
 
         public Cupidon(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
+
         }
 
         public override string ToString()
@@ -38,7 +37,7 @@ namespace BotDiscord.Roles
 
             if (channel != null)
             {
-                var embed = new DiscordEmbedBuilder()
+                var embed = new DiscordEmbedBuilder
                 {
                     Color = Color.PollColor,
                     Title = Global.Game.Texts.GameRoles.CupidMessage
@@ -46,7 +45,7 @@ namespace BotDiscord.Roles
                 var msg = await channel.SendMessageAsync(embed: embed.Build());
                 Global.Client.MessageReactionAdded += OnReactionAddedCupidon;
 
-                await Task.Delay(TimeToVote);
+                await Task.Delay(Global.Config.DayVoteTime);
 
                 msg = await channel.GetMessageAsync(msg.Id);
 
@@ -79,23 +78,23 @@ namespace BotDiscord.Roles
                 }
             }
 
-            if (!present || (GameBuilder.GetMember(game.Guild, e.User)).Roles.Contains(Global.Roles[DiscordRole.Spectator]))
+            if (!present || (GameBuilder.GetMember(game.Guild, e.User)).Roles.Contains(Global.Roles[PublicRole.Spectator]))
             {
-                await DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
+                await BotFunctions.DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
                 return;
             }
 
             var cnt = 0;
 
             if (!e.User.IsBot && !GameBuilder.GetMember(game.Guild, e.User).Roles
-                    .Contains(Global.Roles[DiscordRole.Spectator]))
+                    .Contains(Global.Roles[PublicRole.Spectator]))
             {
                 foreach (var otherEmoji in (await game.Guild.GetEmojisAsync()))
                 {
                     cnt++;
                     if (otherEmoji.Name != e.Emoji.Name && cnt > 1)
                     {
-                        await DailyVotingMessage.DeleteReactionAsync(otherEmoji, e.User,
+                        await BotFunctions.DailyVotingMessage.DeleteReactionAsync(otherEmoji, e.User,
                             $"{e.User.Username} already voted");
                         cnt = 0; // 0  car on ajoute 1 avant le test
                     }

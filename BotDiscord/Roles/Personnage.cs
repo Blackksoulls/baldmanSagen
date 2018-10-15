@@ -1,7 +1,6 @@
 ﻿using BotDiscord.Env;
 using BotDiscord.Env.Enum;
 using BotDiscord.Env.Extentions;
-using BotDiscord.Locale;
 using DSharpPlus;
 using DSharpPlus.Entities;
 

@@ -1,8 +1,8 @@
-﻿using BotDiscord.Env;
-using DSharpPlus.Entities;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using BotDiscord.Env;
+using DSharpPlus.Entities;
 
 namespace BotDiscord.Roles
 {
@@ -41,10 +41,10 @@ namespace BotDiscord.Roles
                         await msg.CreateReactionAsync(player.Emoji);
                     }
 
-                    await Task.Delay(TimeToVote * 1000);
+                    await Task.Delay(Global.Config.DayVoteTime);
                     var react = msg.Reactions.ToList().FindAll(reaction => reaction.Count == msg.Reactions.Max(x => x.Count));
                     await msg.ModifyAsync(content: $"{msg.Reactions.ToList().Count}");
-                    var embed = new DiscordEmbedBuilder()
+                    var embed = new DiscordEmbedBuilder
                     {
                         Color = Color.InfoColor
                     };

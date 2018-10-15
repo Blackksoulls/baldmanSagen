@@ -7,14 +7,15 @@ using BotDiscord.Roles;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-using DiscordRole = BotDiscord.Env.Enum.DiscordRole;
 
 namespace BotDiscord
 {
-    internal class BotFunctions
+    public class BotFunctions
     {
-        public static DiscordMessage DailyVotingMessage;
-        public static readonly int TimeToVote = 20;
+
+        public static DiscordMessage DailyVotingMessage { get; private set; }
+
+
 
         public static async Task DailyVote(int nbTry = 1)
         {
@@ -37,7 +38,7 @@ namespace BotDiscord
             if (nbTry == 1) Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
 
 
-            await Task.Delay(TimeToVote * 1000);
+            await Task.Delay(Global.Config.DayVoteTime );
 
 
             Console.WriteLine("Le temps est fini");
@@ -79,7 +80,7 @@ namespace BotDiscord
                 if (e.Emoji == personnage.Emoji)
                     present = true;
 
-            if (!present || e.User.GetMember().Roles.Contains(Global.Roles[DiscordRole.Spectator]))
+            if (!present || e.User.GetMember().Roles.Contains(Global.Roles[PublicRole.Spectator]))
             {
                 await DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
                 return;
@@ -87,7 +88,7 @@ namespace BotDiscord
 
 
             if (!e.User.IsBot && !GameBuilder.GetMember(Global.Game.Guild, e.User).Roles
-                    .Contains(Global.Roles[DiscordRole.Spectator]))
+                    .Contains(Global.Roles[PublicRole.Spectator]))
                 foreach (var otherEmoji in await Global.Game.Guild.GetEmojisAsync())
                     if (otherEmoji.Name != e.Emoji.Name)
                         await DailyVotingMessage.DeleteReactionAsync(otherEmoji, e.User,

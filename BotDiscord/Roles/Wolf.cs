@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using BotDiscord.Env;
 using BotDiscord.Env.Enum;
 using DSharpPlus;
@@ -32,7 +35,7 @@ namespace BotDiscord.Roles
         public static async Task WolfVote()
         {
             Global.Game.NightTargets = new List<Personnage>();
-            var embed = new DiscordEmbedBuilder()
+            var embed = new DiscordEmbedBuilder
             {
                 Color = Color.PollColor,
                 Title = Global.Game.Texts.Annoucement.NightlyWolfMessage
@@ -45,7 +48,7 @@ namespace BotDiscord.Roles
                 await msg.CreateReactionAsync(personnage.Emoji);
             }
 
-            await Task.Delay(TimeToVote * 1000);
+            await Task.Delay(Global.Config.DayVoteTime);
             msg = await Global.Game.DiscordChannels[GameChannel.WolfText].GetMessageAsync(msg.Id);
             var react = msg.Reactions.ToList().FindAll(reaction =>
                 reaction.Count == msg.Reactions.Max(x => x.Count) && reaction.Count >= 2);
@@ -57,7 +60,7 @@ namespace BotDiscord.Roles
             }
             else
             {
-                embed = new DiscordEmbedBuilder()
+                embed = new DiscordEmbedBuilder
                 {
                     Color = Color.InfoColor,
                     Title = Global.Game.Texts.Polls.NoWolfKill

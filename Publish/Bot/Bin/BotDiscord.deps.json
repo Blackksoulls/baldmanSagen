@@ -1,15 +1,15 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "f878427578b5226315973bd9bc89be01955aaf63"
+    "signature": "2a7d0ba247ffc7922bc6b7cbaa55a094531d2d8e"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.1": {
       "BotDiscord/1.0.0": {
         "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00547",
-          "DSharpPlus.CommandsNext": "4.0.0-nightly-00547",
+          "DSharpPlus": "4.0.0-nightly-00542",
+          "DSharpPlus.CommandsNext": "4.0.0-nightly-00526",
           "Microsoft.Extensions.DependencyInjection": "2.2.0-preview2-35157",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "2.2.0-preview2-35157",
           "Newtonsoft.Json": "11.0.2"
@@ -18,7 +18,7 @@
           "BotDiscord.dll": {}
         }
       },
-      "DSharpPlus/4.0.0-nightly-00547": {
+      "DSharpPlus/4.0.0-nightly-00542": {
         "dependencies": {
           "Newtonsoft.Json": "11.0.2",
           "System.Net.Http": "4.3.3",
@@ -28,20 +28,20 @@
         },
         "runtime": {
           "lib/netstandard2.0/DSharpPlus.dll": {
-            "assemblyVersion": "4.0.0.547",
-            "fileVersion": "4.0.0.547"
+            "assemblyVersion": "4.0.0.542",
+            "fileVersion": "4.0.0.542"
           }
         }
       },
-      "DSharpPlus.CommandsNext/4.0.0-nightly-00547": {
+      "DSharpPlus.CommandsNext/4.0.0-nightly-00526": {
         "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00547",
+          "DSharpPlus": "4.0.0-nightly-00542",
           "Microsoft.Extensions.DependencyInjection": "2.2.0-preview2-35157"
         },
         "runtime": {
           "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {
-            "assemblyVersion": "4.0.0.547",
-            "fileVersion": "4.0.0.547"
+            "assemblyVersion": "4.0.0.526",
+            "fileVersion": "4.0.0.526"
           }
         }
       },
@@ -797,19 +797,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "DSharpPlus/4.0.0-nightly-00547": {
+    "DSharpPlus/4.0.0-nightly-00542": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ED65YiTt2V8deAqhIZqLd/uIrgTFfYqLsi1dQob/dWsXnWPBdYxEbm/A5omfJJEFfKJHznAESqnG3PQKGtu2Hg==",
-      "path": "dsharpplus/4.0.0-nightly-00547",
-      "hashPath": "dsharpplus.4.0.0-nightly-00547.nupkg.sha512"
+      "sha512": "sha512-GmEA/sszI5UebPwOmnO8pzkFAeHRnTlMtlDJZGxXDdv9wBLaap8b5Fg3KooNbMkYFmVYeNCqKQGFAwcrQXylog==",
+      "path": "dsharpplus/4.0.0-nightly-00542",
+      "hashPath": "dsharpplus.4.0.0-nightly-00542.nupkg.sha512"
     },
-    "DSharpPlus.CommandsNext/4.0.0-nightly-00547": {
+    "DSharpPlus.CommandsNext/4.0.0-nightly-00526": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-w93WndOQUlu/5ErnLsJk2GI8o/+WTpl4t9JX837ao1LO+ZZWndTeoTfjfGtJGAaZihBRbcoWsvJpoTrQzVQ1Vw==",
-      "path": "dsharpplus.commandsnext/4.0.0-nightly-00547",
-      "hashPath": "dsharpplus.commandsnext.4.0.0-nightly-00547.nupkg.sha512"
+      "sha512": "sha512-PM2Zoe3iDZGl36bI4u7sBHXZvektKnnuC6jb8IIwsYHUph9nu+6Qe8vBPDnGpqamq7SUdCyVlNXFHgCCy/Itkg==",
+      "path": "dsharpplus.commandsnext/4.0.0-nightly-00526",
+      "hashPath": "dsharpplus.commandsnext.4.0.0-nightly-00526.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection/2.2.0-preview2-35157": {
       "type": "package",

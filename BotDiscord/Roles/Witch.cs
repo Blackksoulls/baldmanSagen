@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using BotDiscord.Env;
 using DSharpPlus.Entities;
 
@@ -33,7 +34,7 @@ namespace BotDiscord.Roles
             if (witch != null)
             {
                 var witchCh = witch.ChannelT;
-                var embed = new DiscordEmbedBuilder()
+                var embed = new DiscordEmbedBuilder
                 {
                     Color = Color.PollColor,
                     Title = $"{Global.Game.NightTargets[0]} {Global.Game.Texts.GameRoles.WitchSaveMsg}"
@@ -43,9 +44,9 @@ namespace BotDiscord.Roles
                 await healMsg.CreateReactionAsync(DiscordEmoji.FromName(Global.Client, ":thumbsup:"));
                 await healMsg.CreateReactionAsync(DiscordEmoji.FromName(Global.Client, ":thumbsdown:"));
 
-                Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
+                Global.Client.MessageReactionAdded += BotFunctions.ClientOnMessageReactionAdded;
 
-                await Task.Delay(TimeToVote / 2);
+                await Task.Delay(Global.Config.DayVoteTime / 2);
                 healMsg = await witchCh.GetMessageAsync(healMsg.Id);
                 if (healMsg.GetReactionsAsync(DiscordEmoji.FromName(Global.Client, ":thumbsup:")).GetAwaiter()
                         .GetResult()
@@ -54,10 +55,10 @@ namespace BotDiscord.Roles
                     Global.Game.NightTargets.Clear();
                 }
 
-                embed = new DiscordEmbedBuilder()
+                embed = new DiscordEmbedBuilder
                 {
                     Color = Color.PollColor,
-                    Title = Global.Game.Texts.GameRoles.WitchKillMsg,
+                    Title = Global.Game.Texts.GameRoles.WitchKillMsg
                 };
                 var killMsg = await witchCh.SendMessageAsync(embed: embed.Build());
                 foreach (var emoji in Global.Game.Guild.GetEmojisAsync().GetAwaiter().GetResult().ToList()
@@ -66,9 +67,9 @@ namespace BotDiscord.Roles
                     await killMsg.CreateReactionAsync(emoji);
                 }
 
-                Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
+                Global.Client.MessageReactionAdded += BotFunctions.ClientOnMessageReactionAdded;
 
-                await Task.Delay(TimeToVote / 2);
+                await Task.Delay(Global.Config.DayVoteTime / 2);
                 killMsg = await witchCh.GetMessageAsync(killMsg.Id);
                 Global.Game.NightTargets.Add(Global.Game.PersonnagesList.Find(p =>
                     p.Emoji == killMsg.Reactions.ToList().Find(r => r.Count == 2).Emoji));
