@@ -32,3 +32,5 @@ M:\IUT\PTUT\BotDiscord\bin\Release\netcoreapp2.1\BotDiscord.pdb
 M:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.1\BotDiscord.csproj.CoreCompileInputs.cache
 M:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.1\BotDiscord.AssemblyInfoInputs.cache
 M:\IUT\PTUT\BotDiscord\obj\Release\netcoreapp2.1\BotDiscord.AssemblyInfo.cs
+P:\Professionels\baldmanSagen\BotDiscord\obj\Release\netcoreapp2.1\BotDiscord.dll
+P:\Professionels\baldmanSagen\BotDiscord\obj\Release\netcoreapp2.1\BotDiscord.pdb

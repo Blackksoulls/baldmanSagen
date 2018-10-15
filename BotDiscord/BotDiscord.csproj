@@ -68,7 +68,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00526" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00542" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00526" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0-preview2-35157" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0-preview2-35157" />
@@ -76,13 +76,13 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="python $(SolutionDir)\\deploy.py&#xD;&#xA;" />
+    <Exec Command="python $(SolutionDir)\deploy.py&#xD;&#xA;" />
   </Target>
 
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="python $(SolutionDir)\\preBuild.py&#xD;&#xA;" />
+    <Exec Command="python $(SolutionDir)\preBuild.py&#xD;&#xA;" />
   </Target>
 
 </Project>
