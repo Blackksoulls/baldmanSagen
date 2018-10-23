@@ -86,7 +86,7 @@ namespace BotDiscord
             };
             DailyVotingMessage =
                 await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
-            await DeadVote();
+            new Task( DeadVote());
             var startTime = DateTime.Now;
 
             foreach (var personnage in Global.Game.PersonnagesList.FindAll(personnage => personnage.Alive))
