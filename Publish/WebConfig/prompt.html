@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Loup-garou config</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="libs/tailwind.min.css" />
+    <style>.inactive{overflow:hidden}.fullpage{position:relative;height:100vh;width:100vw;transition:height .75s ease-out}.fullpage button{font-size:3rem;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transition:color .5s ease-out,transform .75s ease-out,box-shadow .5s ease-out,background-color .25s ease-out;visibility:visible;opacity:1}.fullpage button:hover{transform:translate(-50%,-70%)}.fullpage.close{height:0}.fullpage.close button{visibility:hidden;opacity:0;transition:visibility 0s .5s,opacity .5s ease-out}.fullblock{min-height:100vh;height:100%}.sweep-to-bottom{position:relative;transform:translateZ(0);transition:color 1s}.sweep-to-bottom::before{content:"";position:absolute;z-index:-1;top:0;left:0;right:0;bottom:0;background:#7886d7;transform:scaleY(0);transform-origin:50% 0;transition:.3s ease-out;border-radius:.25rem}.sweep-to-bottom:hover::before{transform:scaleY(1)}.noselect{-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}</style>
+</head>
+<body class="inactive">
+    <div class="fullpage bg-indigo-light">
+        <button onclick="greet()" class="noselect bg-green shadow hover:bg-green-light hover:shadow-lg text-white font-bold py-4 px-8 rounded-full">Hello!</button>
+    </div>
+    <div class="fullblock bg-blue-lightest">
+        <div class="max-w-sm container mx-auto pt-6">
+            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="/validate" method="POST">
+                <div class="mb-4">
+                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="preset">
+                        Preset
+                    </label>
+                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="preset" name="preset">
+                        <option selected value="0">Deck de base</option>
+                        <option value="1">Extension 1</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="joingame">
+                        Time to join the game
+                    </label>
+                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="joingame" name="joingame">
+                        <option>0s</option>
+                        <option>10s</option>
+                        <option selected>15s</option>
+                        <option>20s</option>
+                        <option>30s</option>
+                        <option>45s</option>
+                        <option>50s</option>
+                        <option>60s</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="actionight">
+                        Time to play per player during night
+                    </label>
+                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="actionight" name="actionight">
+                        <option>10s</option>
+                        <option>15s</option>
+                        <option>20s</option>
+                        <option selected>30s</option>
+                        <option>45s</option>
+                        <option>50s</option>
+                        <option>60s</option>
+                        <option>90s</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="voteday">
+                        Time to vote per player during daytime
+                    </label>
+                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="voteday" name="voteday">
+                        <option>10s</option>
+                        <option>15s</option>
+                        <option>20s</option>
+                        <option>30s</option>
+                        <option selected>45s</option>
+                        <option>50s</option>
+                        <option>60s</option>
+                        <option>90s</option>
+                    </select>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="noselect shadow mx-auto sweep-to-bottom bg-green text-white font-bold py-2 px-4 rounded focus:outline-none" type="submit">
+                        Validate
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>function greet() {document.querySelector('.fullpage').classList.add('close');document.querySelector('body').classList.remove('inactive');}</script>
+</body>
+</html>
