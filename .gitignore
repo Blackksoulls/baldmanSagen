@@ -3,3 +3,4 @@ nimcache/
 .vs/
 .idea/
 .vs
+.vs/*
