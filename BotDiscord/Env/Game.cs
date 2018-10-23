@@ -132,71 +132,29 @@ namespace BotDiscord.Env
                         Title = Texts.Annoucement.BotWantPlay,
                         Color = Color.PollColor
                     };
-                    var askMessage = await generalChannel.SendMessageAsync(embed: embed.Build());
-                    var emoji = DiscordEmoji.FromName(e.Client, ":thumbsup:");
-                    await askMessage.CreateReactionAsync(emoji);
-
+                    await generalChannel.SendMessageAsync(embed: embed.Build());
 
                     var players = new List<DiscordMember>();
 
 
-                    try
+
+
+                    foreach (var usr in botVChannel.Users)
                     {
-                        await Task.Delay(Global.Config.JoinTime);
-
-                        var users = await (await Guild.GetDefaultChannel().GetMessageAsync(askMessage.Id)).GetReactionsAsync(emoji);
-                       /*
- 
-                        if (!users..Equals(botVChannel.Users.ToArray()))
+                        if (!usr.IsBot)
                         {
-                            await Task.Delay(Global.Config.JoinTime);
+                            await usr.RevokeRoleAsync(Global.Roles[PublicRole.Spectator]);
+                            await usr.GrantRoleAsync(Global.Roles[PublicRole.Player]);
+                            players.Add(usr);
                         }
-                       */
-
-                        bool pb;
-
-                        do
-                        {
-                            pb = false;
-
-                            foreach (var usr in users)
-                            {
-                                if (botVChannel.Users.Count() == users.Count - 1 && !usr.IsBot && !botVChannel.Users.Contains(usr.GetMember()))
-                                {
-                                    pb = true;
-                                }
-                            }
-                            
-                            if(pb)
-                            {
-                                await Task.Delay(1000);
-                            }
-
-
-                        } while (pb);
-
-                     
-
-
-                        foreach (var usr in users)
-                        {
-                            if (!usr.IsBot)
-                            {
-                                var dm = await Guild.GetMemberAsync(usr.Id);
-                                await dm.RevokeRoleAsync(Global.Roles[PublicRole.Spectator]);
-                                await dm.GrantRoleAsync(Global.Roles[PublicRole.Player]);
-                                players.Add(dm);
-                            }
-                        }
-
-                        e.Client.GuildMemberAdded -= StartMember;
-                        Global.Client.MessageReactionAdded += GameBuilder.Spectator_ReactionAdd;
-                        Global.Client.MessageReactionRemoved += GameBuilder.Spectator_ReactionRem;
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
+
+                    await Task.Delay(Global.Config.JoinTime);
+
+                    e.Client.GuildMemberAdded -= StartMember;
+                    Global.Client.MessageReactionAdded += GameBuilder.Spectator_ReactionAdd;
+                    Global.Client.MessageReactionRemoved += GameBuilder.Spectator_ReactionRem;
+                   
 
 
                     Console.WriteLine(13);
@@ -249,6 +207,10 @@ namespace BotDiscord.Env
                             Color = Color.InfoColor
                         };
                         await DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+
+                        await Task.Delay(Global.Config.JoinTime);
+
+                        await Global.Game.Guild.DeleteAsync();
                     }
 
                     while (Victory == Victory.None && Victory != Victory.NotPlayable) await PlayAsync();
