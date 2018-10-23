@@ -152,8 +152,8 @@ namespace BotDiscord.Env
                     await Task.Delay(Global.Config.JoinTime);
 
                     e.Client.GuildMemberAdded -= StartMember;
-                    Global.Client.MessageReactionAdded += GameBuilder.Spectator_ReactionAdd;
-                    Global.Client.MessageReactionRemoved += GameBuilder.Spectator_ReactionRem;
+                    Global.Client.MessageReactionAdded += Listeners.PreventMultiVote;
+                    Global.Client.MessageReactionAdded += Listeners.PreventSpectatorFromVote;
                    
 
 

@@ -43,3 +43,4 @@ P:\Professionels\baldmanSagen\BotDiscord\obj\Release\netcoreapp2.1\BotDiscord.As
 P:\Professionels\baldmanSagen\BotDiscord\obj\Release\netcoreapp2.1\BotDiscord.AssemblyInfo.cs
 P:\Professionels\baldmanSagen\BotDiscord\obj\Release\netcoreapp2.1\BotDiscord.dll
 P:\Professionels\baldmanSagen\BotDiscord\obj\Release\netcoreapp2.1\BotDiscord.pdb
+P:\Professionels\baldmanSagen\BotDiscord\obj\Release\netcoreapp2.1\BotDiscord.csprojAssemblyReference.cache

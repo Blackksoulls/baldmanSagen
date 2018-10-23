@@ -11,7 +11,12 @@ namespace BotDiscord.Roles
         public DiscordMember Me { get; }
         public bool Alive { get; set; }
         public Effect Effect = Effect.None;
-
+        public int NbPoints;
+        private static int mise = 1;
+        private static int gainSimple = 1;
+        private static int gainMise = 3;
+        public bool aMise;
+        
         public DiscordChannel ChannelT { get; set; }
         public DiscordChannel ChannelV { get; set; }
 
@@ -23,7 +28,7 @@ namespace BotDiscord.Roles
             Me = me;
             Emoji = emoji;
             Alive = true;
-
+            NbPoints = GetNbPoints(me.Id); // TODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODO
 
             ChannelV = Global.Game.Guild.CreateChannelAsync(Me.Username.RemoveSpecialChars(), ChannelType.Voice,
                 Global.Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
@@ -45,6 +50,28 @@ namespace BotDiscord.Roles
             embed.AddField("Role", ToString());
             ChannelT.SendMessageAsync(embed: embed.Build()).GetAwaiter().GetResult();
             me.PlaceInAsync(ChannelV);
+        }
+
+        public void Mise()
+        {
+            if(NbPoints!=0)
+            {
+                NbPoints -= mise;
+                aMise = true;
+            }
+        }
+
+        public void Gain()
+        {
+            if(aMise)
+            {
+                NbPoints += gainMise;
+                aMise = false;
+            }
+            else
+            {
+                NbPoints += gainSimple;
+            }
         }
 
         public virtual string GotKilled()

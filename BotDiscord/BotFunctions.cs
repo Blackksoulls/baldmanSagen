@@ -12,21 +12,81 @@ namespace BotDiscord
 {
     public class BotFunctions
     {
-
         public static DiscordMessage DailyVotingMessage { get; private set; }
+        public static DiscordMessage DeadVotingMessage { get; private set; }
+        public static bool Attendre
+		{
+			get { return Attendre; }
+			set { if (value) DoThingsDailyVote(); Attendre = value; }
+		}
 
+
+        public static async Task DeadVote(int nbTry = 1)
+        {
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = Global.Game.Texts.Polls.DeadVoteMessage,
+                Color = Color.PollColor
+            };
+            DeadVotingMessage =
+                await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+
+            var startTime = DateTime.Now;
+
+            foreach (var personnage in Global.Game.PersonnagesList.FindAll(personnage => personnage.Alive))
+            {
+                Console.WriteLine($"Personnage : {personnage.Me.Username} -> {personnage.Emoji.Name}");
+                await DeadVotingMessage.CreateReactionAsync(personnage.Emoji);
+            }
+
+            if (nbTry == 1) Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
+
+
+            await Task.Delay(Global.Config.DayVoteTime);
+
+
+            Console.WriteLine("Le temps est fini");
+            DeadVotingMessage =
+                await Global.Game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DeadVotingMessage.Id);
+            foreach (var discordReaction in DeadVotingMessage.Reactions)
+                Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
+
+
+            var players = DeadVotingMessage.Reactions.ToList().FindAll(x =>
+                x.Count == DeadVotingMessage.Reactions.Max(y => y.Count) && x.Count >= 2);
+
+
+            if (players.Count == 0)
+            {
+                embed = new DiscordEmbedBuilder
+                {
+                    Title = Global.Game.Texts.Polls.NoTownKill,
+                    Color = Color.InfoColor
+                };
+                await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed);
+            }
+            else
+            {
+                var p = Global.Game.PersonnagesList.Find(personnage => personnage.Emoji.Id == players[0].Emoji.Id);
+                await MakeDeath(p);
+            }
+
+            Global.Game.CheckVictory();
+
+            Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
+        }
 
 
         public static async Task DailyVote(int nbTry = 1)
         {
             var embed = new DiscordEmbedBuilder
             {
-                Title = Global.Game.Texts.Annoucement.DailyVoteMessage,
+                Title = Global.Game.Texts.Polls.DailyVoteMessage,
                 Color = Color.PollColor
             };
             DailyVotingMessage =
                 await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
-
+            await DeadVote();
             var startTime = DateTime.Now;
 
             foreach (var personnage in Global.Game.PersonnagesList.FindAll(personnage => personnage.Alive))
@@ -45,7 +105,9 @@ namespace BotDiscord
             DailyVotingMessage =
                 await Global.Game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DailyVotingMessage.Id);
             foreach (var discordReaction in DailyVotingMessage.Reactions)
+            {
                 Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
+            }
 
 
             var players = DailyVotingMessage.Reactions.ToList().FindAll(x =>
@@ -180,6 +242,11 @@ namespace BotDiscord
             await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
             foreach (var p in Global.Game.PersonnagesList.FindAll(p => p.Alive))
                 await p.Me.PlaceInAsync(Global.Game.DiscordChannels[GameChannel.TownVoice]);
+        }
+
+        internal static Task DeadVote()
+        {
+            throw new NotImplementedException();
         }
     }
 }

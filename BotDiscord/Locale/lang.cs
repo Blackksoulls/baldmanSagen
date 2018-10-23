@@ -46,7 +46,6 @@ namespace BotDiscord.Locale
     {
         public string NightAnnoucement { get; set; }
         public string DayAnnoucement { get; set; }
-        public string DailyVoteMessage { get; set; }
         public string NightlyWolfMessage { get; set; }
         public string TownVictory { get; set; }
         public string WolfVictory { get; set; }
@@ -115,5 +114,7 @@ namespace BotDiscord.Locale
         public string TownPollAgain { get; set; }
         public string NoWolfKill { get; set; }
         public string NoTownKill { get; set; }
+        public string DailyVoteMessage { get; set; }
+		public string DeadVoteMessage { get; set; }
     }
 }
