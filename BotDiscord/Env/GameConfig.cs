@@ -12,5 +12,4 @@ namespace BotDiscord.Env
         public int DayVoteTime { get; set; }
         [JsonProperty("preset")]
         public int Preset { get; set; }
-    }
-}
+    }}

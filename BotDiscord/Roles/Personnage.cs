@@ -11,24 +11,20 @@ namespace BotDiscord.Roles
         public DiscordMember Me { get; }
         public bool Alive { get; set; }
         public Effect Effect = Effect.None;
-        public int NbPoints;
-        private static int mise = 1;
-        private static int gainSimple = 1;
-        private static int gainMise = 3;
-        public bool aMise;
+
         
         public DiscordChannel ChannelT { get; set; }
         public DiscordChannel ChannelV { get; set; }
 
         public DiscordGuildEmoji Emoji;
-
+        public Point Point { get; set; }
 
         protected Personnage(DiscordMember me, DiscordGuildEmoji emoji)
         {
             Me = me;
             Emoji = emoji;
             Alive = true;
-            NbPoints = GetNbPoints(me.Id); // TODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODO
+            //NbPoints = GetNbPoints(me.Id); // TODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODO
 
             ChannelV = Global.Game.Guild.CreateChannelAsync(Me.Username.RemoveSpecialChars(), ChannelType.Voice,
                 Global.Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
@@ -52,9 +48,28 @@ namespace BotDiscord.Roles
             me.PlaceInAsync(ChannelV);
         }
 
+
+
+        public virtual string GotKilled()
+        {
+            return $"{Me.DisplayName} {Global.Game.Texts.Annoucement.DeadMessagePublic}";
+        }
+
+        public abstract string GetClassName();
+    }
+
+    public  class Point
+    {
+        public int NbPoints;
+        private static int mise = 1;
+        private static int gainSimple = 1;
+        private static int gainMise = 3;
+        public bool aMise;
+
+
         public void Mise()
         {
-            if(NbPoints!=0)
+            if (NbPoints != 0)
             {
                 NbPoints -= mise;
                 aMise = true;
@@ -63,7 +78,7 @@ namespace BotDiscord.Roles
 
         public void Gain()
         {
-            if(aMise)
+            if (aMise)
             {
                 NbPoints += gainMise;
                 aMise = false;
@@ -73,12 +88,5 @@ namespace BotDiscord.Roles
                 NbPoints += gainSimple;
             }
         }
-
-        public virtual string GotKilled()
-        {
-            return $"{Me.DisplayName} {Global.Game.Texts.Annoucement.DeadMessagePublic}";
-        }
-
-        public abstract string GetClassName();
     }
 }

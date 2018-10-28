@@ -55,7 +55,7 @@ namespace BotDiscord.Locale
         public string DeadMessagePrivate { get; set; }
         public string DeadMessagePublic { get; set; }
         public string BotWantPlay { get; set; }
-
+        public string LeaveMessage { get; set; }
     }
 
     public class Errors
@@ -116,5 +116,12 @@ namespace BotDiscord.Locale
         public string NoTownKill { get; set; }
         public string DailyVoteMessage { get; set; }
 		public string DeadVoteMessage { get; set; }
+    }
+
+    public class HelpMessages
+    {
+        public string Title { get; set; }
+        public string Msg {get; set; }
+
     }
 }

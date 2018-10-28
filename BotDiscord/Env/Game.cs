@@ -119,8 +119,8 @@ namespace BotDiscord.Env
 
                     var botVChannel = await Guild.CreateChannelAsync("Bot", ChannelType.Voice, generalChannel.Parent);
                     DiscordChannels.Add(GameChannel.BotVoice, botVChannel);
-                    e.Client.GuildMemberAdded += NewGuildMember;
-                    e.Client.GuildMemberAdded += StartMember;
+                    Global.Client.GuildMemberAdded += NewGuildMember;
+                    Global.Client.GuildMemberAdded += StartMember;
 
 
                     var inv = await generalChannel.CreateInviteAsync();
@@ -139,19 +139,18 @@ namespace BotDiscord.Env
 
 
 
-                    foreach (var usr in botVChannel.Users)
-                    {
-                        if (!usr.IsBot)
-                        {
-                            await usr.RevokeRoleAsync(Global.Roles[PublicRole.Spectator]);
-                            await usr.GrantRoleAsync(Global.Roles[PublicRole.Player]);
-                            players.Add(usr);
-                        }
-                    }
-
+              
                     await Task.Delay(Global.Config.JoinTime);
 
-                    e.Client.GuildMemberAdded -= StartMember;
+                    foreach (var usr in botVChannel.Users)
+                    {
+                        await usr.RevokeRoleAsync(Global.Roles[PublicRole.Spectator]);
+                        await usr.GrantRoleAsync(Global.Roles[PublicRole.Player]);
+                        players.Add(usr);
+                        WriteDebug(usr.Username);
+                    }
+
+                    Global.Client.GuildMemberAdded -= StartMember;
                     Global.Client.MessageReactionAdded += Listeners.PreventMultiVote;
                     Global.Client.MessageReactionAdded += Listeners.PreventSpectatorFromVote;
                    

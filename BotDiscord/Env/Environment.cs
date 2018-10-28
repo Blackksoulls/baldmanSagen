@@ -1,3 +1,10 @@
+using BotDiscord.Env.Enum;
+using BotDiscord.Env.Extentions;
+using BotDiscord.Roles;
+using DSharpPlus;
+using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,14 +12,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using BotDiscord.Env.Enum;
-using BotDiscord.Env.Extentions;
-using BotDiscord.Locale;
-using BotDiscord.Roles;
-using DSharpPlus;
-using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
-using Newtonsoft.Json;
 
 namespace BotDiscord.Env
 {
@@ -22,10 +21,9 @@ namespace BotDiscord.Env
         public static Dictionary<PublicRole, DiscordRole> Roles { get; set; }
 
         public static DiscordClient Client { get; set; }
+
         public static GameConfig Config { get; set; } = JsonConvert.DeserializeObject<GameConfig>(
-                                                        File.ReadAllText
-                                                        ($@"..//Config//game-settings.json",
-                                                            Encoding.UTF8));
+                                                            File.ReadAllText($@"..//Config//game-settings.json",Encoding.UTF8));
         public static bool InGame = false;
     }
 
@@ -151,14 +149,15 @@ namespace BotDiscord.Env
             for (var i = 0; i < nbPlayer; i++)
                 switch (i)
                 {
+
                     case 1:
-                        roleList.Add(GameRole.Citizen);
+                        roleList.Add(GameRole.Seer);
                         break;
                     case 2:
                         roleList.Add(GameRole.Wolf);
                         break;
                     case 3:
-                        roleList.Add(GameRole.Seer);
+                        roleList.Add(GameRole.Citizen);
                         break;
                     case 4:
                         roleList.Add(GameRole.Wolf);
@@ -186,6 +185,41 @@ namespace BotDiscord.Env
                     default:
                         roleList.Add(i % 3 == 0 ? GameRole.Wolf : GameRole.Citizen);
                         break;
+                        /*case 1:
+                            roleList.Add(GameRole.Citizen);
+                            break;
+                        case 2:
+                            roleList.Add(GameRole.Wolf);
+                            break;
+                        case 3:
+                            roleList.Add(GameRole.Seer);
+                            break;
+                        case 4:
+                            roleList.Add(GameRole.Wolf);
+                            break;
+                        case 5:
+                            roleList.Add(GameRole.Savior);
+                            roleList.Add(GameRole.Citizen);
+                            roleList.Add(GameRole.Wolf);
+                            break;
+                        case 6:
+                            roleList.Add(GameRole.LittleGirl);
+                            break;
+                        case 7:
+                            roleList.Add(GameRole.Witch);
+                            break;
+                        case 8:
+                            roleList.Add(GameRole.Hunter);
+                            break;
+                        case 9:
+                            roleList.Add(GameRole.Wolf);
+                            break;
+                        case 10:
+                            roleList.Add(GameRole.Cupid);
+                            break;
+                        default:
+                            roleList.Add(i % 3 == 0 ? GameRole.Wolf : GameRole.Citizen);
+                            break;*/
                 }
 
             return roleList;

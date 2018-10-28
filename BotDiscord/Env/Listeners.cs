@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using BotDiscord.Env.Enum;
-using DSharpPlus.CommandsNext;
+﻿using BotDiscord.Env.Enum;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace BotDiscord.Env
@@ -32,7 +32,24 @@ namespace BotDiscord.Env
             }
         }
 
+        public static async Task KillLeaver(VoiceServerUpdateEventArgs e)
+        {
+           
+            
+            var foo = Global.Game.PersonnagesList.Find(p => p.Alive && p.Me.Id == e.Member.Id);
+            if (foo != null)
+            {
+                foo.Alive = false;
 
+                var embed = new DiscordEmbedBuilder
+                {
+                    Title = Global.Game.Texts.Annoucement.LeaveMessage
+                };
+
+                await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+                Global.Game.CheckVictory();
+            }
+        }
 
 
     }

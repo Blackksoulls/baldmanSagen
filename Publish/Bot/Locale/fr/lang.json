@@ -2,6 +2,12 @@
   "Lang": "fr",
 
 
+  "HelpMessage" : {
+    "Title": "Guide d'utilisation du bot",
+    "Msg" :  "**!go** pour lancer une partie\n**!help** pour afficher ce message" 
+  },
+
+
   "Channels": {
     "GraveyardChannel": "Cimetière",
     "TownChannel": "Village",

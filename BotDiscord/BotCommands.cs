@@ -1,23 +1,30 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BotDiscord.Env;
 using BotDiscord.Env.Enum;
+using BotDiscord.Locale;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using Newtonsoft.Json;
 
 namespace BotDiscord
 {
     public class BotCommands : BaseCommandModule
     {
+
+
+
         [Command("game"), Aliases("go")]
         [Description("Available langages: 'fr', 'en', 'es', 'de', 'ja'")]
-        public async Task CreateGame(CommandContext e, string lang = "fr")
+        public async Task CreateGame(CommandContext e, [Description("Language for the bot")]string lang = "fr")
         {
             try
             {
@@ -90,5 +97,8 @@ namespace BotDiscord
 
             await GameBuilder.GetMember(e.Guild, e.User).GrantRoleAsync(adminRole);
         }
+
+
+
     }
 }

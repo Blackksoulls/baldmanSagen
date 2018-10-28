@@ -45,14 +45,13 @@ namespace BotDiscord
                 await Global.Game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DeadVotingMessage.Id);
             //Attendre
 
-            foreach (var discordReaction in (await Global.Game.Guild.GetEmojisAsync()))
+/*            foreach (var discordReaction in (await Global.Game.Guild.GetEmojisAsync()))
             {
                 foreach (var discordUserReact in (await DeadVotingMessage.GetReactionsAsync()))
                 {
-                    discordReaction.
                     Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
                 }
-            }
+            }*/
 
             var players = DeadVotingMessage.Reactions.ToList().FindAll(x =>
                 x.Count == DeadVotingMessage.Reactions.Max(y => y.Count) && x.Count >= 2);

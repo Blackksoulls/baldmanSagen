@@ -32,6 +32,11 @@
 {
   "Lang": "en",
 
+  "HelpMessage": {
+    "Title": "Help !",
+    "Msg": "**!go** to launch a game\n**!help** to display this message."
+  },
+
 
   "Channels": {
     "GraveyardChannel": "Graveyard",
@@ -60,7 +65,7 @@
 
   "Errors": {
     "NotEnoughPlayer": "Il n'y a pas assez de joueur dans le jeu :",
-    "AnotherGameIsPlaying":  "Wait for the old game to finish " 
+    "AnotherGameIsPlaying": "Wait for the old game to finish "
   },
 
 
