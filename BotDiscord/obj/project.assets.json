@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "DSharpPlus/4.0.0-nightly-00542": {
+      "DSharpPlus/4.0.0-nightly-00555": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "10.0.3",
@@ -18,10 +18,10 @@
           "lib/netstandard2.0/DSharpPlus.dll": {}
         }
       },
-      "DSharpPlus.CommandsNext/4.0.0-nightly-00526": {
+      "DSharpPlus.CommandsNext/4.0.0-nightly-00555": {
         "type": "package",
         "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00526",
+          "DSharpPlus": "4.0.0-nightly-00555",
           "Microsoft.Extensions.DependencyInjection": "2.0.0"
         },
         "compile": {
@@ -1336,12 +1336,13 @@
     }
   },
   "libraries": {
-    "DSharpPlus/4.0.0-nightly-00542": {
-      "sha512": "GmEA/sszI5UebPwOmnO8pzkFAeHRnTlMtlDJZGxXDdv9wBLaap8b5Fg3KooNbMkYFmVYeNCqKQGFAwcrQXylog==",
+    "DSharpPlus/4.0.0-nightly-00555": {
+      "sha512": "OLcqK7PvQbBcbpJ5OMqsh5/WeSV/Aedg28uDdHioo1mZFkSiGCKxZJYh8/v6k0wyxMHNVAxkPTLG4roAtln0NA==",
       "type": "package",
-      "path": "dsharpplus/4.0.0-nightly-00542",
+      "path": "dsharpplus/4.0.0-nightly-00555",
       "files": [
-        "dsharpplus.4.0.0-nightly-00542.nupkg.sha512",
+        ".nupkg.metadata",
+        "dsharpplus.4.0.0-nightly-00555.nupkg.sha512",
         "dsharpplus.nuspec",
         "lib/net45/DSharpPlus.dll",
         "lib/net45/DSharpPlus.xml",
@@ -1357,12 +1358,13 @@
         "lib/netstandard2.0/DSharpPlus.xml"
       ]
     },
-    "DSharpPlus.CommandsNext/4.0.0-nightly-00526": {
-      "sha512": "PM2Zoe3iDZGl36bI4u7sBHXZvektKnnuC6jb8IIwsYHUph9nu+6Qe8vBPDnGpqamq7SUdCyVlNXFHgCCy/Itkg==",
+    "DSharpPlus.CommandsNext/4.0.0-nightly-00555": {
+      "sha512": "5sMOQwWIxJswq55T6HaIEMXPPBTxfa8Ah0gTzZfawDLPGfWGzGqwBj07BEgUTtVzDNDLIV5dzwVDU8P8SliBxQ==",
       "type": "package",
-      "path": "dsharpplus.commandsnext/4.0.0-nightly-00526",
+      "path": "dsharpplus.commandsnext/4.0.0-nightly-00555",
       "files": [
-        "dsharpplus.commandsnext.4.0.0-nightly-00526.nupkg.sha512",
+        ".nupkg.metadata",
+        "dsharpplus.commandsnext.4.0.0-nightly-00555.nupkg.sha512",
         "dsharpplus.commandsnext.nuspec",
         "lib/net45/DSharpPlus.CommandsNext.dll",
         "lib/net45/DSharpPlus.CommandsNext.xml",
@@ -4617,8 +4619,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "DSharpPlus >= 4.0.0-nightly-00542",
-      "DSharpPlus.CommandsNext >= 4.0.0-nightly-00526",
+      "DSharpPlus >= 4.0.0-nightly-00555",
+      "DSharpPlus.CommandsNext >= 4.0.0-nightly-00555",
       "Microsoft.Extensions.DependencyInjection >= 2.2.0-preview2-35157",
       "Microsoft.Extensions.DependencyInjection.Abstractions >= 2.2.0-preview2-35157",
       "Microsoft.NETCore.App >= 2.1.0",
@@ -4626,7 +4628,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jonag\\.nuget\\packages\\": {},
+    "C:\\Users\\Elyspio\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -4635,14 +4637,14 @@
       "projectUniqueName": "P:\\Professionels\\baldmanSagen\\BotDiscord\\BotDiscord.csproj",
       "projectName": "BotDiscord",
       "projectPath": "P:\\Professionels\\baldmanSagen\\BotDiscord\\BotDiscord.csproj",
-      "packagesPath": "C:\\Users\\jonag\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\Elyspio\\.nuget\\packages\\",
       "outputPath": "P:\\Professionels\\baldmanSagen\\BotDiscord\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\jonag\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Elyspio\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4669,11 +4671,11 @@
         "dependencies": {
           "DSharpPlus": {
             "target": "Package",
-            "version": "[4.0.0-nightly-00542, )"
+            "version": "[4.0.0-nightly-00555, )"
           },
           "DSharpPlus.CommandsNext": {
             "target": "Package",
-            "version": "[4.0.0-nightly-00526, )"
+            "version": "[4.0.0-nightly-00555, )"
           },
           "Microsoft.Extensions.DependencyInjection": {
             "target": "Package",

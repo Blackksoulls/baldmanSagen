@@ -28,8 +28,8 @@
     "PublicHunterMessage": "a tiré sur ",
     "DeadMessagePrivate": "Vous venez de mourir, mais ce n'est pas terminé pour vous : vous pouvez maintenant voir toutes les discussions, mais **attention** toute tentative de triche (non fair play) est condamnée.",
     "DeadMessagePublic": "est mort et c'était ",
-    "BotWantPlay": "Qui veux jouer ?\nVeuillez vous connecter au salon vocal *bot* même si vous ne voulez ou pouvez pas parler"
-
+    "BotWantPlay": "Qui veux jouer ?\nVeuillez vous connecter au salon vocal *bot* même si vous ne voulez ou pouvez pas parler",
+    "LeaveMessage":  " est parti dans un autre village." 
   },
 
   "Errors": {

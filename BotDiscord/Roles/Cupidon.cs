@@ -10,10 +10,8 @@ namespace BotDiscord.Roles
 {
     public class Cupidon : Citizen
     {
-
         public Cupidon(DiscordMember me, DiscordGuildEmoji emoji) : base(me, emoji)
         {
-
         }
 
         public override string ToString()
@@ -66,6 +64,7 @@ namespace BotDiscord.Roles
                 Global.Client.MessageReactionAdded -= OnReactionAddedCupidon;
             }
         }
+
         private static async Task OnReactionAddedCupidon(MessageReactionAddEventArgs e)
         {
             var game = Global.Game;
@@ -78,7 +77,8 @@ namespace BotDiscord.Roles
                 }
             }
 
-            if (!present || (GameBuilder.GetMember(game.Guild, e.User)).Roles.Contains(Global.Roles[PublicRole.Spectator]))
+            if (!present ||
+                (GameBuilder.GetMember(game.Guild, e.User)).Roles.Contains(Global.Roles[PublicRole.Spectator]))
             {
                 await BotFunctions.DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
                 return;

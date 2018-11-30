@@ -23,7 +23,8 @@ namespace BotDiscord.Env
         public static DiscordClient Client { get; set; }
 
         public static GameConfig Config { get; set; } = JsonConvert.DeserializeObject<GameConfig>(
-                                                            File.ReadAllText($@"..//Config//game-settings.json",Encoding.UTF8));
+            File.ReadAllText($@"..//Config//game-settings.json", Encoding.UTF8));
+
         public static bool InGame = false;
     }
 
@@ -149,7 +150,6 @@ namespace BotDiscord.Env
             for (var i = 0; i < nbPlayer; i++)
                 switch (i)
                 {
-
                     case 1:
                         roleList.Add(GameRole.Seer);
                         break;
@@ -185,41 +185,41 @@ namespace BotDiscord.Env
                     default:
                         roleList.Add(i % 3 == 0 ? GameRole.Wolf : GameRole.Citizen);
                         break;
-                        /*case 1:
-                            roleList.Add(GameRole.Citizen);
-                            break;
-                        case 2:
-                            roleList.Add(GameRole.Wolf);
-                            break;
-                        case 3:
-                            roleList.Add(GameRole.Seer);
-                            break;
-                        case 4:
-                            roleList.Add(GameRole.Wolf);
-                            break;
-                        case 5:
-                            roleList.Add(GameRole.Savior);
-                            roleList.Add(GameRole.Citizen);
-                            roleList.Add(GameRole.Wolf);
-                            break;
-                        case 6:
-                            roleList.Add(GameRole.LittleGirl);
-                            break;
-                        case 7:
-                            roleList.Add(GameRole.Witch);
-                            break;
-                        case 8:
-                            roleList.Add(GameRole.Hunter);
-                            break;
-                        case 9:
-                            roleList.Add(GameRole.Wolf);
-                            break;
-                        case 10:
-                            roleList.Add(GameRole.Cupid);
-                            break;
-                        default:
-                            roleList.Add(i % 3 == 0 ? GameRole.Wolf : GameRole.Citizen);
-                            break;*/
+                    /*case 1:
+                        roleList.Add(GameRole.Citizen);
+                        break;
+                    case 2:
+                        roleList.Add(GameRole.Wolf);
+                        break;
+                    case 3:
+                        roleList.Add(GameRole.Seer);
+                        break;
+                    case 4:
+                        roleList.Add(GameRole.Wolf);
+                        break;
+                    case 5:
+                        roleList.Add(GameRole.Savior);
+                        roleList.Add(GameRole.Citizen);
+                        roleList.Add(GameRole.Wolf);
+                        break;
+                    case 6:
+                        roleList.Add(GameRole.LittleGirl);
+                        break;
+                    case 7:
+                        roleList.Add(GameRole.Witch);
+                        break;
+                    case 8:
+                        roleList.Add(GameRole.Hunter);
+                        break;
+                    case 9:
+                        roleList.Add(GameRole.Wolf);
+                        break;
+                    case 10:
+                        roleList.Add(GameRole.Cupid);
+                        break;
+                    default:
+                        roleList.Add(i % 3 == 0 ? GameRole.Wolf : GameRole.Citizen);
+                        break;*/
                 }
 
             return roleList;
@@ -276,9 +276,7 @@ namespace BotDiscord.Env
 
             await Global.Game.Guild.EveryoneRole.ModifyAsync(x => x.Permissions = Permissions.None);
 
-
             #endregion
-
         }
 
         public static async Task Spectator_ReactionAdd(MessageReactionAddEventArgs e)
@@ -287,15 +285,14 @@ namespace BotDiscord.Env
             {
                 await e.Message.DeleteReactionAsync(e.Emoji, e.User, $"Spectator {e.User.Username} can't vote");
             }
-
         }
+
         public static async Task Spectator_ReactionRem(MessageReactionRemoveEventArgs e)
         {
             if (e.User.GetMember().Roles.Contains(Global.Roles[PublicRole.Spectator]))
             {
                 await e.Message.DeleteReactionAsync(e.Emoji, e.User, $"Spectator {e.User.Username} can't vote");
             }
-
         }
 
         public static Permissions CreatePerms(params Permissions[] perms)

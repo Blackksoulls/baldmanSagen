@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using BotDiscord.Env;
 using BotDiscord.Env.Enum;
 using BotDiscord.Roles;
@@ -20,6 +21,7 @@ namespace BotDiscord
             set => Attendre = value;
         }
 
+   
 
         public static async Task DeadVote(int nbTry = 1)
         {
@@ -41,20 +43,19 @@ namespace BotDiscord
 
 
             Console.WriteLine("Le temps est fini");
-            DeadVotingMessage =
-                await Global.Game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DeadVotingMessage.Id);
+            DeadVotingMessage = await Global.Game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DeadVotingMessage.Id);
+
             //Attendre
 
 /*            foreach (var discordReaction in (await Global.Game.Guild.GetEmojisAsync()))
             {
-                foreach (var discordUserReact in (await DeadVotingMessage.GetReactionsAsync()))
+                foreach (var discordUserReact in (await DeadVotingMessage.GetReactionsAsync(discordReaction)))
                 {
                     Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
                 }
             }*/
 
-            var players = DeadVotingMessage.Reactions.ToList().FindAll(x =>
-                x.Count == DeadVotingMessage.Reactions.Max(y => y.Count) && x.Count >= 2);
+            /*var players = DeadVotingMessage.Reactions.ToList().FindAll(x => x.Count == DeadVotingMessage.Reactions.Max(y => y.Count) && x.Count >= 2);
 
 
             if (players.Count == 0)
@@ -71,9 +72,7 @@ namespace BotDiscord
                 var p = Global.Game.PersonnagesList.Find(personnage => personnage.Emoji.Id == players[0].Emoji.Id);
                 await MakeDeath(p);
             }
-
-            Global.Game.CheckVictory();
-
+            */
             Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
         }
 
@@ -113,7 +112,7 @@ namespace BotDiscord
 
             var players = DailyVotingMessage.Reactions.ToList().FindAll(x =>
                 x.Count == DailyVotingMessage.Reactions.Max(y => y.Count) && x.Count >= 2);
-
+            await BotCommands.GetVote(DailyVotingMessage);
 
             if (players.Count == 0)
             {

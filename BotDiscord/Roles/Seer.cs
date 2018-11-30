@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using BotDiscord.Env;
@@ -26,6 +27,7 @@ namespace BotDiscord.Roles
         {
             return Global.Game.Texts.GameRoles.SeerName;
         }
+
         public static async Task SeerAction()
         {
             try
@@ -33,16 +35,18 @@ namespace BotDiscord.Roles
                 var seer = Global.Game.PersonnagesList.Find(p => p.GetType() == typeof(Seer));
                 if (seer != null)
                 {
+                    Game.WriteDebug("JE S'APPELLE VOYANTE");
                     var msg = await seer.ChannelT.SendMessageAsync(Global.Game.Texts.GameRoles.SeerAskMsg);
 
-                    foreach (var player in (Global.Game.PersonnagesList.FindAll(p => p.Alive && p.GetType() != typeof(Seer))))
+                    foreach (var player in (Global.Game.PersonnagesList.FindAll(p =>
+                        p.Alive && p.GetType() != typeof(Seer))))
                     {
-
                         await msg.CreateReactionAsync(player.Emoji);
                     }
 
                     await Task.Delay(Global.Config.DayVoteTime);
-                    var react = msg.Reactions.ToList().FindAll(reaction => reaction.Count == msg.Reactions.Max(x => x.Count));
+                    var react = msg.Reactions.ToList()
+                        .FindAll(reaction => reaction.Count == msg.Reactions.Max(x => x.Count));
                     await msg.ModifyAsync(content: $"{msg.Reactions.ToList().Count}");
                     var embed = new DiscordEmbedBuilder
                     {
@@ -61,17 +65,12 @@ namespace BotDiscord.Roles
                     }
 
                     await seer.ChannelT.SendMessageAsync(text, embed: embed.Build());
-
-
-
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-
-
         }
     }
 }

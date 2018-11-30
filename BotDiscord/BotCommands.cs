@@ -1,19 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using BotDiscord.Env;
+﻿using BotDiscord.Env;
 using BotDiscord.Env.Enum;
-using BotDiscord.Locale;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BotDiscord
 {
@@ -76,9 +71,31 @@ namespace BotDiscord
 
 
         [Command("test")]
-        public async Task Test(CommandContext e)
+        public async Task Test(CommandContext e, string id)
         {
-            await Task.Run(() => Game.WriteDebug("test"));
+            Console.Write("dznia" );
+            await GetVote(m: await e.Channel.GetMessageAsync((ulong) Int32.Parse(id)));
+        }
+
+        public static async Task<Dictionary<DiscordUser, DiscordGuildEmoji>> GetVote(DiscordMessage m)
+        {
+            Dictionary<DiscordUser, DiscordGuildEmoji> d = new Dictionary<DiscordUser, DiscordGuildEmoji>();
+            foreach (var discordReaction in (await Global.Game.Guild.GetEmojisAsync()))
+            {
+                foreach (var discordUserReact in (await m.GetReactionsAsync(discordReaction)))
+                {
+                    if(!discordUserReact.IsCurrent)
+                        d.Add(discordUserReact, discordReaction);
+                    // Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
+                }
+            }
+
+            Game.WriteDebug($"Debug");
+            foreach (var (key, value) in d)
+            {
+                Game.WriteDebug($"\t{key} : {value}");
+            }
+            return d;
         }
 
         [Command("delete")]

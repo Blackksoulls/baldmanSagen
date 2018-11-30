@@ -12,7 +12,7 @@ namespace BotDiscord.Roles
         public bool Alive { get; set; }
         public Effect Effect = Effect.None;
 
-        
+
         public DiscordChannel ChannelT { get; set; }
         public DiscordChannel ChannelV { get; set; }
 
@@ -49,7 +49,6 @@ namespace BotDiscord.Roles
         }
 
 
-
         public virtual string GotKilled()
         {
             return $"{Me.DisplayName} {Global.Game.Texts.Annoucement.DeadMessagePublic}";
@@ -58,7 +57,7 @@ namespace BotDiscord.Roles
         public abstract string GetClassName();
     }
 
-    public  class Point
+    public class Point
     {
         public int NbPoints;
         private static int mise = 1;

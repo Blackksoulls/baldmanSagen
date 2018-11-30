@@ -12,7 +12,7 @@ namespace BotDiscord.Roles
 
 
         public override string ToString()
-          {
+        {
             return Global.Game.Texts.GameRoles.LittleGirlToString + " \n " + Global.Game.Texts.GameRoles.TownFriendly;
         }
 

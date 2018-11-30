@@ -32,20 +32,16 @@ namespace BotDiscord.Env
         public int Laps;
 
 
-
-        public Game( string lang)
+        public Game(string lang)
         {
             SetLanguage(lang);
         }
 
 
         public void SetLanguage(string lang) => Texts = JsonConvert.DeserializeObject<Language>(
-                                                        File.ReadAllText
-                                                        ($@"..//Locale/{lang}/lang.json",
-                                                        Encoding.UTF8));
-
-
-
+            File.ReadAllText
+            ($@"..//Locale/{lang}/lang.json",
+                Encoding.UTF8));
 
 
         public async Task CreateGuild(CommandContext e)
@@ -68,13 +64,11 @@ namespace BotDiscord.Env
                         Global.Client = e.Client;
 
 
-
                         var msgs = (await e.Guild.GetDefaultChannel().GetMessagesAsync(10)).ToList()
                             .FindAll(m => m.Author == e.Client.CurrentUser || m.Content.Contains("!go"));
                         if (msgs.Count > 0)
                         {
                             await e.Guild.GetDefaultChannel().DeleteMessagesAsync(msgs);
-
                         }
                     }
                     catch (Exception exception)
@@ -95,8 +89,10 @@ namespace BotDiscord.Env
                             Console.WriteLine(ex);
                         }
                     }
+
                     await Guild.ModifyAsync(x => x.SystemChannel = new Optional<DiscordChannel>(null));
-                    await Guild.ModifyAsync(opt => opt.DefaultMessageNotifications = DefaultMessageNotifications.MentionsOnly);
+                    await Guild.ModifyAsync(opt =>
+                        opt.DefaultMessageNotifications = DefaultMessageNotifications.MentionsOnly);
                     Global.InGame = true;
 
                     WriteDebug("1");
@@ -106,7 +102,8 @@ namespace BotDiscord.Env
                     WriteDebug("2");
                     await Global.Client.CurrentUser.GetMember().GrantRoleAsync(Global.Roles[PublicRole.Admin]);
                     WriteDebug("3");
-                    await (await Guild.GetAllMembersAsync()).First().ModifyAsync(m => m.Nickname = Texts.DiscordRoles.BotName);
+                    await (await Guild.GetAllMembersAsync()).First()
+                        .ModifyAsync(m => m.Nickname = Texts.DiscordRoles.BotName);
                     WriteDebug("4");
                     Console.WriteLine("Guild Created");
                     DiscordChannels = new Dictionary<GameChannel, DiscordChannel>();
@@ -137,9 +134,6 @@ namespace BotDiscord.Env
                     var players = new List<DiscordMember>();
 
 
-
-
-              
                     await Task.Delay(Global.Config.JoinTime);
 
                     foreach (var usr in botVChannel.Users)
@@ -153,7 +147,6 @@ namespace BotDiscord.Env
                     Global.Client.GuildMemberAdded -= StartMember;
                     Global.Client.MessageReactionAdded += Listeners.PreventMultiVote;
                     Global.Client.MessageReactionAdded += Listeners.PreventSpectatorFromVote;
-                   
 
 
                     Console.WriteLine(13);
@@ -206,10 +199,13 @@ namespace BotDiscord.Env
                             Color = Color.InfoColor
                         };
                         await DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
-
                         await Task.Delay(Global.Config.JoinTime);
 
                         await Global.Game.Guild.DeleteAsync();
+                    }
+                    else
+                    {
+                        e.Client.VoiceStateUpdated += Listeners.KillLeaver;
                     }
 
                     while (Victory == Victory.None && Victory != Victory.NotPlayable) await PlayAsync();
@@ -219,8 +215,6 @@ namespace BotDiscord.Env
             {
                 Console.WriteLine(e4);
             }
-
-           
         }
 
         public async Task RoleAssignment(DiscordMessage msgInv, CommandContext e, List<DiscordMember> players)
@@ -233,7 +227,8 @@ namespace BotDiscord.Env
                 Global.Game.DiscordChannels.Add(GameChannel.PersoGroup, chsPerso);
 
                 var wolfGrpChannel =
-                    await Global.Game.Guild.CreateChannelAsync(Global.Game.Texts.Channels.WolvesChannel, ChannelType.Category);
+                    await Global.Game.Guild.CreateChannelAsync(Global.Game.Texts.Channels.WolvesChannel,
+                        ChannelType.Category);
                 var townGrpChannel = await Global.Game.Guild
                     .CreateChannelAsync(Global.Game.Texts.Channels.TownChannel, ChannelType.Category);
 
@@ -293,15 +288,14 @@ namespace BotDiscord.Env
         private async Task StartMember(GuildMemberAddEventArgs e)
         {
             var p =
-                GameBuilder.CreatePerms(Permissions.AccessChannels, 
-                                        Permissions.UseVoice, 
-                                        Permissions.Speak, 
-                                        Permissions.UseVoiceDetection);
+                GameBuilder.CreatePerms(Permissions.AccessChannels,
+                    Permissions.UseVoice,
+                    Permissions.Speak,
+                    Permissions.UseVoiceDetection);
 
             await DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(e.Member, p);
             WriteDebug($"D : {e.Member.Username}");
         }
-
 
 
         public void CreateStack()
@@ -359,7 +353,6 @@ namespace BotDiscord.Env
                 DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
             }
 
-          
 
             if (Victory != Victory.None) Moments.Push(Moment.End);
         }
@@ -436,7 +429,6 @@ namespace BotDiscord.Env
         }
 
 
-
         public async Task Kill(Personnage p)
         {
             try
@@ -460,7 +452,7 @@ namespace BotDiscord.Env
                 await p.ChannelT.SendMessageAsync(embed: embed.Build());
                 foreach (var discordChannel in DiscordChannels.Values)
                     await discordChannel.AddOverwriteAsync(p.Me, Permissions.AccessChannels, Permissions.ManageEmojis);
-                    
+
                 await p.Me.RevokeRoleAsync(Global.Roles[PublicRole.Player]);
                 await p.Me.GrantRoleAsync(Global.Roles[PublicRole.Spectator]);
             }

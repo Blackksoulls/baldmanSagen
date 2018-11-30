@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using BotDiscord.Env;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
@@ -17,7 +18,11 @@ namespace BotDiscord
         private DiscordClient _client;
         private CommandsNextExtension _commands;
         private static Config _config;
-        private static void Main(string[] args) => new Program().AsyncMain().GetAwaiter().GetResult();
+
+        private static void Main(string[] args)
+        {
+            new Program().AsyncMain().GetAwaiter().GetResult();
+        }
 
         public async Task AsyncMain()
         {
@@ -91,8 +96,10 @@ namespace BotDiscord
         private Task Client_GuildAvailable(GuildCreateEventArgs e)
         {
             if (e.Guild.Name == "Loup Garou" && e.Guild.JoinedAt < DateTimeOffset.Now.AddSeconds(-10))
+            {
                 e.Guild.DeleteAsync();
-            e.Client.DebugLogger.LogMessage(LogLevel.Info, "BotApp", $"{e.Guild.Name} is now available", DateTime.Now);
+            }
+                e.Client.DebugLogger.LogMessage(LogLevel.Info, "BotApp", $"{e.Guild.Name} is now available", DateTime.Now);
             return Task.CompletedTask;
         }
 
@@ -110,16 +117,19 @@ namespace BotDiscord
             return Task.CompletedTask;
         }
 
-        private Task Client_VoiceStateUpdated(VoiceStateUpdateEventArgs e)
+        private static Task Client_VoiceStateUpdated(VoiceStateUpdateEventArgs e)
         {
+            Game.WriteDebug(e.Channel);
+
             try
             {
                 e.Client.DebugLogger.LogMessage(LogLevel.Info, "BotApp",
                     $"{e.User.Username} updated voice in {e.Channel.Name} ({e.Guild.Name})", DateTime.Now);
             }
-            catch (Exception)
+            catch (Exception e1)
             {
-                Console.WriteLine();
+                Console.WriteLine(e1);
+                Console.WriteLine($"{e.User.Username} disconnected");
             }
 
             return Task.CompletedTask;
@@ -143,6 +153,8 @@ namespace BotDiscord
                 $"{e.UserBefore.AvatarUrl} => {e.UserAfter.AvatarUrl}", DateTime.Now);
             e.Client.DebugLogger.LogMessage(LogLevel.Debug, "BotApp",
                 $"{e.UserBefore.Presence.Activity.Name} => {e.UserAfter.Presence.Activity.Name}", DateTime.Now);
+
+
             return Task.CompletedTask;
         }
 
@@ -441,9 +453,10 @@ namespace BotDiscord
 
             var s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-            var broadcast = IPAddress.Parse("192.168.1.21");
+            var broadcast = IPAddress.Parse("192.168.1.21" );
 
-            var sendbuf = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(new LogMessage { Loglevel = e.Level.ToString(), Message = e.Message, Source = e.Application, Timestamp = e.Timestamp}));
+            var sendbuf = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(new LogMessage
+                {Loglevel = e.Level.ToString(), Message = e.Message, Source = e.Application, Timestamp = e.Timestamp}));
             var ep = new IPEndPoint(broadcast, 42915);
 
             s.SendTo(sendbuf, ep);
@@ -457,15 +470,11 @@ namespace BotDiscord
         [JsonProperty("logfile")] public string LogFile { get; private set; }
     }
 
-    struct LogMessage
+    internal struct LogMessage
     {
-        [JsonProperty("source")]
-        public string Source { get; set; }
-        [JsonProperty("loglevel")]
-        public string Loglevel { get; set; }
-        [JsonProperty("timestamp")]
-        public DateTime Timestamp { get; set; }
-        [JsonProperty("message")]
-        public string Message { get; set; }
+        [JsonProperty("source")] public string Source { get; set; }
+        [JsonProperty("loglevel")] public string Loglevel { get; set; }
+        [JsonProperty("timestamp")] public DateTime Timestamp { get; set; }
+        [JsonProperty("message")] public string Message { get; set; }
     }
 }
