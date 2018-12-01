@@ -8,6 +8,7 @@ using BotDiscord.Roles;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using BotDiscord.Env.Extentions;
 
 namespace BotDiscord
 {
@@ -15,13 +16,14 @@ namespace BotDiscord
     {
         public static DiscordMessage DailyVotingMessage { get; private set; }
         public static DiscordMessage DeadVotingMessage { get; private set; }
+
         public static bool Attendre
-		{
-			get => Attendre;
+        {
+            get => Attendre;
             set => Attendre = value;
         }
 
-   
+
 
         public static async Task DeadVote(int nbTry = 1)
         {
@@ -32,7 +34,7 @@ namespace BotDiscord
             };
             DeadVotingMessage =
                 await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
-            
+
             foreach (var personnage in Global.Game.PersonnagesList.FindAll(personnage => personnage.Alive))
             {
                 Console.WriteLine($"Personnage : {personnage.Me.Username} -> {personnage.Emoji.Name}");
@@ -43,7 +45,8 @@ namespace BotDiscord
 
 
             Console.WriteLine("Le temps est fini");
-            DeadVotingMessage = await Global.Game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DeadVotingMessage.Id);
+            DeadVotingMessage = await Global.Game.DiscordChannels[GameChannel.TownText]
+                .GetMessageAsync(DeadVotingMessage.Id);
 
             //Attendre
 
@@ -55,7 +58,7 @@ namespace BotDiscord
                 }
             }*/
 
-            /*var players = DeadVotingMessage.Reactions.ToList().FindAll(x => x.Count == DeadVotingMessage.Reactions.Max(y => y.Count) && x.Count >= 2);
+            /*var players = DeadVotingMessage.Reactions.ToList().FindAll(x => x.Count == DeadVotingMessage.Reactions.Voted(y => y.Count) && x.Count >= 2);
 
 
             if (players.Count == 0)
@@ -77,7 +80,7 @@ namespace BotDiscord
         }
 
 
-        public static async Task DailyVote(int nbTry = 1)
+        public static async Task DailyVote()
         {
             var embed = new DiscordEmbedBuilder
             {
@@ -95,26 +98,26 @@ namespace BotDiscord
                 await DailyVotingMessage.CreateReactionAsync(personnage.Emoji);
             }
 
-            if (nbTry == 1) Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
+            Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
 
 
-            await Task.Delay(Global.Config.DayVoteTime );
+            await Task.Delay(Global.Config.DayVoteTime);
 
 
-            Console.WriteLine("Le temps est fini");
-            DailyVotingMessage =
-                await Global.Game.DiscordChannels[GameChannel.TownText].GetMessageAsync(DailyVotingMessage.Id);
-            foreach (var discordReaction in DailyVotingMessage.Reactions)
+            Console.WriteLine("Le temps pour voter le jour est fini");
+
+
+
+            var votes = await BotCommands.GetVotes(DailyVotingMessage);
+            var player = votes.Voted();
+
+
+            if (player != null)
             {
-                Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
+                var p = Global.Game.PersonnagesList.Find(personnage => personnage.Id == player.Id);
+                await MakeDeath(p);
             }
-
-
-            var players = DailyVotingMessage.Reactions.ToList().FindAll(x =>
-                x.Count == DailyVotingMessage.Reactions.Max(y => y.Count) && x.Count >= 2);
-            await BotCommands.GetVote(DailyVotingMessage);
-
-            if (players.Count == 0)
+            else
             {
                 embed = new DiscordEmbedBuilder
                 {
@@ -123,15 +126,13 @@ namespace BotDiscord
                 };
                 await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed);
             }
-            else
-            {
-                var p = Global.Game.PersonnagesList.Find(personnage => personnage.Emoji.Id == players[0].Emoji.Id);
-                await MakeDeath(p);
-            }
 
             Global.Game.CheckVictory();
 
             Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
+
+            await Task.Delay(10000);
+
         }
 
 

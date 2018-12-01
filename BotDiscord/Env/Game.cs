@@ -428,6 +428,10 @@ namespace BotDiscord.Env
             }
         }
 
+        public async Task Kill(DiscordMember m)
+        {
+            await Kill(Global.Game.PersonnagesList.Find(p => p.Id == m.Id));
+        }
 
         public async Task Kill(Personnage p)
         {

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BotDiscord.Env;
 using BotDiscord.Env.Enum;
+using BotDiscord.Env.Extentions;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
@@ -49,14 +50,13 @@ namespace BotDiscord.Roles
             }
 
             await Task.Delay(Global.Config.DayVoteTime);
-            msg = await Global.Game.DiscordChannels[GameChannel.WolfText].GetMessageAsync(msg.Id);
-            var react = msg.Reactions.ToList().FindAll(reaction =>
-                reaction.Count == msg.Reactions.Max(x => x.Count) && reaction.Count >= 2);
-            Game.WriteDebug(react);
-            if (react.Count > 0)
+
+            var targetMember = (await BotCommands.GetVotes(msg)).Voted();
+
+            if (targetMember != null)
             {
-                var target = Global.Game.PersonnagesList.Find(p => p.Emoji.Id == react[0].Emoji.Id);
-                Global.Game.NightTargets.Add(target);
+                var targetPersonnage = Global.Game.PersonnagesList.Find(p => p.Me == targetMember);
+                Global.Game.NightTargets.Add(targetPersonnage);
             }
             else
             {
