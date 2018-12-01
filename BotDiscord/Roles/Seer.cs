@@ -52,7 +52,7 @@ namespace BotDiscord.Roles
                     {
                         Color = Color.InfoColor
                     };
-                    string text = "42";
+                    var text = "42";
                     if (react.Count > 0)
                     {
                         var target = Global.Game.PersonnagesList.Find(p => p.Emoji.Id == react[0].Emoji.Id);

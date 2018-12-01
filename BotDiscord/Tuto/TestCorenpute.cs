@@ -23,10 +23,10 @@ namespace BotDiscord.Tuto
     {
         public static void Main(string[] args)
         {
-            List<Aliment> Aliments = new List<Aliment>();
+            var Aliments = new List<Aliment>();
             var rand = new Random();
 
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 if (rand.Next() % 2 == 1)
                 {
@@ -75,7 +75,7 @@ namespace BotDiscord.Tuto
             this.hauteur = hauteur;
             Muffins.Add(this);
 
-            for (int i = 0; i < 500; i++)
+            for (var i = 0; i < 500; i++)
             {
                 Muffins.AddRange(Muffins);
             }

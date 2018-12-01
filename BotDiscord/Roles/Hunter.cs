@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BotDiscord.Env;
 using BotDiscord.Env.Enum;
+using BotDiscord.Env.Extentions;
 using DSharpPlus.Entities;
 
 namespace BotDiscord.Roles
@@ -12,10 +13,7 @@ namespace BotDiscord.Roles
         {
         }
 
-        public override string ToString()
-        {
-            return Global.Game.Texts.GameRoles.HunterToString + " \n " + Global.Game.Texts.GameRoles.TownFriendly;
-        }
+        public override string ToString() => Global.Game.Texts.GameRoles.HunterToString + " \n " + Global.Game.Texts.GameRoles.TownFriendly;
 
         public override string GotKilled()
         {
@@ -41,13 +39,12 @@ namespace BotDiscord.Roles
 
             await Task.Delay(Global.Config.DayVoteTime);
 
-            var react = message.Reactions.First(reaction => reaction.Count == message.Reactions.Max(x => x.Count));
-            var target = Global.Game.PersonnagesList.Find(p => p.Emoji.Id == react.Emoji.Id);
+            var target = (await BotCommands.GetVotes(message)).Voted();
             await Global.Game.Kill(target);
             var embed = new DiscordEmbedBuilder
             {
                 Title =
-                    $"{hunter.Me.Username} {Global.Game.Texts.Annoucement.PublicHunterMessage} {target.Me.Username}",
+                    $"{hunter.Me.Username} {Global.Game.Texts.Annoucement.PublicHunterMessage} {target.Username}",
                 Color = Color.DeadColor
             };
             await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());

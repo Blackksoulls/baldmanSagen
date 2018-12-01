@@ -74,18 +74,18 @@ namespace BotDiscord
         public async Task Test(CommandContext e, string id)
         {
             Console.Write("dznia" );
-            await GetVote(m: await e.Channel.GetMessageAsync((ulong) Int32.Parse(id)));
+            await GetVotes(m: await e.Channel.GetMessageAsync((ulong) Int32.Parse(id)));
         }
 
-        public static async Task<Dictionary<DiscordUser, DiscordGuildEmoji>> GetVote(DiscordMessage m)
+        public static async Task<Dictionary<DiscordMember, DiscordGuildEmoji>> GetVotes(DiscordMessage m)
         {
-            Dictionary<DiscordUser, DiscordGuildEmoji> d = new Dictionary<DiscordUser, DiscordGuildEmoji>();
+            var d = new Dictionary<DiscordMember, DiscordGuildEmoji>();
             foreach (var discordReaction in (await Global.Game.Guild.GetEmojisAsync()))
             {
                 foreach (var discordUserReact in (await m.GetReactionsAsync(discordReaction)))
                 {
                     if(!discordUserReact.IsCurrent)
-                        d.Add(discordUserReact, discordReaction);
+                        d.Add(discordUserReact.GetMember(), discordReaction);
                     // Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
                 }
             }
