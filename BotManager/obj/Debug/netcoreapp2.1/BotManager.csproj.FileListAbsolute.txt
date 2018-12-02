@@ -1,0 +1,11 @@
+P:\Professionels\baldmanSagen\BotManager\bin\Debug\netcoreapp2.1\BotManager.deps.json
+P:\Professionels\baldmanSagen\BotManager\bin\Debug\netcoreapp2.1\BotManager.runtimeconfig.json
+P:\Professionels\baldmanSagen\BotManager\bin\Debug\netcoreapp2.1\BotManager.runtimeconfig.dev.json
+P:\Professionels\baldmanSagen\BotManager\bin\Debug\netcoreapp2.1\BotManager.dll
+P:\Professionels\baldmanSagen\BotManager\obj\Debug\netcoreapp2.1\BotManager.csproj.CoreCompileInputs.cache
+P:\Professionels\baldmanSagen\BotManager\obj\Debug\netcoreapp2.1\BotManager.AssemblyInfoInputs.cache
+P:\Professionels\baldmanSagen\BotManager\obj\Debug\netcoreapp2.1\BotManager.AssemblyInfo.cs
+P:\Professionels\baldmanSagen\BotManager\obj\Debug\netcoreapp2.1\BotManager.csprojAssemblyReference.cache
+P:\Professionels\baldmanSagen\BotManager\bin\Debug\netcoreapp2.1\BotManager.pdb
+P:\Professionels\baldmanSagen\BotManager\obj\Debug\netcoreapp2.1\BotManager.dll
+P:\Professionels\baldmanSagen\BotManager\obj\Debug\netcoreapp2.1\BotManager.pdb

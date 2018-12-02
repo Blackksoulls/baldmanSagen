@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00555" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00555" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="robocopy.exe $(SolutionDir)\GameManager\bin\Debug\netcoreapp2.1\  $(SolutionDir)\Publish\Bots\GameManager\Bin /E /IS&#xD;&#xA;robocopy.exe $(SolutionDir)\GameManager\Config\  $(SolutionDir)\Publish\Bots\GameManager\Config /E /IS&#xD;&#xA;robocopy.exe $(SolutionDir)\GameManager\Locale\  $(SolutionDir)\Publish\Bots\GameManager\Locale /E /IS&#xD;&#xA;&#xD;&#xA;robocopy.exe $(SolutionDir)\Library\Locale\  $(SolutionDir)\Publish\Bots\GameManager\Bin /E /IS&#xD;&#xA;&#xD;&#xA;" />
+  </Target>
+
+</Project>

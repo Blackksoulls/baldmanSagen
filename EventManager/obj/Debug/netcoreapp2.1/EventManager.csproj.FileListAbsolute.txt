@@ -1,0 +1,14 @@
+P:\Professionels\baldmanSagen\EventManager\bin\Debug\netcoreapp2.1\EventManager.deps.json
+P:\Professionels\baldmanSagen\EventManager\bin\Debug\netcoreapp2.1\EventManager.runtimeconfig.json
+P:\Professionels\baldmanSagen\EventManager\bin\Debug\netcoreapp2.1\EventManager.runtimeconfig.dev.json
+P:\Professionels\baldmanSagen\EventManager\bin\Debug\netcoreapp2.1\EventManager.dll
+P:\Professionels\baldmanSagen\EventManager\bin\Debug\netcoreapp2.1\EventManager.pdb
+P:\Professionels\baldmanSagen\EventManager\bin\Debug\netcoreapp2.1\BotManager.dll
+P:\Professionels\baldmanSagen\EventManager\bin\Debug\netcoreapp2.1\BotManager.pdb
+P:\Professionels\baldmanSagen\EventManager\obj\Debug\netcoreapp2.1\EventManager.csprojAssemblyReference.cache
+P:\Professionels\baldmanSagen\EventManager\obj\Debug\netcoreapp2.1\EventManager.csproj.CoreCompileInputs.cache
+P:\Professionels\baldmanSagen\EventManager\obj\Debug\netcoreapp2.1\EventManager.AssemblyInfoInputs.cache
+P:\Professionels\baldmanSagen\EventManager\obj\Debug\netcoreapp2.1\EventManager.AssemblyInfo.cs
+P:\Professionels\baldmanSagen\EventManager\obj\Debug\netcoreapp2.1\EventManager.csproj.CopyComplete
+P:\Professionels\baldmanSagen\EventManager\obj\Debug\netcoreapp2.1\EventManager.dll
+P:\Professionels\baldmanSagen\EventManager\obj\Debug\netcoreapp2.1\EventManager.pdb

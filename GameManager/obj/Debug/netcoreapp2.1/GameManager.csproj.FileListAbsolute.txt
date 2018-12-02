@@ -1,0 +1,14 @@
+P:\Professionels\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\GameManager.deps.json
+P:\Professionels\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\GameManager.runtimeconfig.json
+P:\Professionels\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\GameManager.runtimeconfig.dev.json
+P:\Professionels\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\GameManager.dll
+P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.csprojAssemblyReference.cache
+P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.csproj.CoreCompileInputs.cache
+P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.AssemblyInfoInputs.cache
+P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.AssemblyInfo.cs
+P:\Professionels\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\GameManager.pdb
+P:\Professionels\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\BotManager.dll
+P:\Professionels\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\BotManager.pdb
+P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.csproj.CopyComplete
+P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.dll
+P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.pdb
