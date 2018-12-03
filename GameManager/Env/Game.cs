@@ -40,7 +40,7 @@ namespace GameManager.Env
 
         public void SetLanguage(string lang) => Texts = JsonConvert.DeserializeObject<Language>(
             File.ReadAllText
-            ($@"..//Locale/{lang}/lang.json",
+            (Path.Combine(Program.GetPath(-2), "Locale", lang, "lang.json"),
                 Encoding.UTF8));
 
 
@@ -76,7 +76,7 @@ namespace GameManager.Env
                         Console.WriteLine(exception);
                     }
 
-                    Console.WriteLine(File.ReadAllText(@"..//Locale/fr/lang.json", Encoding.UTF8));
+                    Console.WriteLine(Texts);
                     while (Guild == null)
                     {
                         try
@@ -145,7 +145,7 @@ namespace GameManager.Env
                     }
 
                     Global.Client.GuildMemberAdded -= StartMember;
-                    Global.Client.MessageReactionAdded += Listeners.PreventMultiVote;
+                    //Global.Client.MessageReactionAdded += Listeners.PreventMultiVote;
                     Global.Client.MessageReactionAdded += Listeners.PreventSpectatorFromVote;
 
 

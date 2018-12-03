@@ -18,19 +18,6 @@
           "lib/netstandard2.0/DSharpPlus.dll": {}
         }
       },
-      "DSharpPlus.CommandsNext/4.0.0-nightly-00555": {
-        "type": "package",
-        "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00555",
-          "Microsoft.Extensions.DependencyInjection": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -56,27 +43,6 @@
         },
         "runtime": {
           "lib/netstandard1.3/Microsoft.CSharp.dll": {}
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection/2.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
         }
       },
       "Microsoft.NETCore.App/2.1.0": {
@@ -1683,21 +1649,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
-      },
-      "BotManager/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00555",
-          "DSharpPlus.CommandsNext": "4.0.0-nightly-00555",
-          "Microsoft.NETCore.App": "2.1.0"
-        },
-        "compile": {
-          "bin/placeholder/BotManager.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/BotManager.dll": {}
-        }
       }
     }
   },
@@ -1722,28 +1673,6 @@
         "lib/netstandard1.3/DSharpPlus.xml",
         "lib/netstandard2.0/DSharpPlus.dll",
         "lib/netstandard2.0/DSharpPlus.xml"
-      ]
-    },
-    "DSharpPlus.CommandsNext/4.0.0-nightly-00555": {
-      "sha512": "5sMOQwWIxJswq55T6HaIEMXPPBTxfa8Ah0gTzZfawDLPGfWGzGqwBj07BEgUTtVzDNDLIV5dzwVDU8P8SliBxQ==",
-      "type": "package",
-      "path": "dsharpplus.commandsnext/4.0.0-nightly-00555",
-      "files": [
-        ".nupkg.metadata",
-        "dsharpplus.commandsnext.4.0.0-nightly-00555.nupkg.sha512",
-        "dsharpplus.commandsnext.nuspec",
-        "lib/net45/DSharpPlus.CommandsNext.dll",
-        "lib/net45/DSharpPlus.CommandsNext.xml",
-        "lib/net46/DSharpPlus.CommandsNext.dll",
-        "lib/net46/DSharpPlus.CommandsNext.xml",
-        "lib/net47/DSharpPlus.CommandsNext.dll",
-        "lib/net47/DSharpPlus.CommandsNext.xml",
-        "lib/netstandard1.1/DSharpPlus.CommandsNext.dll",
-        "lib/netstandard1.1/DSharpPlus.CommandsNext.xml",
-        "lib/netstandard1.3/DSharpPlus.CommandsNext.dll",
-        "lib/netstandard1.3/DSharpPlus.CommandsNext.xml",
-        "lib/netstandard2.0/DSharpPlus.CommandsNext.dll",
-        "lib/netstandard2.0/DSharpPlus.CommandsNext.xml"
       ]
     },
     "Microsoft.CSharp/4.3.0": {
@@ -1802,32 +1731,6 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
-      ]
-    },
-    "Microsoft.Extensions.DependencyInjection/2.0.0": {
-      "sha512": "V6xeuEEpIIygDHtOtJ+0X0qkKtVSUS1+kwOC3O4pH0depJf8AfofGo8hanOxoRgooj7WmTtPcgOIjwAteEe28A==",
-      "type": "package",
-      "path": "microsoft.extensions.dependencyinjection/2.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.xml",
-        "microsoft.extensions.dependencyinjection.2.0.0.nupkg.sha512",
-        "microsoft.extensions.dependencyinjection.nuspec"
-      ]
-    },
-    "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-      "sha512": "P4dK3DZQFsp7fFzkBu9H9jesBj0KB3O9c50n9FeAOIF+A8aQKBRj63luC9gPqvcedNdMfYQoEUe5dLps1sqvuA==",
-      "type": "package",
-      "path": "microsoft.extensions.dependencyinjection.abstractions/2.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
-        "microsoft.extensions.dependencyinjection.abstractions.2.0.0.nupkg.sha512",
-        "microsoft.extensions.dependencyinjection.abstractions.nuspec"
       ]
     },
     "Microsoft.NETCore.App/2.1.0": {
@@ -5949,16 +5852,11 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
-    },
-    "BotManager/1.0.0": {
-      "type": "project",
-      "path": "../BotManager/BotManager.csproj",
-      "msbuildProject": "../BotManager/BotManager.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "BotManager >= 1.0.0",
+      "DSharpPlus >= 4.0.0-nightly-00555",
       "Microsoft.NETCore.App >= 2.1.0"
     ]
   },
@@ -5992,11 +5890,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {
-            "P:\\Professionels\\baldmanSagen\\BotManager\\BotManager.csproj": {
-              "projectPath": "P:\\Professionels\\baldmanSagen\\BotManager\\BotManager.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -6008,6 +5902,10 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "DSharpPlus": {
+            "target": "Package",
+            "version": "[4.0.0-nightly-00555, )"
+          },
           "Microsoft.NETCore.App": {
             "target": "Package",
             "version": "[2.1.0, )",

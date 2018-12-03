@@ -26,7 +26,11 @@ namespace GameManager
 
         public async Task AsyncMain()
         {
-            _config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../Config/config.json"));
+
+            var str = GetPath(2);
+
+
+            _config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Path.Combine(str, "Config", "config.json")));
             _client = new DiscordClient(new DiscordConfiguration {LogLevel = LogLevel.Debug, Token = _config.Token});
             _commands = _client.UseCommandsNext(new CommandsNextConfiguration
             {
@@ -93,13 +97,34 @@ namespace GameManager
             await Task.Delay(-1);
         }
 
+        public static string GetPath(int nbToRemove)
+        {
+            var strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            Console.WriteLine(strPath);
+            var strs = strPath.Split(Path.DirectorySeparatorChar);
+            foreach (var s in strs)
+            {
+                Console.Write($"{s} ");
+            }
+
+            Console.WriteLine("");
+            var str = "";
+            for (var i = 0; i < strs.Length - 2; i++)
+            {
+                str = Path.Combine(str, strs[i]);
+            }
+
+            return str;
+        }
+
         private Task Client_GuildAvailable(GuildCreateEventArgs e)
         {
             if (e.Guild.Name == "Loup Garou" && e.Guild.JoinedAt < DateTimeOffset.Now.AddSeconds(-10))
             {
                 e.Guild.DeleteAsync();
             }
-                e.Client.DebugLogger.LogMessage(LogLevel.Info, "BotApp", $"{e.Guild.Name} is now available", DateTime.Now);
+
+            e.Client.DebugLogger.LogMessage(LogLevel.Info, "BotApp", $"{e.Guild.Name} is now available", DateTime.Now);
             return Task.CompletedTask;
         }
 
@@ -453,7 +478,7 @@ namespace GameManager
 
             var s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-            var broadcast = IPAddress.Parse("192.168.1.21" );
+            var broadcast = IPAddress.Parse("192.168.1.21");
 
             var sendbuf = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(new LogMessage
                 {Loglevel = e.Level.ToString(), Message = e.Message, Source = e.Application, Timestamp = e.Timestamp}));

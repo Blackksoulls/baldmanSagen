@@ -129,7 +129,7 @@
             </summary>
             <param name="client">Discord client to initialize for.</param>
         </member>
-        <member name="M:DSharpPlus.DebugLogger.LogMessage(DSharpPlus.LogLevel,System.String,System.String,System.DateTime)">
+        <member name="M:DSharpPlus.DebugLogger.LogMessage(DSharpPlus.LogLevel,System.String,System.String,System.DateTime,System.Exception)">
             <summary>
             Logs a message to this DebugLogger
             </summary>
@@ -137,6 +137,7 @@
             <param name="application">What this message applies to</param>
             <param name="message">Message to log</param>
             <param name="timestamp">When this message was sent</param>
+            <param name="exception">The exception that occurred</param>
         </member>
         <member name="M:DSharpPlus.DebugLogger.LogTaskFault(System.Threading.Tasks.Task,DSharpPlus.LogLevel,System.String,System.String)">
             <summary>
@@ -165,6 +166,11 @@
         <member name="P:DSharpPlus.EventArgs.DebugLogMessageEventArgs.Message">
             <summary>
             Gets the sent message.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.EventArgs.DebugLogMessageEventArgs.Exception">
+            <summary>
+             Gets the exception of the message.
             </summary>
         </member>
         <member name="P:DSharpPlus.EventArgs.DebugLogMessageEventArgs.Timestamp">
@@ -4972,7 +4978,7 @@
         </member>
         <member name="P:DSharpPlus.Entities.DiscordMember.Hierarchy">
             <summary>
-            Gets the member's position in the role hierarchy, which is the member's highest role's position. Returns <see cref="F:System.Int32.MaxValue"/> for guild's owner.
+            Gets the member's position in the role hierarchy, which is the member's highest role's position. Returns <see cref="F:System.Int32.MaxValue"/> for the guild's owner.
             </summary>
         </member>
         <member name="P:DSharpPlus.Entities.DiscordMember.Username">
@@ -7665,6 +7671,11 @@
         <member name="F:DSharpPlus.Permissions.ViewAuditLog">
             <summary>
             Allows viewing audit log entries.
+            </summary>
+        </member>
+        <member name="F:DSharpPlus.Permissions.PrioritySpeaker">
+            <summary>
+            Allows the use of priority speaker.
             </summary>
         </member>
         <member name="F:DSharpPlus.Permissions.AccessChannels">

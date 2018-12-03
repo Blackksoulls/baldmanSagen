@@ -1,14 +1,14 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "43a0b1fffb7478eeb3361b1ab66cb5955226503a"
+    "signature": "1e968d809828296b911a47d502ca6992cf9edfd0"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.1": {
       "EventManager/1.0.0": {
         "dependencies": {
-          "BotManager": "1.0.0"
+          "DSharpPlus": "4.0.0-nightly-00555"
         },
         "runtime": {
           "EventManager.dll": {}
@@ -24,18 +24,6 @@
         },
         "runtime": {
           "lib/netstandard2.0/DSharpPlus.dll": {
-            "assemblyVersion": "4.0.0.555",
-            "fileVersion": "4.0.0.555"
-          }
-        }
-      },
-      "DSharpPlus.CommandsNext/4.0.0-nightly-00555": {
-        "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00555",
-          "Microsoft.Extensions.DependencyInjection": "2.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {
             "assemblyVersion": "4.0.0.555",
             "fileVersion": "4.0.0.555"
           }
@@ -59,25 +47,6 @@
           "System.Runtime.Extensions": "4.3.0",
           "System.Runtime.InteropServices": "4.3.0",
           "System.Threading": "4.3.0"
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection/2.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.0.17205"
-          }
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.0.17205"
-          }
         }
       },
       "Microsoft.Win32.Primitives/4.3.0": {
@@ -1001,15 +970,6 @@
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0"
         }
-      },
-      "BotManager/1.0.0": {
-        "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00555",
-          "DSharpPlus.CommandsNext": "4.0.0-nightly-00555"
-        },
-        "runtime": {
-          "BotManager.dll": {}
-        }
       }
     }
   },
@@ -1026,33 +986,12 @@
       "path": "dsharpplus/4.0.0-nightly-00555",
       "hashPath": "dsharpplus.4.0.0-nightly-00555.nupkg.sha512"
     },
-    "DSharpPlus.CommandsNext/4.0.0-nightly-00555": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-5sMOQwWIxJswq55T6HaIEMXPPBTxfa8Ah0gTzZfawDLPGfWGzGqwBj07BEgUTtVzDNDLIV5dzwVDU8P8SliBxQ==",
-      "path": "dsharpplus.commandsnext/4.0.0-nightly-00555",
-      "hashPath": "dsharpplus.commandsnext.4.0.0-nightly-00555.nupkg.sha512"
-    },
     "Microsoft.CSharp/4.3.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-P+MBhIM0YX+JqROuf7i306ZLJEjQYA9uUyRDE+OqwUI5sh41e2ZbPQV3LfAPh+29cmceE1pUffXsGfR4eMY3KA==",
       "path": "microsoft.csharp/4.3.0",
       "hashPath": "microsoft.csharp.4.3.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.DependencyInjection/2.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-V6xeuEEpIIygDHtOtJ+0X0qkKtVSUS1+kwOC3O4pH0depJf8AfofGo8hanOxoRgooj7WmTtPcgOIjwAteEe28A==",
-      "path": "microsoft.extensions.dependencyinjection/2.0.0",
-      "hashPath": "microsoft.extensions.dependencyinjection.2.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-P4dK3DZQFsp7fFzkBu9H9jesBj0KB3O9c50n9FeAOIF+A8aQKBRj63luC9gPqvcedNdMfYQoEUe5dLps1sqvuA==",
-      "path": "microsoft.extensions.dependencyinjection.abstractions/2.0.0",
-      "hashPath": "microsoft.extensions.dependencyinjection.abstractions.2.0.0.nupkg.sha512"
     },
     "Microsoft.Win32.Primitives/4.3.0": {
       "type": "package",
@@ -1627,11 +1566,6 @@
       "sha512": "sha512-lJ8AxvkX7GQxpC6GFCeBj8ThYVyQczx2+f/cWHJU8tjS7YfI6Cv6bon70jVEgs2CiFbmmM8b9j1oZVx0dSI2Ww==",
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
-    },
-    "BotManager/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

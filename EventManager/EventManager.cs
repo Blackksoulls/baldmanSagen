@@ -18,7 +18,18 @@ namespace EventManager
 
         public async Task AsyncMain()
         {
-            var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../Config/config.json"));
+
+            string strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var strs = strPath.Split(Path.DirectorySeparatorChar);
+            var str = "";
+            for (var i = 0; i < strs.Length - 2; i++)
+            {
+                str = Path.Combine(str, strs[i]);
+            }
+
+
+
+            var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Path.Combine(str, "Config", "config.json")));
             var client = new DiscordClient(new DiscordConfiguration {LogLevel = LogLevel.Debug, Token = config.Token});
 
             client.MessageReactionAdded += PreventMultiVote;

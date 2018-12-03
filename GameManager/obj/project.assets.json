@@ -1683,21 +1683,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
-      },
-      "BotManager/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00555",
-          "DSharpPlus.CommandsNext": "4.0.0-nightly-00555",
-          "Microsoft.NETCore.App": "2.1.0"
-        },
-        "compile": {
-          "bin/placeholder/BotManager.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/BotManager.dll": {}
-        }
       }
     }
   },
@@ -5949,16 +5934,12 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
-    },
-    "BotManager/1.0.0": {
-      "type": "project",
-      "path": "../BotManager/BotManager.csproj",
-      "msbuildProject": "../BotManager/BotManager.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "BotManager >= 1.0.0",
+      "DSharpPlus >= 4.0.0-nightly-00555",
+      "DSharpPlus.CommandsNext >= 4.0.0-nightly-00555",
       "Microsoft.NETCore.App >= 2.1.0"
     ]
   },
@@ -5992,11 +5973,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {
-            "P:\\Professionels\\baldmanSagen\\BotManager\\BotManager.csproj": {
-              "projectPath": "P:\\Professionels\\baldmanSagen\\BotManager\\BotManager.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -6008,6 +5985,14 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "DSharpPlus": {
+            "target": "Package",
+            "version": "[4.0.0-nightly-00555, )"
+          },
+          "DSharpPlus.CommandsNext": {
+            "target": "Package",
+            "version": "[4.0.0-nightly-00555, )"
+          },
           "Microsoft.NETCore.App": {
             "target": "Package",
             "version": "[2.1.0, )",

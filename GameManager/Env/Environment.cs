@@ -23,7 +23,7 @@ namespace GameManager.Env
         public static DiscordClient Client { get; set; }
 
         public static GameConfig Config { get; set; } = JsonConvert.DeserializeObject<GameConfig>(
-            File.ReadAllText($@"..//Config//game-settings.json", Encoding.UTF8));
+            File.ReadAllText(Path.Combine(Program.GetPath(2), "Config", "game-settings.json"), Encoding.UTF8));
 
         public static bool InGame = false;
     }
@@ -69,10 +69,10 @@ namespace GameManager.Env
                         }
                         else
                         {
+                            string path = Path.Combine(Program.GetPath(-2), "Images", "UserIcons", $"{name}.png");
                             new WebClient().DownloadFile(players[0].AvatarUrl.Replace("size=1024", "size=256"),
-                                $"..//Images//UserIcons//{name}.png");
-                            //image = Image.FromFile($"..//Images//UserIcons//{name}.png");
-                            stream2 = new FileStream($"..//Images//UserIcons//{name}.png", FileMode.Open);
+                                path);
+                            stream2 = new FileStream(path, FileMode.Open);
                         }
 
                         //image.Save(stream, ImageFormat.Png);

@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BotManager\BotManager.csproj" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00555" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00555" />
   </ItemGroup>
 
 </Project>

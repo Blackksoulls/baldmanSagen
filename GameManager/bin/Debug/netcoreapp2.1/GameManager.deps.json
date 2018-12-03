@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v2.1": {
       "GameManager/1.0.0": {
         "dependencies": {
-          "BotManager": "1.0.0"
+          "DSharpPlus": "4.0.0-nightly-00555",
+          "DSharpPlus.CommandsNext": "4.0.0-nightly-00555"
         },
         "runtime": {
           "GameManager.dll": {}
@@ -1001,15 +1002,6 @@
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0"
         }
-      },
-      "BotManager/1.0.0": {
-        "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00555",
-          "DSharpPlus.CommandsNext": "4.0.0-nightly-00555"
-        },
-        "runtime": {
-          "BotManager.dll": {}
-        }
       }
     }
   },
@@ -1627,11 +1619,6 @@
       "sha512": "sha512-lJ8AxvkX7GQxpC6GFCeBj8ThYVyQczx2+f/cWHJU8tjS7YfI6Cv6bon70jVEgs2CiFbmmM8b9j1oZVx0dSI2Ww==",
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
-    },
-    "BotManager/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }
