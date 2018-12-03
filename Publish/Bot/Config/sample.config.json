@@ -1,5 +1,0 @@
-{
-  "logfile": "{{logfile}}",
-  "prefix": "{{prefix}}",
-  "token": "{{discord_token}}"
-}
