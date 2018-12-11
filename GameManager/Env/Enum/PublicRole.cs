@@ -4,6 +4,7 @@
     {
         Spectator,
         Player,
-        Admin
+        Admin,
+        GameCreator
     }
 }

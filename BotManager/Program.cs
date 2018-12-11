@@ -34,15 +34,22 @@ namespace BotManager
             };
      
 
+
             var strGameBot = Path.Combine(new[] { str, "GameManager", "Bin", "GameManager.dll" });
             var strEventBot = Path.Combine(new[] {str, "EventManager", "Bin", "EventManager.dll" });
 
-            Process.Start("cmd.exe", $"/C dotnet {strGameBot}");
-            Process.Start("cmd.exe", $"/C dotnet {strEventBot}");
 
+            var p1 = Process.Start("cmd.exe", $"/C dotnet {strGameBot}");
+            var p2 = Process.Start("cmd.exe", $"/C dotnet {strEventBot}");
 
-
+            while (!p1.HasExited && !p2.HasExited)
+            {
+                p1.WaitForExit(1000);
+                p2.WaitForExit(1000);
+            }
             Console.WriteLine("All bots disconnected");
+            Environment.Exit(0);
+
         }
 
         private static void Exited(object sender, EventArgs e)

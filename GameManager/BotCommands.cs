@@ -15,7 +15,6 @@ namespace GameManager
 {
     public class BotCommands : BaseCommandModule
     {
-
         [Command("Reload"), Aliases("r")]
         public async Task Reload()
         {
@@ -28,7 +27,7 @@ namespace GameManager
 
         [Command("game"), Aliases("go")]
         [Description("Available langages: 'fr', 'en', 'es', 'de', 'ja'")]
-        public async Task CreateGame(CommandContext e, [Description("Language for the bot")]string lang = "fr")
+        public async Task CreateGame(CommandContext e, [Description("Language for the bot")] string lang = "fr")
         {
             try
             {
@@ -38,14 +37,12 @@ namespace GameManager
                 {
                     Global.Game = new Game(lang);
                     Global.Game.CreateGuild(e).GetAwaiter().GetResult();
-
                 });
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
             }
-      
         }
 
         [Command("ping"), Description("")]
@@ -55,18 +52,6 @@ namespace GameManager
             await e.RespondAsync($"{e.User.Mention} Pong ({e.Client.Ping}ms)");
         }
 
-
-        private async Task NewGuildMember(GuildMemberAddEventArgs e)
-        {
-            await e.Member.GrantRoleAsync(Global.Roles[PublicRole.Spectator]);
-        }
-
-        private async Task StartMember(GuildMemberAddEventArgs e)
-        {
-            var p = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice, Permissions.Speak);
-            await Global.Game.DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(e.Member, p);
-            Game.WriteDebug($"D : {e.Member.Username}");
-        }
 
 
         [Command("disconnect"), Aliases("dis", "dc")]
@@ -84,7 +69,7 @@ namespace GameManager
         [Command("test")]
         public async Task Test(CommandContext e, string id)
         {
-            Console.Write("dznia" );
+            Console.Write("dznia");
             await GetVotes(m: await e.Channel.GetMessageAsync((ulong) Int32.Parse(id)));
         }
 
@@ -95,7 +80,7 @@ namespace GameManager
             {
                 foreach (var discordUserReact in (await m.GetReactionsAsync(discordReaction)))
                 {
-                    if(!discordUserReact.IsCurrent)
+                    if (!discordUserReact.IsCurrent)
                         d.Add(discordUserReact.GetMember(), discordReaction);
                     // Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
                 }
@@ -106,6 +91,7 @@ namespace GameManager
             {
                 Game.WriteDebug($"\t{key} : {value}");
             }
+
             return d;
         }
 
@@ -125,8 +111,5 @@ namespace GameManager
 
             await GameBuilder.GetMember(e.Guild, e.User).GrantRoleAsync(adminRole);
         }
-
-
-
     }
 }

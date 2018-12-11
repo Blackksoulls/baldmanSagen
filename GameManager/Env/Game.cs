@@ -29,6 +29,8 @@ namespace GameManager.Env
         public Stack<Moment> Moments { get; set; }
         public List<Personnage> NightTargets { get; set; }
 
+        public DiscordUser Creator { get; set; }
+
         public int Laps;
 
 
@@ -62,13 +64,13 @@ namespace GameManager.Env
                     try
                     {
                         Global.Client = e.Client;
+                        Global.Game.Creator = e.User;
 
-
-                        var msgs = (await e.Guild.GetDefaultChannel().GetMessagesAsync(10)).ToList()
+                        var msgs = (await e.Channel.GetMessagesAsync(10)).ToList()
                             .FindAll(m => m.Author == e.Client.CurrentUser || m.Content.Contains("!go"));
                         if (msgs.Count > 0)
                         {
-                            await e.Guild.GetDefaultChannel().DeleteMessagesAsync(msgs);
+                            await e.Channel.DeleteMessagesAsync(msgs);
                         }
                     }
                     catch (Exception exception)
@@ -201,7 +203,8 @@ namespace GameManager.Env
                         await DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
                         await Task.Delay(Global.Config.JoinTime);
 
-                        await Global.Game.Guild.DeleteAsync();
+                        // TODO Uncomment after test
+                        //await Global.Game.Guild.DeleteAsync();
                     }
                     else
                     {
@@ -294,7 +297,12 @@ namespace GameManager.Env
                     Permissions.UseVoiceDetection);
 
             await DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(e.Member, p);
-            WriteDebug($"D : {e.Member.Username}");
+            WriteDebug($"D : {e.Member.Username} {Global.Game.Creator.Username}" );
+            if (e.Member.Username == Global.Game.Creator.Username)
+            {
+                await e.Member.GrantRoleAsync(Global.Roles[PublicRole.GameCreator]);
+                Console.WriteLine("GRANTED");
+            }
         }
 
 

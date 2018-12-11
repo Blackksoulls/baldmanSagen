@@ -274,6 +274,11 @@ namespace GameManager.Env
             Global.Roles.Add(PublicRole.Spectator, spectRole);
 
 
+            var gameCreatorPerms = CreatePerms(Permissions.ManageGuild);
+            var gameCreatorRole = await Global.Game.Guild.CreateRoleAsync("GameCreatorTODO", gameCreatorPerms);
+            Global.Roles.Add(PublicRole.GameCreator, gameCreatorRole);
+
+
             await Global.Game.Guild.EveryoneRole.ModifyAsync(x => x.Permissions = Permissions.None);
 
             #endregion
