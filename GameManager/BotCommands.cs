@@ -15,12 +15,14 @@ namespace GameManager
 {
     public class BotCommands : BaseCommandModule
     {
+
+    
         [Command("Reload"), Aliases("r")]
         public async Task Reload()
         {
             Global.Game = null;
-            Global.Client = null;
-            Global.Config = null;
+            //Global.Client = null;
+            //Global.Config = null;
             Global.InGame = false;
             Global.Roles = null;
         }
@@ -66,12 +68,6 @@ namespace GameManager
         }
 
 
-        [Command("test")]
-        public async Task Test(CommandContext e, string id)
-        {
-            Console.Write("dznia");
-            await GetVotes(m: await e.Channel.GetMessageAsync((ulong) Int32.Parse(id)));
-        }
 
         public static async Task<Dictionary<DiscordMember, DiscordGuildEmoji>> GetVotes(DiscordMessage m)
         {
@@ -82,15 +78,14 @@ namespace GameManager
                 {
                     if (!discordUserReact.IsCurrent)
                         d.Add(discordUserReact.GetMember(), discordReaction);
-                    // Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
                 }
             }
 
-            Game.WriteDebug($"Debug");
-            foreach (var (key, value) in d)
-            {
-                Game.WriteDebug($"\t{key} : {value}");
-            }
+            //Game.WriteDebug($"Debug");
+            //foreach (var (key, value) in d)
+            //{
+            //    Game.WriteDebug($"\t{key} : {value}");
+            //}
 
             return d;
         }

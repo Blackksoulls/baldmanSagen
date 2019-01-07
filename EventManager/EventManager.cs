@@ -11,7 +11,8 @@ namespace EventManager
 {
     public class EventManager
     {
-        private static Config config;
+        private static Config _config;
+
         private static void Main(string[] args)
         {
             new EventManager().AsyncMain().GetAwaiter().GetResult();
@@ -19,7 +20,6 @@ namespace EventManager
 
         public async Task AsyncMain()
         {
-
             string strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var strs = strPath.Split(Path.DirectorySeparatorChar);
             var str = "";
@@ -29,10 +29,11 @@ namespace EventManager
             }
 
             Console.WriteLine(str);
-            
 
-            config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Path.Combine(str, "Config", "config.json")));
-            var client = new DiscordClient(new DiscordConfiguration {LogLevel = LogLevel.Debug, Token = config.Token});
+
+            _config = JsonConvert.DeserializeObject<Config>(
+                File.ReadAllText(Path.Combine(str, "Config", "_config.json")));
+            var client = new DiscordClient(new DiscordConfiguration {LogLevel = LogLevel.Debug, Token = _config.Token});
 
             client.MessageReactionAdded += PreventMultiVote;
 
@@ -50,19 +51,17 @@ namespace EventManager
 
             Console.WriteLine("Bot Event : GOO0D");
             await Task.Delay(-1);
-
-
         }
 
         private async Task PleaseInviteMe(MessageCreateEventArgs e)
         {
-            Console.WriteLine($"Message reçu de {e.Author.Username} : {e.Message.Content}" );
+            Console.WriteLine($"Message reçu de {e.Author.Username} : {e.Message.Content}");
 
             if (!e.Author.IsBot && e.Message.Content.Contains("!go"))
             {
-                Console.WriteLine("SALOPE");
-                await e.Message.RespondAsync(
-                    $"https://discordapp.com/oauth2/authorize?client_id={config.Id}&scope=bot&permissions=0");
+                await (await e.Guild.GetMemberAsync(e.Author.Id)).SendMessageAsync(
+                    $"https://discordapp.com/oauth2/authorize?client_id={_config.Id}&scope=bot&permissions=0");
+                Console.WriteLine($"Asked to invite in private {e.Author.Username}");
             }
         }
 
@@ -72,17 +71,14 @@ namespace EventManager
                 foreach (var otherEmoji in (await e.Channel.Guild.GetEmojisAsync()).ToList()
                     .FindAll(em => em.Id != e.Emoji.Id))
                     await e.Message.DeleteReactionAsync(otherEmoji, e.User, $"{e.User.Username} already voted");
-
-
-
         }
+
+ 
 
         public class Config
         {
             public string Token { get; set; }
             public string Id { get; set; }
         }
-
-
     }
 }

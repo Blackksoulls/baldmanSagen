@@ -1,6 +1,7 @@
 using GameManager.Env;
 using GameManager.Roles;
 using DSharpPlus.Entities;
+using GameManager.Locale;
 
 public class Citizen : Personnage
 {
@@ -15,7 +16,7 @@ public class Citizen : Personnage
 
     public override string GotKilled()
     {
-        return $"{Global.Game.Texts.GameRoles.CitizenName}";
+        return Language.FirstDieMessages(Global.Game, Me) + $"{Global.Game.Texts.GameRoles.CitizenName}";
     }
 
     public override string GetClassName()

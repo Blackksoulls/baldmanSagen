@@ -15,8 +15,8 @@ namespace GameManager
     public class BotFunctions
     {
         public static DiscordMessage DailyVotingMessage { get; private set; }
-        public static DiscordMessage DeadVotingMessage { get; private set; }
-
+        public static DiscordMessage deadVotingMessage { get; private set; }
+        public static Dictionary<ulong, int> scores;
         public static bool Attendre
         {
             get => Attendre;
@@ -27,61 +27,83 @@ namespace GameManager
 
         public static async Task DeadVote(int nbTry = 1)
         {
+            Attendre = true;
             var embed = new DiscordEmbedBuilder
             {
                 Title = Global.Game.Texts.Polls.DeadVoteMessage,
                 Color = Color.PollColor
             };
-            DeadVotingMessage =
+            deadVotingMessage =
                 await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
 
             foreach (var personnage in Global.Game.PersonnagesList.FindAll(personnage => personnage.Alive))
             {
                 Console.WriteLine($"Personnage : {personnage.Me.Username} -> {personnage.Emoji.Name}");
-                await DeadVotingMessage.CreateReactionAsync(personnage.Emoji);
+                await deadVotingMessage.CreateReactionAsync(personnage.Emoji);
             }
 
             if (nbTry == 1) Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
 
 
             Console.WriteLine("Le temps est fini");
-            DeadVotingMessage = await Global.Game.DiscordChannels[GameChannel.TownText]
-                .GetMessageAsync(DeadVotingMessage.Id);
+            deadVotingMessage = await Global.Game.DiscordChannels[GameChannel.TownText]
+                .GetMessageAsync(deadVotingMessage.Id);
 
-            //Attendre
-
-/*            foreach (var discordReaction in (await Global.Game.Guild.GetEmojisAsync()))
+            while (Attendre)
             {
-                foreach (var discordUserReact in (await DeadVotingMessage.GetReactionsAsync(discordReaction)))
+                await Task.Delay(100);}
+            Attendre = false;
+            var vote = await BotCommands.GetVotes(deadVotingMessage);
+            var voted = (await BotCommands.GetVotes(DailyVotingMessage)).Voted();
+            
+            foreach (var(user, emoji) in vote)
+            {
+                if (emoji.Equals(voted.Emoji))
                 {
-                    Console.WriteLine($"Reaction : {discordReaction.Emoji.Name} : {discordReaction.Count}");
+                    var u = user.Id;
+                    scores[u] += 1;
                 }
-            }*/
-
-            /*var players = DeadVotingMessage.Reactions.ToList().FindAll(x => x.Count == DeadVotingMessage.Reactions.Voted(y => y.Count) && x.Count >= 2);
-
-
-            if (players.Count == 0)
-            {
-                embed = new DiscordEmbedBuilder
+                else
                 {
-                    Title = Global.Game.Texts.Polls.NoTownKill,
-                    Color = Color.InfoColor
-                };
-                await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed);
+                    var u = user.Id;
+                    if (scores[u] > 0)
+                    { scores[u] -= 1; }
+                }
             }
-            else
-            {
-                var p = Global.Game.PersonnagesList.Find(personnage => personnage.Emoji.Id == players[0].Emoji.Id);
-                await MakeDeath(p);
-            }
-            */
+            
             Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
         }
 
+        public static void LoadScore() {
+
+
+
+            foreach (Personnage player in Global.Game.PersonnagesList)
+            {
+                scores.Add(player.Id, 0);
+            }
+        }
+
+        public static void SaveScore()
+        {
+
+        }
 
         public static async Task DailyVote()
         {
+            while (!Attendre){
+                Task.Delay(100).GetAwaiter().GetResult();
+            }
+            foreach(var(id,score) in scores)
+            {
+                foreach(var perso in Global.Game.PersonnagesList.FindAll(p => p.Alive))
+                {
+                    if(perso.Id == id)
+                    {
+                        scores[id] += 1;
+                    }
+                }
+            }
             var embed = new DiscordEmbedBuilder
             {
                 Title = Global.Game.Texts.Polls.DailyVoteMessage,
@@ -130,7 +152,7 @@ namespace GameManager
             Global.Game.CheckVictory();
 
             Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
-
+            Attendre = false;
             await Task.Delay(10000);
 
         }

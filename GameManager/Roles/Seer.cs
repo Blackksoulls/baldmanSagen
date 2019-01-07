@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using GameManager.Env.Extentions;
 using DSharpPlus.Entities;
 using GameManager.Env;
+using GameManager.Locale;
 
 namespace GameManager.Roles
 {
@@ -19,7 +20,7 @@ namespace GameManager.Roles
 
         public override string GotKilled()
         {
-            return $"{Global.Game.Texts.GameRoles.SeerName}";
+            return Language.FirstDieMessages(Global.Game, Me) + $"{Global.Game.Texts.GameRoles.SeerName}";
         }
 
         public override string GetClassName()

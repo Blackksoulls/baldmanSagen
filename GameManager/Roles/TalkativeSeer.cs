@@ -1,5 +1,8 @@
 ﻿using DSharpPlus.Entities;
 using GameManager.Env;
+using GameManager.Env;
+using GameManager.Env.Enum;
+using GameManager.Locale;
 
 namespace GameManager.Roles
 {
@@ -18,7 +21,7 @@ namespace GameManager.Roles
 
         public override string GotKilled()
         {
-            return $"{Global.Game.Texts.GameRoles.TalkativeSeerName}";
+            return Language.FirstDieMessages(Global.Game, Me) + $"{Global.Game.Texts.GameRoles.TalkativeSeerName}";
         }
 
         public override string GetClassName()

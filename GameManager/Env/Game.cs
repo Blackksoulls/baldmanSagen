@@ -138,7 +138,7 @@ namespace GameManager.Env
 
                     await Task.Delay(Global.Config.JoinTime);
 
-                    foreach (var usr in botVChannel.Users)
+                    foreach (var usr in botVChannel.Users.ToList())
                     {
                         await usr.RevokeRoleAsync(Global.Roles[PublicRole.Spectator]);
                         await usr.GrantRoleAsync(Global.Roles[PublicRole.Player]);
@@ -204,7 +204,7 @@ namespace GameManager.Env
                         await Task.Delay(Global.Config.JoinTime);
 
                         // TODO Uncomment after test
-                        //await Global.Game.Guild.DeleteAsync();
+                        await Global.Game.Guild.DeleteAsync();
                     }
                     else
                     {

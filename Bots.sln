@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.136
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameManager", "GameManager\GameManager.csproj", "{EE53FE4B-7515-4B71-A165-F4CE793AF474}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManager", "EventManage
 		{55BA9516-F928-4C1A-99D1-1B026DDBE4A7} = {55BA9516-F928-4C1A-99D1-1B026DDBE4A7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotManager", "BotManager\BotManager.csproj", "{55BA9516-F928-4C1A-99D1-1B026DDBE4A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotManager", "BotManager\BotManager.csproj", "{55BA9516-F928-4C1A-99D1-1B026DDBE4A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "ConsoleApp1\Test.csproj", "{C935B83B-E237-444B-A1BC-536B0FB7958E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{55BA9516-F928-4C1A-99D1-1B026DDBE4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55BA9516-F928-4C1A-99D1-1B026DDBE4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55BA9516-F928-4C1A-99D1-1B026DDBE4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C935B83B-E237-444B-A1BC-536B0FB7958E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C935B83B-E237-444B-A1BC-536B0FB7958E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C935B83B-E237-444B-A1BC-536B0FB7958E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C935B83B-E237-444B-A1BC-536B0FB7958E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

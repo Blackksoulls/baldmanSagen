@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using DSharpPlus.Entities;
 using GameManager.Env;
+using GameManager.Locale;
 
 namespace GameManager.Roles
 {
@@ -18,7 +19,7 @@ namespace GameManager.Roles
 
         public override string GotKilled()
         {
-            return $"{Global.Game.Texts.GameRoles.LittleGirlName}";
+            return Language.FirstDieMessages(Global.Game, Me) + $"{Global.Game.Texts.GameRoles.LittleGirlName}";
         }
 
         public override string GetClassName()

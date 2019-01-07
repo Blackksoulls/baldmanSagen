@@ -117,15 +117,16 @@ namespace GameManager
             return str;
         }
 
-        private Task Client_GuildAvailable(GuildCreateEventArgs e)
+        private async Task Client_GuildAvailable(GuildCreateEventArgs e)
         {
+            Console.WriteLine("CICI");
             if (e.Guild.Name == "Loup Garou" && e.Guild.JoinedAt < DateTimeOffset.Now.AddSeconds(-10))
             {
-                e.Guild.DeleteAsync();
+                await e.Guild.DeleteAsync();
+                Console.WriteLine("SUPPRESSION");
             }
 
             e.Client.DebugLogger.LogMessage(LogLevel.Info, "BotApp", $"{e.Guild.Name} is now available", DateTime.Now);
-            return Task.CompletedTask;
         }
 
         private Task Client_ChannelCreated(ChannelCreateEventArgs e)

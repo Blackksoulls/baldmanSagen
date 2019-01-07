@@ -19,14 +19,12 @@ namespace GameManager.Roles
         public DiscordChannel ChannelV { get; set; }
 
         public DiscordGuildEmoji Emoji;
-        public Point Point { get; set; }
 
         protected Personnage(DiscordMember me, DiscordGuildEmoji emoji)
         {
             Id = me.Id;
             Emoji = emoji;
             Alive = true;
-            //NbPoints = GetNbPoints(me.Id); // TODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODO
 
             ChannelV = Global.Game.Guild.CreateChannelAsync(Me.Username.RemoveSpecialChars(), ChannelType.Voice,
                 Global.Game.DiscordChannels[GameChannel.PersoGroup]).GetAwaiter().GetResult();
@@ -59,35 +57,5 @@ namespace GameManager.Roles
         public abstract string GetClassName();
     }
 
-    public class Point
-    {
-        public int NbPoints;
-        private static int mise = 1;
-        private static int gainSimple = 1;
-        private static int gainMise = 3;
-        public bool aMise;
-
-
-        public void Mise()
-        {
-            if (NbPoints != 0)
-            {
-                NbPoints -= mise;
-                aMise = true;
-            }
-        }
-
-        public void Gain()
-        {
-            if (aMise)
-            {
-                NbPoints += gainMise;
-                aMise = false;
-            }
-            else
-            {
-                NbPoints += gainSimple;
-            }
-        }
-    }
+   
 }
