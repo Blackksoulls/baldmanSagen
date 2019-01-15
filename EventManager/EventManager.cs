@@ -20,7 +20,7 @@ namespace EventManager
 
         public async Task AsyncMain()
         {
-            string strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var strs = strPath.Split(Path.DirectorySeparatorChar);
             var str = "";
             for (var i = 0; i < strs.Length - 2; i++)
@@ -32,7 +32,7 @@ namespace EventManager
 
 
             _config = JsonConvert.DeserializeObject<Config>(
-                File.ReadAllText(Path.Combine(str, "Config", "_config.json")));
+                File.ReadAllText(Path.Combine(str, "Config", "config.json")));
             var client = new DiscordClient(new DiscordConfiguration {LogLevel = LogLevel.Debug, Token = _config.Token});
 
             client.MessageReactionAdded += PreventMultiVote;

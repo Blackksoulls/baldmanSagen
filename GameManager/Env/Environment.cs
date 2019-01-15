@@ -69,7 +69,7 @@ namespace GameManager.Env
                         }
                         else
                         {
-                            string path = Path.Combine(Program.GetPath(-2), "Images", "UserIcons", $"{name}.png");
+                            var path = Path.Combine(Program.GetPath(-2), "Images", "UserIcons", $"{name}.png");
                             new WebClient().DownloadFile(players[0].AvatarUrl.Replace("size=1024", "size=256"),
                                 path);
                             stream2 = new FileStream(path, FileMode.Open);

@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "DSharpPlus/4.0.0-nightly-00555": {
+      "DSharpPlus/4.0.0-nightly-00562": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "10.0.3",
@@ -18,10 +18,10 @@
           "lib/netstandard2.0/DSharpPlus.dll": {}
         }
       },
-      "DSharpPlus.CommandsNext/4.0.0-nightly-00555": {
+      "DSharpPlus.CommandsNext/4.0.0-nightly-00562": {
         "type": "package",
         "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00555",
+          "DSharpPlus": "4.0.0-nightly-00562",
           "Microsoft.Extensions.DependencyInjection": "2.0.0"
         },
         "compile": {
@@ -29,6 +29,30 @@
         },
         "runtime": {
           "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {}
+        }
+      },
+      "DSharpPlus.Lavalink/4.0.0-nightly-00562": {
+        "type": "package",
+        "dependencies": {
+          "DSharpPlus": "4.0.0-nightly-00562"
+        },
+        "compile": {
+          "lib/netstandard2.0/DSharpPlus.Lavalink.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/DSharpPlus.Lavalink.dll": {}
+        }
+      },
+      "DSharpPlus.VoiceNext/4.0.0-nightly-00562": {
+        "type": "package",
+        "dependencies": {
+          "DSharpPlus": "4.0.0-nightly-00562"
+        },
+        "compile": {
+          "lib/netstandard2.0/DSharpPlus.VoiceNext.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/DSharpPlus.VoiceNext.dll": {}
         }
       },
       "Microsoft.CSharp/4.3.0": {
@@ -1687,13 +1711,13 @@
     }
   },
   "libraries": {
-    "DSharpPlus/4.0.0-nightly-00555": {
-      "sha512": "OLcqK7PvQbBcbpJ5OMqsh5/WeSV/Aedg28uDdHioo1mZFkSiGCKxZJYh8/v6k0wyxMHNVAxkPTLG4roAtln0NA==",
+    "DSharpPlus/4.0.0-nightly-00562": {
+      "sha512": "ooZiES5HGmCUD+ob0EznW0GhPMJ1PcjbczfGb38EXnjCOBJutkwgCz5jQ76IhmR8d5NPa/GlegDtXw+k2S3gJw==",
       "type": "package",
-      "path": "dsharpplus/4.0.0-nightly-00555",
+      "path": "dsharpplus/4.0.0-nightly-00562",
       "files": [
         ".nupkg.metadata",
-        "dsharpplus.4.0.0-nightly-00555.nupkg.sha512",
+        "dsharpplus.4.0.0-nightly-00562.nupkg.sha512",
         "dsharpplus.nuspec",
         "lib/net45/DSharpPlus.dll",
         "lib/net45/DSharpPlus.xml",
@@ -1709,13 +1733,13 @@
         "lib/netstandard2.0/DSharpPlus.xml"
       ]
     },
-    "DSharpPlus.CommandsNext/4.0.0-nightly-00555": {
-      "sha512": "5sMOQwWIxJswq55T6HaIEMXPPBTxfa8Ah0gTzZfawDLPGfWGzGqwBj07BEgUTtVzDNDLIV5dzwVDU8P8SliBxQ==",
+    "DSharpPlus.CommandsNext/4.0.0-nightly-00562": {
+      "sha512": "cPgQ3kXTdAw0rCl4SU2nqad+U/Gnfh4H5fvyDYXcfxv8WLz31BTgaFzIFlUCnr90AjL7L0S8YmGrDuAq0SVADw==",
       "type": "package",
-      "path": "dsharpplus.commandsnext/4.0.0-nightly-00555",
+      "path": "dsharpplus.commandsnext/4.0.0-nightly-00562",
       "files": [
         ".nupkg.metadata",
-        "dsharpplus.commandsnext.4.0.0-nightly-00555.nupkg.sha512",
+        "dsharpplus.commandsnext.4.0.0-nightly-00562.nupkg.sha512",
         "dsharpplus.commandsnext.nuspec",
         "lib/net45/DSharpPlus.CommandsNext.dll",
         "lib/net45/DSharpPlus.CommandsNext.xml",
@@ -1729,6 +1753,50 @@
         "lib/netstandard1.3/DSharpPlus.CommandsNext.xml",
         "lib/netstandard2.0/DSharpPlus.CommandsNext.dll",
         "lib/netstandard2.0/DSharpPlus.CommandsNext.xml"
+      ]
+    },
+    "DSharpPlus.Lavalink/4.0.0-nightly-00562": {
+      "sha512": "Jt6rjyptXRxzzIB8yhC5Z5X1JrO7BxBmu8EQQ4aiLfhicpOe2BmY3DaYy4O+HUpL2k5fe8j060sX0X6Z+fMcqw==",
+      "type": "package",
+      "path": "dsharpplus.lavalink/4.0.0-nightly-00562",
+      "files": [
+        ".nupkg.metadata",
+        "dsharpplus.lavalink.4.0.0-nightly-00562.nupkg.sha512",
+        "dsharpplus.lavalink.nuspec",
+        "lib/net45/DSharpPlus.Lavalink.dll",
+        "lib/net45/DSharpPlus.Lavalink.xml",
+        "lib/net46/DSharpPlus.Lavalink.dll",
+        "lib/net46/DSharpPlus.Lavalink.xml",
+        "lib/net47/DSharpPlus.Lavalink.dll",
+        "lib/net47/DSharpPlus.Lavalink.xml",
+        "lib/netstandard1.1/DSharpPlus.Lavalink.dll",
+        "lib/netstandard1.1/DSharpPlus.Lavalink.xml",
+        "lib/netstandard1.3/DSharpPlus.Lavalink.dll",
+        "lib/netstandard1.3/DSharpPlus.Lavalink.xml",
+        "lib/netstandard2.0/DSharpPlus.Lavalink.dll",
+        "lib/netstandard2.0/DSharpPlus.Lavalink.xml"
+      ]
+    },
+    "DSharpPlus.VoiceNext/4.0.0-nightly-00562": {
+      "sha512": "y9VWY/8xzBDDu6KmZF9xMkJKYsKzqg4+K0eh8Sb287BC0pHrRQejcdBL74C3tEe79wnKghXuwzPRHqXNinP6hg==",
+      "type": "package",
+      "path": "dsharpplus.voicenext/4.0.0-nightly-00562",
+      "files": [
+        ".nupkg.metadata",
+        "dsharpplus.voicenext.4.0.0-nightly-00562.nupkg.sha512",
+        "dsharpplus.voicenext.nuspec",
+        "lib/net45/DSharpPlus.VoiceNext.dll",
+        "lib/net45/DSharpPlus.VoiceNext.xml",
+        "lib/net46/DSharpPlus.VoiceNext.dll",
+        "lib/net46/DSharpPlus.VoiceNext.xml",
+        "lib/net47/DSharpPlus.VoiceNext.dll",
+        "lib/net47/DSharpPlus.VoiceNext.xml",
+        "lib/netstandard1.1/DSharpPlus.VoiceNext.dll",
+        "lib/netstandard1.1/DSharpPlus.VoiceNext.xml",
+        "lib/netstandard1.3/DSharpPlus.VoiceNext.dll",
+        "lib/netstandard1.3/DSharpPlus.VoiceNext.xml",
+        "lib/netstandard2.0/DSharpPlus.VoiceNext.dll",
+        "lib/netstandard2.0/DSharpPlus.VoiceNext.xml"
       ]
     },
     "Microsoft.CSharp/4.3.0": {
@@ -5938,8 +6006,10 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "DSharpPlus >= 4.0.0-nightly-00555",
-      "DSharpPlus.CommandsNext >= 4.0.0-nightly-00555",
+      "DSharpPlus >= 4.0.0-nightly-00562",
+      "DSharpPlus.CommandsNext >= 4.0.0-nightly-00562",
+      "DSharpPlus.Lavalink >= 4.0.0-nightly-00562",
+      "DSharpPlus.VoiceNext >= 4.0.0-nightly-00562",
       "Microsoft.NETCore.App >= 2.1.0"
     ]
   },
@@ -5987,11 +6057,19 @@
         "dependencies": {
           "DSharpPlus": {
             "target": "Package",
-            "version": "[4.0.0-nightly-00555, )"
+            "version": "[4.0.0-nightly-00562, )"
           },
           "DSharpPlus.CommandsNext": {
             "target": "Package",
-            "version": "[4.0.0-nightly-00555, )"
+            "version": "[4.0.0-nightly-00562, )"
+          },
+          "DSharpPlus.Lavalink": {
+            "target": "Package",
+            "version": "[4.0.0-nightly-00562, )"
+          },
+          "DSharpPlus.VoiceNext": {
+            "target": "Package",
+            "version": "[4.0.0-nightly-00562, )"
           },
           "Microsoft.NETCore.App": {
             "target": "Package",

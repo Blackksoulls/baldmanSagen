@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
@@ -14,6 +7,12 @@ using GameManager.Env.Enum;
 using GameManager.Locale;
 using GameManager.Roles;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GameManager.Env
 {
@@ -33,10 +32,13 @@ namespace GameManager.Env
 
         public int Laps;
 
+        public Score Score;
+
 
         public Game(string lang)
         {
             SetLanguage(lang);
+            Score = Score.Load();
         }
 
 
@@ -181,15 +183,27 @@ namespace GameManager.Env
 
                     await RoleAssignment(msgInv, e, players);
 
+
+                    // Score / perms
                     foreach (var p in PersonnagesList)
                     {
-                        WriteDebug($"Y : {p.Me.Username}");
+                        if (Global.Game.Score.AddPlayer(p.Id))
+                        {
+                            WriteDebug($"Bank create for {p.Me.Username}");
+                        }
+                        else
+                        {
+                            WriteDebug($"{p.Me.Username} already is in bank");
+
+                        }
 
                         var usr = GameBuilder.GetMember(Guild, p.Me);
 
                         await DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(usr, Permissions.None,
                             GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice));
                     }
+                       
+                    Global.Game.Score.Save();
 
 
                     if (PersonnagesList.Count < 2)
@@ -212,6 +226,9 @@ namespace GameManager.Env
                     }
 
                     while (Victory == Victory.None && Victory != Victory.NotPlayable) await PlayAsync();
+                    // Sauvegarde de fin 
+                    Global.Game.Score.Save();
+
                 }
             }
             catch (Exception e4)
@@ -430,6 +447,8 @@ namespace GameManager.Env
                             throw new ArgumentOutOfRangeException();
                     }
                 }
+
+                Global.Game.Score.Save();
             }
             catch (Exception e)
             {

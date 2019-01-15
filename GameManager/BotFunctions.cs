@@ -1,14 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-using GameManager.Env.Extentions;
 using GameManager.Env;
 using GameManager.Env.Enum;
+using GameManager.Env.Extentions;
 using GameManager.Roles;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GameManager
 {
@@ -60,41 +60,30 @@ namespace GameManager
             {
                 if (emoji.Equals(voted.Emoji))
                 {
-                    var u = user.Id;
-                    scores[u] += 1;
+                    Global.Game.Score.ModifyPoint(user.Id, 1);
                 }
                 else
                 {
-                    var u = user.Id;
-                    if (scores[u] > 0)
-                    { scores[u] -= 1; }
+                    Global.Game.Score.ModifyPoint(user.Id, -1);
                 }
             }
             
             Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
         }
 
-        public static void LoadScore() {
-
-
-
-            foreach (Personnage player in Global.Game.PersonnagesList)
-            {
-                scores.Add(player.Id, 0);
-            }
-        }
-
-        public static void SaveScore()
-        {
-
-        }
 
         public static async Task DailyVote()
         {
-            while (!Attendre){
+            /*while (!Attendre){
                 Task.Delay(100).GetAwaiter().GetResult();
+            }*/
+
+            foreach (var personnage in Global.Game.PersonnagesList.FindAll(p => p.Alive))
+            {
+                Global.Game.Score.ModifyPoint(personnage.Id, 1);
             }
-            foreach(var(id,score) in scores)
+
+/*            foreach (var(id,score) in scores)
             {
                 foreach(var perso in Global.Game.PersonnagesList.FindAll(p => p.Alive))
                 {
@@ -103,7 +92,7 @@ namespace GameManager
                         scores[id] += 1;
                     }
                 }
-            }
+            }*/
             var embed = new DiscordEmbedBuilder
             {
                 Title = Global.Game.Texts.Polls.DailyVoteMessage,
@@ -129,7 +118,7 @@ namespace GameManager
             Console.WriteLine("Le temps pour voter le jour est fini");
 
 
-
+            
             var votes = await BotCommands.GetVotes(DailyVotingMessage);
             var player = votes.Voted();
 
@@ -148,12 +137,15 @@ namespace GameManager
                 };
                 await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed);
             }
-
+            Console.WriteLine("PREV");
             Global.Game.CheckVictory();
+            Console.WriteLine("POST");
 
             Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
-            Attendre = false;
+            //Attendre = false;
+            Console.WriteLine("A");
             await Task.Delay(10000);
+            Console.WriteLine("B");
 
         }
 

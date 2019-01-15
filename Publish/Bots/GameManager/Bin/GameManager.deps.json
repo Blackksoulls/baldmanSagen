@@ -1,21 +1,23 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "43a0b1fffb7478eeb3361b1ab66cb5955226503a"
+    "signature": "64ed551298721d76db80d3a813f2724c80c5645d"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.1": {
       "GameManager/1.0.0": {
         "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00555",
-          "DSharpPlus.CommandsNext": "4.0.0-nightly-00555"
+          "DSharpPlus": "4.0.0-nightly-00562",
+          "DSharpPlus.CommandsNext": "4.0.0-nightly-00562",
+          "DSharpPlus.Lavalink": "4.0.0-nightly-00562",
+          "DSharpPlus.VoiceNext": "4.0.0-nightly-00562"
         },
         "runtime": {
           "GameManager.dll": {}
         }
       },
-      "DSharpPlus/4.0.0-nightly-00555": {
+      "DSharpPlus/4.0.0-nightly-00562": {
         "dependencies": {
           "Newtonsoft.Json": "10.0.3",
           "System.Net.Http": "4.3.3",
@@ -25,20 +27,42 @@
         },
         "runtime": {
           "lib/netstandard2.0/DSharpPlus.dll": {
-            "assemblyVersion": "4.0.0.555",
-            "fileVersion": "4.0.0.555"
+            "assemblyVersion": "4.0.0.562",
+            "fileVersion": "4.0.0.562"
           }
         }
       },
-      "DSharpPlus.CommandsNext/4.0.0-nightly-00555": {
+      "DSharpPlus.CommandsNext/4.0.0-nightly-00562": {
         "dependencies": {
-          "DSharpPlus": "4.0.0-nightly-00555",
+          "DSharpPlus": "4.0.0-nightly-00562",
           "Microsoft.Extensions.DependencyInjection": "2.0.0"
         },
         "runtime": {
           "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {
-            "assemblyVersion": "4.0.0.555",
-            "fileVersion": "4.0.0.555"
+            "assemblyVersion": "4.0.0.562",
+            "fileVersion": "4.0.0.562"
+          }
+        }
+      },
+      "DSharpPlus.Lavalink/4.0.0-nightly-00562": {
+        "dependencies": {
+          "DSharpPlus": "4.0.0-nightly-00562"
+        },
+        "runtime": {
+          "lib/netstandard2.0/DSharpPlus.Lavalink.dll": {
+            "assemblyVersion": "4.0.0.562",
+            "fileVersion": "4.0.0.562"
+          }
+        }
+      },
+      "DSharpPlus.VoiceNext/4.0.0-nightly-00562": {
+        "dependencies": {
+          "DSharpPlus": "4.0.0-nightly-00562"
+        },
+        "runtime": {
+          "lib/netstandard2.0/DSharpPlus.VoiceNext.dll": {
+            "assemblyVersion": "4.0.0.562",
+            "fileVersion": "4.0.0.562"
           }
         }
       },
@@ -1011,19 +1035,33 @@
       "serviceable": false,
       "sha512": ""
     },
-    "DSharpPlus/4.0.0-nightly-00555": {
+    "DSharpPlus/4.0.0-nightly-00562": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-OLcqK7PvQbBcbpJ5OMqsh5/WeSV/Aedg28uDdHioo1mZFkSiGCKxZJYh8/v6k0wyxMHNVAxkPTLG4roAtln0NA==",
-      "path": "dsharpplus/4.0.0-nightly-00555",
-      "hashPath": "dsharpplus.4.0.0-nightly-00555.nupkg.sha512"
+      "sha512": "sha512-ooZiES5HGmCUD+ob0EznW0GhPMJ1PcjbczfGb38EXnjCOBJutkwgCz5jQ76IhmR8d5NPa/GlegDtXw+k2S3gJw==",
+      "path": "dsharpplus/4.0.0-nightly-00562",
+      "hashPath": "dsharpplus.4.0.0-nightly-00562.nupkg.sha512"
     },
-    "DSharpPlus.CommandsNext/4.0.0-nightly-00555": {
+    "DSharpPlus.CommandsNext/4.0.0-nightly-00562": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-5sMOQwWIxJswq55T6HaIEMXPPBTxfa8Ah0gTzZfawDLPGfWGzGqwBj07BEgUTtVzDNDLIV5dzwVDU8P8SliBxQ==",
-      "path": "dsharpplus.commandsnext/4.0.0-nightly-00555",
-      "hashPath": "dsharpplus.commandsnext.4.0.0-nightly-00555.nupkg.sha512"
+      "sha512": "sha512-cPgQ3kXTdAw0rCl4SU2nqad+U/Gnfh4H5fvyDYXcfxv8WLz31BTgaFzIFlUCnr90AjL7L0S8YmGrDuAq0SVADw==",
+      "path": "dsharpplus.commandsnext/4.0.0-nightly-00562",
+      "hashPath": "dsharpplus.commandsnext.4.0.0-nightly-00562.nupkg.sha512"
+    },
+    "DSharpPlus.Lavalink/4.0.0-nightly-00562": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Jt6rjyptXRxzzIB8yhC5Z5X1JrO7BxBmu8EQQ4aiLfhicpOe2BmY3DaYy4O+HUpL2k5fe8j060sX0X6Z+fMcqw==",
+      "path": "dsharpplus.lavalink/4.0.0-nightly-00562",
+      "hashPath": "dsharpplus.lavalink.4.0.0-nightly-00562.nupkg.sha512"
+    },
+    "DSharpPlus.VoiceNext/4.0.0-nightly-00562": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-y9VWY/8xzBDDu6KmZF9xMkJKYsKzqg4+K0eh8Sb287BC0pHrRQejcdBL74C3tEe79wnKghXuwzPRHqXNinP6hg==",
+      "path": "dsharpplus.voicenext/4.0.0-nightly-00562",
+      "hashPath": "dsharpplus.voicenext.4.0.0-nightly-00562.nupkg.sha512"
     },
     "Microsoft.CSharp/4.3.0": {
       "type": "package",

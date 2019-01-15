@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using GameManager.Env;
 using GameManager.Env.Enum;
+using GameManager.Env.Extentions;
 
 namespace GameManager
 {
@@ -105,6 +106,29 @@ namespace GameManager
             var adminRole = e.Guild.CreateRoleAsync("ADMIN", Permissions.Administrator).GetAwaiter().GetResult();
 
             await GameBuilder.GetMember(e.Guild, e.User).GrantRoleAsync(adminRole);
+        }
+
+
+
+        [Command("score"), Aliases("s")]
+        public async Task Scores(CommandContext e)
+        {
+            Console.WriteLine("Score !!!");
+            try
+            {
+                Console.WriteLine(PathExtension.RootBot());
+                var s = Score.Load();
+                await e.RespondAsync(s.ToString());
+
+                s.ModifyPoint(1, 100);
+                s.Save();
+                
+
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
     }
 }

@@ -1,7 +1,11 @@
+using System;
 using System.Threading.Tasks;
+using DSharpPlus;
 using DSharpPlus.Entities;
 using GameManager.Env;
 using GameManager.Locale;
+using DSharpPlus.VoiceNext;
+using GameManager.Env.Enum;
 
 namespace GameManager.Roles
 {
@@ -11,6 +15,15 @@ namespace GameManager.Roles
         {
         }
 
+
+        public void ActivateLittleGirl()
+        {
+            var client = Global.Client;
+            var vNext = client.GetVoiceNext();
+             vNext.ConnectAsync(Global.Game.DiscordChannels[GameChannel.WolfVoice]).GetAwaiter().GetResult();
+            // if (vNext == null)
+            // client.DebugLogger.LogMessage(LogLevel.Info, "BotApp", , DateTime.Now);
+        }
 
         public override string ToString()
         {

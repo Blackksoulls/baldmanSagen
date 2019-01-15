@@ -1,7 +1,5 @@
 ﻿using DSharpPlus.Entities;
 using GameManager.Env;
-using GameManager.Env;
-using GameManager.Env.Enum;
 using GameManager.Locale;
 
 namespace GameManager.Roles

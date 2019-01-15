@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
+using DSharpPlus.VoiceNext;
+using DSharpPlus.VoiceNext.Codec;
 using GameManager.Env;
 using Newtonsoft.Json;
 
@@ -38,6 +40,12 @@ namespace GameManager
                 StringPrefixes = new List<string> {_config.Prefix}
             });
             _commands.RegisterCommands<BotCommands>();
+
+            var _voice = _client.UseVoiceNext(new VoiceNextConfiguration
+            {
+                EnableIncoming = true,
+                VoiceApplication = VoiceApplication.Voice
+            });
 
             _client.DebugLogger.LogMessageReceived += DebugLogger_LogMessageReceived;
             _client.ChannelCreated += Client_ChannelCreated;
@@ -115,6 +123,14 @@ namespace GameManager
             }
 
             return str;
+        }
+
+
+
+        public static string WhereIsPath(int nbToBack)
+        {
+            var strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            return strPath;
         }
 
         private async Task Client_GuildAvailable(GuildCreateEventArgs e)
@@ -443,39 +459,41 @@ namespace GameManager
         {
             if (e.Application == "REST")
                 return;
-
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.Write(DateTime.Now.ToString("HH:mm:ss,ff"));
-            Console.Write(e.Timestamp);
-            Console.ResetColor();
-            Console.Write(" ");
-            Console.BackgroundColor = ConsoleColor.DarkYellow;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(e.Application);
-            Console.ResetColor();
-            Console.Write(" : ");
-            switch (e.Level)
+            //lock (Console)
             {
-                case LogLevel.Critical:
-                case LogLevel.Error:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    break;
-                case LogLevel.Warning:
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    break;
-                case LogLevel.Info:
-                    Console.ForegroundColor = ConsoleColor.White;
-                    break;
-                case LogLevel.Debug:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    break;
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write(DateTime.Now.ToString("HH:mm:ss,ff"));
+                Console.Write(e.Timestamp);
+                Console.ResetColor();
+                Console.Write(" ");
+                Console.BackgroundColor = ConsoleColor.DarkYellow;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(e.Application);
+                Console.ResetColor();
+                Console.Write(" : ");
+                switch (e.Level)
+                {
+                    case LogLevel.Critical:
+                    case LogLevel.Error:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        break;
+                    case LogLevel.Warning:
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        break;
+                    case LogLevel.Info:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                    case LogLevel.Debug:
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        break;
+                }
+
+                Console.WriteLine(e.Message);
+                //File.AppendAllText(_config.LogFile, $"[{e.Level}] [{e.Timestamp}] [{e.Application}] : {e.Message}\n");
+
+                Console.ResetColor();
             }
-
-            Console.WriteLine(e.Message);
-            //File.AppendAllText(_config.LogFile, $"[{e.Level}] [{e.Timestamp}] [{e.Application}] : {e.Message}\n");
-
-            Console.ResetColor();
 
             var s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 

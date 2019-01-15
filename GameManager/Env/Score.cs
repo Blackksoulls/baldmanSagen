@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text;
-using GameManager.Locale;
+using System.Xml;
+using GameManager.Env.Extentions;
 using Newtonsoft.Json;
 
 namespace GameManager.Env
@@ -11,49 +10,82 @@ namespace GameManager.Env
     public class Score
     {
 
-   
+        [JsonProperty("scores")]
+        private Dictionary<string, int> _scores { get; set; }
 
-        private List<Point> _scores;
-
-        public Score()
+        public void ModifyPoint(ulong id, int nb)
         {
-            this._scores = new List<Point>();
+            try
+            {
+                Console.WriteLine("Try to modify");
+                var strId = id.ToString();
+                _scores[strId] += nb;
+
+                if (_scores[strId] < 0)
+                    _scores[strId] = 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
 
         }
 
-        private void Load()
+        public bool AddPlayer(ulong id)
         {
-            JsonConvert.DeserializeObject<Language>(
-                File.ReadAllText
-                (Path.Combine(Program.GetPath(-2), "Config", "scores.json"),
-                    Encoding.UTF8));
-
+            Console.WriteLine("Try to addPlayer");
+            return _scores.TryAdd(id.ToString(), 0);
         }
+
+        public int GetScore(ulong id)
+        {
+            return _scores[id.ToString()];
+        }
+
+        public override string ToString()
+        {
+            var str = "Scores des joueurs (par id)\n";
+            foreach (var (key, value) in _scores)
+            {
+                str += $"**{key}** : {value}\n";
+            }
+
+            return str;
+        }
+
+
+        public static Score Load()
+        {
+            try
+            {
+                var path = Path.Combine(PathExtension.RootBot(), "Scores", "score.json");
+                Console.WriteLine($"Try to load on {path}");
+                return JsonConvert.DeserializeObject<Score>(File.ReadAllText(path));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(1 + e.Message);
+                //return null;
+            }
+
+            return null;
+        }
+
 
         public void Save()
         {
-            _scores.Add(new Point(1, 1));
-            _scores.Add(new Point(2, 1));
-            _scores.Add(new Point(3, 6));
-            _scores.Add(new Point(4, 1));
-            _scores.Add(new Point(5, 1));
-            Console.WriteLine(JsonConvert.SerializeObject(this._scores));
-        }
-
-        private class Point
-        {
-            private ulong id;
-            private int nbPoint;
-
-            public Point(ulong id, int nbPoint)
+            try
             {
-                this.id = id;
-                this.nbPoint = nbPoint;
+                Console.WriteLine("Try to save");
+                var path = Path.Combine(PathExtension.RootBot(), "Scores", "score.json");
+
+                File.WriteAllText(path, JsonConvert.SerializeObject(this));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
     }
-
-
-  
-
 }

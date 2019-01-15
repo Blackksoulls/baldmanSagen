@@ -6771,6 +6771,62 @@
             </summary>
             <returns>HTTP response to this request.</returns>
         </member>
+        <member name="T:DSharpPlus.Net.ConnectionEndpoint">
+            <summary>
+            Represents a network connection endpoint.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.ConnectionEndpoint.Hostname">
+            <summary>
+            Gets or sets the hostname associated with this endpoint.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.ConnectionEndpoint.Port">
+            <summary>
+            Gets or sets the port associated with this endpoint.
+            </summary>
+        </member>
+        <member name="M:DSharpPlus.Net.ConnectionEndpoint.#ctor(System.String,System.Int32)">
+            <summary>
+            Creates a new endpoint structure.
+            </summary>
+            <param name="hostname">Hostname to connect to.</param>
+            <param name="port">Port to use for connection.</param>
+        </member>
+        <member name="M:DSharpPlus.Net.ConnectionEndpoint.GetHashCode">
+            <summary>
+            Gets the hash code of this endpoint.
+            </summary>
+            <returns>Hash code of this endpoint.</returns>
+        </member>
+        <member name="M:DSharpPlus.Net.ConnectionEndpoint.ToString">
+            <summary>
+            Gets the string representation of this connection endpoint.
+            </summary>
+            <returns>String representation of this endpoint.</returns>
+        </member>
+        <member name="T:DSharpPlus.Net.IpEndpoint">
+            <summary>
+            Represents a network connection IP endpoint.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.IpEndpoint.Address">
+            <summary>
+            Gets or sets the hostname associated with this endpoint.
+            </summary>
+        </member>
+        <member name="P:DSharpPlus.Net.IpEndpoint.Port">
+            <summary>
+            Gets or sets the port associated with this endpoint.
+            </summary>
+        </member>
+        <member name="M:DSharpPlus.Net.IpEndpoint.#ctor(System.Net.IPAddress,System.Int32)">
+            <summary>
+            Creates a new IP endpoint structure.
+            </summary>
+            <param name="address">IP address to connect to.</param>
+            <param name="port">Port to use for connection.</param>
+        </member>
         <member name="P:DSharpPlus.Net.Models.BaseEditModel.AuditLogReason">
             <summary>
             Reason given in audit logs
@@ -7165,7 +7221,7 @@
             Gets the amount of data available for this client.
             </summary>
         </member>
-        <member name="M:DSharpPlus.Net.Udp.BaseUdpClient.Setup(DSharpPlus.Net.Udp.ConnectionEndpoint)">
+        <member name="M:DSharpPlus.Net.Udp.BaseUdpClient.Setup(DSharpPlus.Net.ConnectionEndpoint)">
             <summary>
             Configures the UDP client.
             </summary>
@@ -7190,33 +7246,6 @@
             Closes and disposes the client.
             </summary>
         </member>
-        <member name="T:DSharpPlus.Net.Udp.ConnectionEndpoint">
-            <summary>
-            Represents a network connection endpoint.
-            </summary>
-        </member>
-        <member name="P:DSharpPlus.Net.Udp.ConnectionEndpoint.Hostname">
-            <summary>
-            Gets or sets the hostname associated with this endpoint.
-            </summary>
-        </member>
-        <member name="P:DSharpPlus.Net.Udp.ConnectionEndpoint.Port">
-            <summary>
-            Gets or sets the port associated with this endpoint.
-            </summary>
-        </member>
-        <member name="M:DSharpPlus.Net.Udp.ConnectionEndpoint.GetHashCode">
-            <summary>
-            Gets the hash code of this endpoint.
-            </summary>
-            <returns>Hash code of this endpoint.</returns>
-        </member>
-        <member name="M:DSharpPlus.Net.Udp.ConnectionEndpoint.ToString">
-            <summary>
-            Gets the string representation of this connection endpoint.
-            </summary>
-            <returns>String representation of this endpoint.</returns>
-        </member>
         <member name="T:DSharpPlus.Net.Udp.DspUdpClient">
             <summary>
             The default, native-based UDP client implementation.
@@ -7232,7 +7261,7 @@
             Creates a new UDP client instance.
             </summary>
         </member>
-        <member name="M:DSharpPlus.Net.Udp.DspUdpClient.Setup(DSharpPlus.Net.Udp.ConnectionEndpoint)">
+        <member name="M:DSharpPlus.Net.Udp.DspUdpClient.Setup(DSharpPlus.Net.ConnectionEndpoint)">
             <summary>
             Configures the UDP client.
             </summary>
@@ -7262,21 +7291,6 @@
             Creates a new instance of <see cref="T:DSharpPlus.Net.Udp.DspUdpClient"/>.
             </summary>
             <returns>An instance of <see cref="T:DSharpPlus.Net.Udp.DspUdpClient"/>.</returns>
-        </member>
-        <member name="T:DSharpPlus.Net.Udp.IpEndpoint">
-            <summary>
-            Represents a network connection IP endpoint.
-            </summary>
-        </member>
-        <member name="P:DSharpPlus.Net.Udp.IpEndpoint.Address">
-            <summary>
-            Gets or sets the hostname associated with this endpoint.
-            </summary>
-        </member>
-        <member name="P:DSharpPlus.Net.Udp.IpEndpoint.Port">
-            <summary>
-            Gets or sets the port associated with this endpoint.
-            </summary>
         </member>
         <member name="T:DSharpPlus.Net.WebSocket.WebSocketClientFactoryDelegate">
             <summary>

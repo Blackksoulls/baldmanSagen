@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Text;
 
 namespace BotManager
 {
@@ -12,7 +9,7 @@ namespace BotManager
         private static void Main(string[] args)
         {
             
-            string strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var strs = strPath.Split(Path.DirectorySeparatorChar);
             var str = "";
             for (var i = 0; i < strs.Length - 3; i++)
