@@ -109,7 +109,7 @@ namespace GameManager
                 await DailyVotingMessage.CreateReactionAsync(personnage.Emoji);
             }
 
-            Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
+            //Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
 
 
             await Task.Delay(Global.Config.DayVoteTime);
@@ -141,7 +141,7 @@ namespace GameManager
             Global.Game.CheckVictory();
             Console.WriteLine("POST");
 
-            Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
+            //Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
             //Attendre = false;
             Console.WriteLine("A");
             await Task.Delay(10000);
