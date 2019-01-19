@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus;
@@ -41,7 +42,7 @@ namespace GameManager
             });
             _commands.RegisterCommands<BotCommands>();
 
-            var _voice = _client.UseVoiceNext(new VoiceNextConfiguration
+            var voice = _client.UseVoiceNext(new VoiceNextConfiguration
             {
                 EnableIncoming = true,
                 VoiceApplication = VoiceApplication.Voice
@@ -107,7 +108,7 @@ namespace GameManager
 
         public static string GetPath(int nbToRemove)
         {
-            var strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var strPath = Assembly.GetExecutingAssembly().Location;
             Console.WriteLine(strPath);
             var strs = strPath.Split(Path.DirectorySeparatorChar);
             foreach (var s in strs)
@@ -125,13 +126,6 @@ namespace GameManager
             return str;
         }
 
-
-
-        public static string WhereIsPath(int nbToBack)
-        {
-            var strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            return strPath;
-        }
 
         private async Task Client_GuildAvailable(GuildCreateEventArgs e)
         {

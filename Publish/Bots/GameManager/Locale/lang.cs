@@ -1,5 +1,4 @@
-﻿using System;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using GameManager.Env;
 
 namespace GameManager.Locale
@@ -41,13 +40,17 @@ namespace GameManager.Locale
         public string WolvesChannel { get; set; }
 
         public string PersoGroup { get; set; }
+        public string TimeBeforeNext { get; set; }
+        public string TimeBeforeDayToString { get; set; }
+        public string TimeBeforeNightToString { get; set; }
+        public string Stats { get; set; }
     }
 
     public class Annoucement
     {
         public string NightAnnoucement { get; set; }
         public string DayAnnoucement { get; set; }
-        public string NightlyWolfMessage { get; set; }
+
         public string TownVictory { get; set; }
         public string WolfVictory { get; set; }
         public string LoverVictory { get; set; }
@@ -57,6 +60,8 @@ namespace GameManager.Locale
         public string DeadMessagePublic { get; set; }
         public string BotWantPlay { get; set; }
         public string LeaveMessage { get; set; }
+        public string NeedEventBot { get; set; }
+        public string NeedEventBotTooltype { get; set; }
     }
 
     public class Errors
@@ -71,6 +76,8 @@ namespace GameManager.Locale
         public string Player { get; set; }
         public string Spectator { get; set; }
         public string Admin { get; set; }
+        public string CupidMessage { get; set; }
+        public string CupidTitle { get; set; }
     }
 
     public class GameEffect
@@ -94,6 +101,7 @@ namespace GameManager.Locale
         public string WolfToString { get; set; }
         public string HunterToString { get; set; }
         public string SaviorToString { get; set; }
+        public string SaviorSave { get; set; }
         public string WitchToString { get; set; }
         public string SeerToString { get; set; }
         public string TalkativeSeerToString { get; set; }
@@ -109,6 +117,7 @@ namespace GameManager.Locale
         public string WitchKillMsg { get; set; }
         public string SaviorName { get; internal set; }
         public string DidNothing { get; internal set; }
+        public string TalkativeSeerMessage { get; set; }
     }
 
     public class Polls
@@ -118,6 +127,7 @@ namespace GameManager.Locale
         public string NoTownKill { get; set; }
         public string DailyVoteMessage { get; set; }
 		public string DeadVoteMessage { get; set; }
+        public string NightlyWolfMessage { get; set; }
     }
 
     public class HelpMessages

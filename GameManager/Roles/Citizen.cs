@@ -1,7 +1,7 @@
-using GameManager.Env;
-using GameManager.Roles;
 using DSharpPlus.Entities;
+using GameManager.Env;
 using GameManager.Locale;
+using GameManager.Roles;
 
 public class Citizen : Personnage
 {

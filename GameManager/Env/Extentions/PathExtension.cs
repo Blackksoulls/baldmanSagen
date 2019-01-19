@@ -1,5 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Reflection;
 
 namespace GameManager.Env.Extentions
 {
@@ -7,7 +7,7 @@ namespace GameManager.Env.Extentions
     {
         public static string GetPath(int nbToRemove)
         {
-            var strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var strPath = Assembly.GetExecutingAssembly().Location;
             var splited = strPath.Split(Path.DirectorySeparatorChar);
             var str = "";
             for (var i = 0; i < splited.Length - nbToRemove; i++)

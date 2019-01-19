@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GameManager.Env.Extentions;
 using DSharpPlus.Entities;
 using GameManager.Env;
+using GameManager.Env.Extentions;
 using GameManager.Locale;
 
 namespace GameManager.Roles
@@ -39,7 +39,7 @@ namespace GameManager.Roles
 
                     foreach (var player in Global.Game.PersonnagesList.FindAll(p => p.Alive && p.GetType() != typeof(Seer))) await msg.CreateReactionAsync(player.Emoji);
 
-                    await Task.Delay(Global.Config.DayVoteTime);
+                    await Task.Delay(Global.Config.NightPhase1 / 2 );
 
                     var target = (await BotCommands.GetVotes(msg)).Voted();
 

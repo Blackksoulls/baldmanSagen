@@ -1,6 +1,11 @@
 {
-  "join_time": "20000",
-  "night_action_time": "10000",
-  "day_vote_time": "10000",
-  "preset": "1000"
+  "join_time": "10000",
+  "night_action_time": "40000",
+  "night_phase_1_time": "20000",
+  "night_phase_2_time": "20000",
+  "day_vote_time": "120000",
+  "preset": "1000",
+  "quick_action_time": "15000",
+  "wait_after_death_time": "5000",
+  "refresh_remaining_time" :  "1000" 
 }

@@ -1,18 +1,20 @@
-﻿using DSharpPlus;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Exceptions;
 using GameManager.Env.Enum;
+using GameManager.Env.Extentions;
 using GameManager.Locale;
 using GameManager.Roles;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameManager.Env
 {
@@ -20,7 +22,6 @@ namespace GameManager.Env
     {
         public Dictionary<GameChannel, DiscordChannel> DiscordChannels;
         public Language Texts;
-        public bool Wait = true;
         public List<Personnage> PersonnagesList;
         public Victory Victory = Victory.None;
         public ulong GuildId;
@@ -32,13 +33,21 @@ namespace GameManager.Env
 
         public int Laps;
 
+        public TimeManagement Time;
+
         public Score Score;
+        public static bool Attendre { get; set; }
+
+
+        public static DiscordMessage DailyVotingMessage { get; private set; }
+        public static DiscordMessage DeadVotingMessage { get; private set; }
 
 
         public Game(string lang)
         {
             SetLanguage(lang);
             Score = Score.Load();
+            Time = new TimeManagement();
         }
 
 
@@ -114,6 +123,17 @@ namespace GameManager.Env
 
                     await e.TriggerTypingAsync();
 
+                    #region TIME
+
+                    var statsChannel = await Guild.CreateChannelAsync(Global.Game.Texts.Channels.Stats, ChannelType.Category);
+
+                    var timeChannel = await Guild.CreateChannelAsync(Global.Game.Texts.Channels.TimeBeforeNext,ChannelType.Voice,  parent:statsChannel);
+                    await timeChannel.ModifyPositionAsync(0);
+                    await timeChannel.AddOverwriteAsync(timeChannel.Guild.EveryoneRole, Permissions.AccessChannels);
+                    DiscordChannels.Add(GameChannel.Time, timeChannel);
+
+                    #endregion TIME
+
                     var generalChannel = Guild.GetDefaultChannel();
                     await generalChannel.ModifyAsync(x => x.Name = "Bot");
                     DiscordChannels.Add(GameChannel.BotText, generalChannel);
@@ -135,10 +155,32 @@ namespace GameManager.Env
                     };
                     await generalChannel.SendMessageAsync(embed: embed.Build());
 
+
                     var players = new List<DiscordMember>();
 
 
                     await Task.Delay(Global.Config.JoinTime);
+
+
+                    var temp = 0;
+                    while (Global.Game.Guild.Members.Count(m => m.IsBot) < 2)
+                    {
+                        Console.WriteLine("PLOP");
+                        if (temp % 20 == 0)
+                        {
+                            var embed1 = new DiscordEmbedBuilder
+                            {
+                                Color = Color.InfoColor,
+                                Title = Global.Game.Texts.Annoucement.NeedEventBot,
+                                Description =
+                                    $"{Global.Game.Creator.Mention} {Global.Game.Texts.Annoucement.NeedEventBotTooltype}"
+                            };
+                            await DiscordChannels[GameChannel.BotText].SendMessageAsync(embed: embed1.Build());
+                        }
+
+                        await Task.Delay(500);
+                        temp++;
+                    }
 
                     foreach (var usr in botVChannel.Users.ToList())
                     {
@@ -194,7 +236,6 @@ namespace GameManager.Env
                         else
                         {
                             WriteDebug($"{p.Me.Username} already is in bank");
-
                         }
 
                         var usr = GameBuilder.GetMember(Guild, p.Me);
@@ -202,7 +243,7 @@ namespace GameManager.Env
                         await DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(usr, Permissions.None,
                             GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.UseVoice));
                     }
-                       
+
                     Global.Game.Score.Save();
 
 
@@ -225,9 +266,30 @@ namespace GameManager.Env
                         e.Client.VoiceStateUpdated += Listeners.KillLeaver;
                     }
 
+                    Global.Game.NightTargets = new List<Personnage>();
+
+                    embed = new DiscordEmbedBuilder()
+                    {
+                        Title = "Scores"
+                    };
+
                     while (Victory == Victory.None && Victory != Victory.NotPlayable) await PlayAsync();
                     // Sauvegarde de fin 
+
+                    foreach( var personnage in Global.Game.PersonnagesList)
+                    {
+                        Score.ModifyPoint(personnage.Id , 10);
+                        embed.AddField(personnage.Me.DisplayName, $"{Score.GetScore(personnage.Id)} point(s)");
+                    }
+
+
+                    await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());     
+                        
                     Global.Game.Score.Save();
+
+                    await Task.Delay(Global.Config.DayVoteTime);
+
+                    await Global.Game.Guild.DeleteAsync();
 
                 }
             }
@@ -314,7 +376,7 @@ namespace GameManager.Env
                     Permissions.UseVoiceDetection);
 
             await DiscordChannels[GameChannel.BotVoice].AddOverwriteAsync(e.Member, p);
-            WriteDebug($"D : {e.Member.Username} {Global.Game.Creator.Username}" );
+            WriteDebug($"D : {e.Member.Username} {Global.Game.Creator.Username}");
             if (e.Member.Username == Global.Game.Creator.Username)
             {
                 await e.Member.GrantRoleAsync(Global.Roles[PublicRole.GameCreator]);
@@ -326,17 +388,24 @@ namespace GameManager.Env
         public void CreateStack()
         {
             Moments = new Stack<Moment>();
-
-
+            
             Moments.Push(Moment.Voting);
             Moments.Push(Moment.EndNight); // Tue vraiment les targets 
-            if (PersonnagesList.FindAll(p => p.GetType() == typeof(Witch)).Count >= 1)
-                Moments.Push(Moment.NightPhase2); // Witch 
+
+            var nightPhase2Roles = new List<Type>(){typeof(Witch), typeof(Savior)};
+            foreach (var role in nightPhase2Roles)
+            {
+                if (PersonnagesList.FindAll(p => p.GetType() == role).Count > 0)
+                {
+                    Moments.Push(Moment.NightPhase2); 
+                    break;
+                  
+                }
+            }
 
             Moments.Push(Moment.NightPhase1); // lg, pf, voyante 
 
-
-            if (Laps == 1 && PersonnagesList.FindAll(p => p.GetType() == typeof(Cupidon)).Count >= 1)
+            if (Laps == 0 && PersonnagesList.FindAll(p => p.GetType() == typeof(Cupidon)).Count >= 1)
                 Moments.Push(Moment.Cupid);
 
             Laps++;
@@ -409,7 +478,7 @@ namespace GameManager.Env
                     switch (Moments.Pop())
                     {
                         case Moment.Voting:
-                            await BotFunctions.DailyVote();
+                            await DailyVote();
                             break;
 
                         case Moment.HunterDead:
@@ -417,23 +486,25 @@ namespace GameManager.Env
                             break;
 
                         case Moment.EndNight:
-                            await BotFunctions.EndNight();
-                            await BotFunctions.DayAnnoucement();
+                            await EndNight();
+                            await DayAnnoucement();
                             break;
 
                         case Moment.NightPhase1:
-                            await BotFunctions.NightAnnoucement();
+                            await NightAnnoucement();
                             await Wolf.WolfVote();
                             await Seer.SeerAction();
-                            await LittleGirl.LittleGirlAction();
+                            await TalkativeSeer.TalkativeSeerAction();
+                            //await LittleGirl.LittleGirlAction();
                             break;
 
                         case Moment.NightPhase2:
                             await Witch.WitchMoment();
+                            await Savior.SaviorMoment();
                             break;
 
                         case Moment.Election:
-                            await BotFunctions.Elections();
+                            await Elections();
                             break;
 
                         case Moment.Cupid:
@@ -441,6 +512,7 @@ namespace GameManager.Env
                             break;
 
                         case Moment.End:
+                            Global.Game.Time.Timer.Stop();
                             done = true;
                             break;
                         default:
@@ -456,11 +528,7 @@ namespace GameManager.Env
             }
         }
 
-        public async Task Kill(DiscordMember m)
-        {
-            await Kill(Global.Game.PersonnagesList.Find(p => p.Id == m.Id));
-        }
-
+       
         public async Task Kill(Personnage p)
         {
             try
@@ -478,7 +546,7 @@ namespace GameManager.Env
                 embed = new DiscordEmbedBuilder
                 {
                     Title = Global.Game.Texts.Annoucement.DeadMessagePrivate,
-                    Color = Color.InfoColor
+                    Color = Color.DeadColor
                 };
 
                 await p.ChannelT.SendMessageAsync(embed: embed.Build());
@@ -487,11 +555,226 @@ namespace GameManager.Env
 
                 await p.Me.RevokeRoleAsync(Global.Roles[PublicRole.Player]);
                 await p.Me.GrantRoleAsync(Global.Roles[PublicRole.Spectator]);
+                await Task.Delay(Global.Config.WaitAfterDeathTime);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
         }
+
+        public static async Task DeadVote()
+        {
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = Global.Game.Texts.Polls.DeadVoteMessage,
+                Color = Color.PollColor
+            };
+            DeadVotingMessage =
+                await Global.Game.DiscordChannels[GameChannel.GraveyardText].SendMessageAsync(embed: embed.Build());
+
+            foreach (var personnage in Global.Game.PersonnagesList.FindAll(personnage => personnage.Alive))
+            {
+                Console.WriteLine($"Personnage : {personnage.Me.Username} -> {personnage.Emoji.Name}");
+                await DeadVotingMessage.CreateReactionAsync(personnage.Emoji);
+            }
+
+            Global.Client.MessageReactionAdded += Listeners.ClientOnMessageReactionAdded;
+
+            //if (nbTry == 1) Global.Client.MessageReactionAdded += Listeners.ClientOnMessageReactionAdded;
+
+
+            Console.WriteLine("Le temps est fini");
+            DeadVotingMessage = await Global.Game.DiscordChannels[GameChannel.GraveyardText]
+                .GetMessageAsync(DeadVotingMessage.Id);
+
+            while (Attendre)
+            {
+                await Task.Delay(500);
+            }
+
+            var vote = await BotCommands.GetVotes(DeadVotingMessage);
+            var voted = (await BotCommands.GetVotes(DailyVotingMessage)).Voted();
+
+            foreach (var (user, emoji) in vote)
+            {
+                if (emoji.Equals(voted.Emoji))
+                {
+                    Global.Game.Score.ModifyPoint(user.Id, 1);
+                }
+                else
+                {
+                    Global.Game.Score.ModifyPoint(user.Id, -1);
+                }
+            }
+
+            Global.Client.MessageReactionAdded -= Listeners.ClientOnMessageReactionAdded;
+        }
+
+        public static async Task DailyVote()
+        {
+
+            foreach (var personnage in Global.Game.PersonnagesList.FindAll(p => p.Alive))
+            {
+                Global.Game.Score.ModifyPoint(personnage.Id, 1);
+            }
+
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = Global.Game.Texts.Polls.DailyVoteMessage,
+                Color = Color.PollColor
+            };
+            DailyVotingMessage =
+                await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+
+            Attendre = true;
+            var thread = new Thread(async () => await DeadVote());
+            thread.Start();
+
+            foreach (var personnage in Global.Game.PersonnagesList.FindAll(personnage => personnage.Alive))
+            {
+                Console.WriteLine($"Personnage : {personnage.Me.Username} -> {personnage.Emoji.Name}");
+                await DailyVotingMessage.CreateReactionAsync(personnage.Emoji);
+            }
+
+            //Global.Client.MessageReactionAdded += ClientOnMessageReactionAdded;
+
+
+            await Task.Delay(Global.Config.DayVoteTime);
+
+
+            Console.WriteLine("Le temps pour voter le jour est fini");
+
+
+            var votes = await BotCommands.GetVotes(DailyVotingMessage);
+            var target = votes.Voted();
+
+
+            if (target != null)
+            {
+                var p = Global.Game.PersonnagesList.Find(personnage => personnage.Id == target.Id);
+                await MakeDeath(p);
+            }
+            else
+            {
+                embed = new DiscordEmbedBuilder
+                {
+                    Title = Global.Game.Texts.Polls.NoTownKill,
+                    Color = Color.InfoColor
+                };
+                await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed);
+            }
+
+            Global.Game.CheckVictory();
+
+            //Global.Client.MessageReactionAdded -= ClientOnMessageReactionAdded;
+            Attendre = false;
+            thread.Join();
+            //await Task.Delay(Global.Config.DayVoteTime);
+        }
+
+        public static async Task EndNight()
+        {
+            WriteDebug("Fin de la nuit");
+
+            foreach (var p in Global.Game.PersonnagesList.FindAll(p => p.GetType() == typeof(Wolf)))
+            {
+                var sends = GameBuilder.CreatePerms(Permissions.SendMessages, Permissions.SendTtsMessages);
+                var others = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.ReadMessageHistory);
+                await Global.Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(p.Me, others, sends);
+            }
+
+
+            foreach (var target in Global.Game.NightTargets)
+            {
+                if (target != null)
+                {
+                    WriteDebug("MEUTRE DE " + target.Me.Username);
+                    await MakeDeath(target);
+                }
+            }
+
+            Global.Game.CheckVictory();
+        }
+
+        public static Task Elections()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static async Task MakeDeath(Personnage p)
+        {
+            await Global.Game.Kill(p);
+
+
+            if (p.GetType() == typeof(Hunter)) Global.Game.Moments.Push(Moment.HunterDead);
+
+            if (p.Effect == Effect.Lover)
+            {
+                var loved = Global.Game.PersonnagesList.Find(p2 => p2.Effect == Effect.Lover && p != p2);
+                var embed = new DiscordEmbedBuilder
+                {
+                    Title = $"{loved.Me.Username} {Global.Game.Texts.Annoucement.LoveSuicide}",
+                    Color = Color.LoveColor
+                };
+                await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+                await Global.Game.Kill(loved);
+            }
+        }
+
+        public static async Task NightAnnoucement()
+        {
+            Global.Game.Time.Timer.Enabled = false;
+            Global.Game.Time.Moment = TimeMoment.Night;
+            Global.Game.Time.Timer.Enabled = true;
+
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = Global.Game.Texts.Annoucement.NightAnnoucement,
+                Color = Color.InfoColor
+            };
+            await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+            var sends = GameBuilder.CreatePerms(Permissions.AccessChannels, Permissions.SendMessages,
+                Permissions.SendTtsMessages);
+            foreach (var p in Global.Game.PersonnagesList.FindAll(p => p.Alive))
+            {
+                if (p.GetType() != typeof(Wolf))
+                {
+                    await p.Me.PlaceInAsync(p.ChannelV);
+                }
+                else
+                {
+                    await p.Me.PlaceInAsync(Global.Game.DiscordChannels[GameChannel.WolfVoice]);
+                    await Global.Game.DiscordChannels[GameChannel.WolfText].AddOverwriteAsync(p.Me, sends);
+                }
+
+                await Global.Game.DiscordChannels[GameChannel.TownText].AddOverwriteAsync(p.Me, Permissions.None, GameBuilder.SendPerms);
+
+            }
+        }
+
+        public static async Task DayAnnoucement()
+        {
+
+            Global.Game.Time.Timer.Enabled = false;
+            Global.Game.Time.Moment = TimeMoment.Day;
+            Global.Game.Time.Timer.Enabled = true;
+
+
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = Global.Game.Texts.Annoucement.DayAnnoucement,
+                Color = Color.InfoColor
+            };
+            await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+            foreach (var p in Global.Game.PersonnagesList.FindAll(p => p.Alive))
+            {
+                await p.Me.PlaceInAsync(Global.Game.DiscordChannels[GameChannel.TownVoice]);
+                await Global.Game.DiscordChannels[GameChannel.TownText].AddOverwriteAsync(p.Me,GameBuilder.CreatePerms(GameBuilder.SendPerms, Permissions.AccessChannels), Permissions.None);
+
+            }
+        }
+
+      
     }
 }

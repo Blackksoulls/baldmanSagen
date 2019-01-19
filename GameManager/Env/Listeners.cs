@@ -1,9 +1,8 @@
-﻿using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using GameManager.Env.Enum;
-
 
 namespace GameManager.Env
 {
@@ -29,6 +28,7 @@ namespace GameManager.Env
 
         public static async Task KillLeaver(VoiceStateUpdateEventArgs e)
         {
+
             if (e.Channel == null)
             {
                 var foo = Global.Game.PersonnagesList.Find(p => p.Alive && p.Me.Id == e.User.GetMember().Id);
@@ -39,12 +39,22 @@ namespace GameManager.Env
                         Title = Global.Game.Texts.Annoucement.LeaveMessage
                     };
 
-                    await Global.Game.Kill(foo);
+                    await Game.MakeDeath(foo);
                     Game.WriteDebug("Meutre du leaver " + foo.Me.Username);
 
                     await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
-                    Global.Game.CheckVictory();
+                    if(Global.Game.Victory == Victory.None)
+                    { Global.Game.CheckVictory();}
                 }
+            }
+        }
+
+        public static async Task ClientOnMessageReactionAdded(MessageReactionAddEventArgs e)
+        {
+            if (!e.User.IsBot && e.User.GetMember().Roles.Contains(Global.Roles[PublicRole.Spectator]))
+            {
+                if(e.Channel != Global.Game.PersonnagesList.Find(p => p.Id == e.User.GetMember().Id).ChannelT) // Permet au joueur de voter dans leur propres channel même en étant mort (chasseur)
+                    await Game.DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
             }
         }
     }

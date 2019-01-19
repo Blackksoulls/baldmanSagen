@@ -15,4 +15,11 @@
 
         End
     }
+
+
+    public enum TimeMoment
+    {
+        Day,
+        Night
+    }
 }

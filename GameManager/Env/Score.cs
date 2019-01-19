@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml;
+using System.Linq;
 using GameManager.Env.Extentions;
 using Newtonsoft.Json;
 
@@ -11,7 +11,7 @@ namespace GameManager.Env
     {
 
         [JsonProperty("scores")]
-        private Dictionary<string, int> _scores { get; set; }
+        private Dictionary<string, int> Scores { get; set; }
 
         public void ModifyPoint(ulong id, int nb)
         {
@@ -19,10 +19,10 @@ namespace GameManager.Env
             {
                 Console.WriteLine("Try to modify");
                 var strId = id.ToString();
-                _scores[strId] += nb;
+                Scores[strId] += nb;
 
-                if (_scores[strId] < 0)
-                    _scores[strId] = 0;
+                if (Scores[strId] < 0)
+                    Scores[strId] = 0;
             }
             catch (Exception e)
             {
@@ -35,24 +35,26 @@ namespace GameManager.Env
         public bool AddPlayer(ulong id)
         {
             Console.WriteLine("Try to addPlayer");
-            return _scores.TryAdd(id.ToString(), 0);
+            return Scores.TryAdd(id.ToString(), 0);
         }
 
         public int GetScore(ulong id)
         {
-            return _scores[id.ToString()];
+            return Scores[id.ToString()];
         }
 
         public override string ToString()
         {
             var str = "Scores des joueurs (par id)\n";
-            foreach (var (key, value) in _scores)
+            foreach (var (key, value) in Scores)
             {
                 str += $"**{key}** : {value}\n";
             }
 
             return str;
-        }
+        }   
+
+
 
 
         public static Score Load()

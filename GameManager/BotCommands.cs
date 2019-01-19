@@ -1,15 +1,12 @@
-﻿using DSharpPlus;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using GameManager.Env;
-using GameManager.Env.Enum;
 using GameManager.Env.Extentions;
 
 namespace GameManager
@@ -19,7 +16,7 @@ namespace GameManager
 
     
         [Command("Reload"), Aliases("r")]
-        public async Task Reload()
+        public void Reload()
         {
             Global.Game = null;
             //Global.Client = null;
@@ -78,7 +75,18 @@ namespace GameManager
                 foreach (var discordUserReact in (await m.GetReactionsAsync(discordReaction)))
                 {
                     if (!discordUserReact.IsCurrent)
-                        d.Add(discordUserReact.GetMember(), discordReaction);
+                    {
+                        if (d.ContainsKey(discordUserReact.GetMember()))
+                        {
+                            d[discordUserReact.GetMember()] = discordReaction;
+                        }
+                        else
+                        {
+                            d.Add(discordUserReact.GetMember(), discordReaction);
+
+                        }
+
+                    }
                 }
             }
 
@@ -105,7 +113,9 @@ namespace GameManager
         {
             var adminRole = e.Guild.CreateRoleAsync("ADMIN", Permissions.Administrator).GetAwaiter().GetResult();
 
-            await GameBuilder.GetMember(e.Guild, e.User).GrantRoleAsync(adminRole);
+                await GameBuilder.GetMember(e.Guild, e.User).GrantRoleAsync(adminRole);
+
+
         }
 
 

@@ -1,9 +1,8 @@
-using System.Linq;
 using System.Threading.Tasks;
-using GameManager.Env.Extentions;
 using DSharpPlus.Entities;
 using GameManager.Env;
 using GameManager.Env.Enum;
+using GameManager.Env.Extentions;
 using GameManager.Locale;
 
 namespace GameManager.Roles
@@ -31,17 +30,15 @@ namespace GameManager.Roles
             var hunter = Global.Game.PersonnagesList.Find(p => p.GetType() == typeof(Hunter));
             var message = await hunter.ChannelT.SendMessageAsync(Global.Game.Texts.GameRoles.HunterDeathQuestion);
 
-
-            foreach (var emoji in (await Global.Game.Guild.GetEmojisAsync()).ToList()
-                .FindAll(emo => emo.Id != hunter.Emoji.Id))
+            foreach (var p in Global.Game.PersonnagesList.FindAll(p => p.Alive && p.Id != hunter.Id))
             {
-                await message.CreateReactionAsync(emoji);
+                await message.CreateReactionAsync(p.Emoji);
             }
 
-            await Task.Delay(Global.Config.DayVoteTime);
+            await Task.Delay(Global.Config.QuickActionTime);
 
             var target = (await BotCommands.GetVotes(message)).Voted();
-            await Global.Game.Kill(target);
+            await Game.MakeDeath(target);
             var embed = new DiscordEmbedBuilder
             {
                 Title =
@@ -49,6 +46,7 @@ namespace GameManager.Roles
                 Color = Color.DeadColor
             };
             await Global.Game.DiscordChannels[GameChannel.TownText].SendMessageAsync(embed: embed.Build());
+            
         }
     }
 }

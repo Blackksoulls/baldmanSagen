@@ -1,8 +1,8 @@
-﻿using GameManager.Env.Extentions;
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using GameManager.Env;
 using GameManager.Env.Enum;
+using GameManager.Env.Extentions;
 
 namespace GameManager.Roles
 {

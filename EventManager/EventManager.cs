@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using DSharpPlus;
-using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using Newtonsoft.Json;
 
@@ -20,7 +20,7 @@ namespace EventManager
 
         public async Task AsyncMain()
         {
-            var strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var strPath = Assembly.GetExecutingAssembly().Location;
             var strs = strPath.Split(Path.DirectorySeparatorChar);
             var str = "";
             for (var i = 0; i < strs.Length - 2; i++)
@@ -68,9 +68,17 @@ namespace EventManager
         private async Task PreventMultiVote(MessageReactionAddEventArgs e)
         {
             if (!e.User.IsBot)
+            {
+                Console.WriteLine("Je Check une reaction d'un joueur !");
                 foreach (var otherEmoji in (await e.Channel.Guild.GetEmojisAsync()).ToList()
                     .FindAll(em => em.Id != e.Emoji.Id))
+                {
                     await e.Message.DeleteReactionAsync(otherEmoji, e.User, $"{e.User.Username} already voted");
+                    Console.WriteLine($"Suppression de l'émoji de {e.User.Username}");
+                }
+            }
+
+      
         }
 
  

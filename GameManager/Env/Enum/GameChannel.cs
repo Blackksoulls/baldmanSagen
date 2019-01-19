@@ -10,6 +10,7 @@
         GraveyardText,
         BotText,
         GraveyardVoice,
-        BotVoice
+        BotVoice,
+        Time
     }
 }

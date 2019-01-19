@@ -8,3 +8,4 @@ P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.As
 P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.AssemblyInfo.cs
 P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.dll
 P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.pdb
+P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.csprojAssemblyReference.cache

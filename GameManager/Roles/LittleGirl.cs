@@ -1,11 +1,9 @@
-using System;
 using System.Threading.Tasks;
-using DSharpPlus;
 using DSharpPlus.Entities;
-using GameManager.Env;
-using GameManager.Locale;
 using DSharpPlus.VoiceNext;
+using GameManager.Env;
 using GameManager.Env.Enum;
+using GameManager.Locale;
 
 namespace GameManager.Roles
 {

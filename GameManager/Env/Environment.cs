@@ -1,8 +1,3 @@
-using GameManager.Env.Extentions;
-using DSharpPlus;
-using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,8 +5,13 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using DSharpPlus;
+using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using GameManager.Env.Enum;
+using GameManager.Env.Extentions;
 using GameManager.Roles;
+using Newtonsoft.Json;
 
 namespace GameManager.Env
 {
@@ -31,8 +31,10 @@ namespace GameManager.Env
 
     public static class GameBuilder
     {
-        public static Permissions UsrPerms = CreatePerms(Permissions.AccessChannels, Permissions.AddReactions,
-            Permissions.SendMessages, Permissions.UseVoiceDetection, Permissions.Speak);
+        public static Permissions UsrPerms = CreatePerms(Permissions.ReadMessageHistory, Permissions.AccessChannels, Permissions.AddReactions,
+            Permissions.SendMessages, Permissions.SendTtsMessages, Permissions.UseVoiceDetection, Permissions.Speak);
+
+        public static Permissions SendPerms = CreatePerms(Permissions.SendMessages, Permissions.SendTtsMessages);
 
         public static async Task CreatePersonnages(List<DiscordMember> players)
         {
@@ -102,7 +104,7 @@ namespace GameManager.Env
                             Global.Game.PersonnagesList.Add(new Witch(players[0], emoji));
                             break;
                         case GameRole.Savior:
-                            Global.Game.PersonnagesList.Add(new Salvator(players[0], emoji));
+                            Global.Game.PersonnagesList.Add(new Savior(players[0], emoji));
                             break;
                         case GameRole.Seer:
                             Global.Game.PersonnagesList.Add(new Seer(players[0], emoji));
@@ -150,25 +152,60 @@ namespace GameManager.Env
             for (var i = 0; i < nbPlayer; i++)
                 switch (i)
                 {
+                    //case 1:
+                    //    roleList.Add(GameRole.TalkativeSeer);
+                    //    break;
+                    //case 2:
+                    //    roleList.Add(GameRole.Wolf);
+                    //    break;
+                    //case 3:
+                    //    roleList.Add(GameRole.Savior);
+                    //    break;
+                    //case 4:
+                    //    roleList.Add(GameRole.Wolf);
+                    //    break;
+                    //case 5:
+                    //    roleList.Add(GameRole.Hunter);
+                    //    roleList.Add(GameRole.Witch);
+                    //    roleList.Add(GameRole.Wolf);
+                    //    break;
+                    //case 6:
+                    //    roleList.Add(GameRole.LittleGirl);
+                    //    break;
+                    //case 7:
+                    //    roleList.Add(GameRole.Witch);
+                    //    break;
+                    //case 8:
+                    //    roleList.Add(GameRole.Hunter);
+                    //    break;
+                    //case 9:
+                    //    roleList.Add(GameRole.Wolf);
+                    //    break;
+                    //case 10:
+                    //    roleList.Add(GameRole.Cupid);
+                    //    break;
+                    //default:
+                    //    roleList.Add(i % 3 == 0 ? GameRole.Wolf : GameRole.Citizen);
+                    //    break;
                     case 1:
-                        roleList.Add(GameRole.Seer);
+                        roleList.Add(GameRole.Citizen);
                         break;
                     case 2:
                         roleList.Add(GameRole.Wolf);
                         break;
                     case 3:
-                        roleList.Add(GameRole.Citizen);
+                        roleList.Add(GameRole.Seer);
                         break;
                     case 4:
                         roleList.Add(GameRole.Wolf);
                         break;
                     case 5:
                         roleList.Add(GameRole.Savior);
-                        roleList.Add(GameRole.Citizen);
+                        roleList.Add(GameRole.TalkativeSeer);
                         roleList.Add(GameRole.Wolf);
                         break;
                     case 6:
-                        roleList.Add(GameRole.LittleGirl);
+                        roleList.Add(GameRole.Citizen);
                         break;
                     case 7:
                         roleList.Add(GameRole.Witch);
@@ -185,41 +222,6 @@ namespace GameManager.Env
                     default:
                         roleList.Add(i % 3 == 0 ? GameRole.Wolf : GameRole.Citizen);
                         break;
-                    /*case 1:
-                        roleList.Add(GameRole.Citizen);
-                        break;
-                    case 2:
-                        roleList.Add(GameRole.Wolf);
-                        break;
-                    case 3:
-                        roleList.Add(GameRole.Seer);
-                        break;
-                    case 4:
-                        roleList.Add(GameRole.Wolf);
-                        break;
-                    case 5:
-                        roleList.Add(GameRole.Savior);
-                        roleList.Add(GameRole.Citizen);
-                        roleList.Add(GameRole.Wolf);
-                        break;
-                    case 6:
-                        roleList.Add(GameRole.LittleGirl);
-                        break;
-                    case 7:
-                        roleList.Add(GameRole.Witch);
-                        break;
-                    case 8:
-                        roleList.Add(GameRole.Hunter);
-                        break;
-                    case 9:
-                        roleList.Add(GameRole.Wolf);
-                        break;
-                    case 10:
-                        roleList.Add(GameRole.Cupid);
-                        break;
-                    default:
-                        roleList.Add(i % 3 == 0 ? GameRole.Wolf : GameRole.Citizen);
-                        break;*/
                 }
 
             return roleList;
@@ -247,11 +249,6 @@ namespace GameManager.Env
             #region Roles
 
             Global.Roles = new Dictionary<PublicRole, DiscordRole>();
-            Game.WriteDebug(Global.Roles);
-            Game.WriteDebug(Global.Game);
-            Game.WriteDebug(Global.Game.Guild);
-            Game.WriteDebug(Global.Game.Texts.DiscordRoles);
-            Game.WriteDebug(Global.Game.Texts.DiscordRoles.BotName);
 
             var adminRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.DiscordRoles.BotName,
                 Permissions.Administrator, Color.AdminColor, true, true, "GameRole Bot");
@@ -259,7 +256,7 @@ namespace GameManager.Env
 
 
             var playerPerms = CreatePerms(Permissions.SendMessages, Permissions.ReadMessageHistory,
-                Permissions.AddReactions);
+                Permissions.AddReactions, Permissions.AttachFiles);
 
             var playerRole = await Global.Game.Guild.CreateRoleAsync(Global.Game.Texts.DiscordRoles.Player, playerPerms,
                 Color.PlayerColor, true, true, "GameRole Joueur");

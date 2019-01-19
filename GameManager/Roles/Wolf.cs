@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using GameManager.Env.Extentions;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using GameManager.Env;
 using GameManager.Env.Enum;
+using GameManager.Env.Extentions;
 using GameManager.Locale;
 
 namespace GameManager.Roles
@@ -36,11 +36,12 @@ namespace GameManager.Roles
 
         public static async Task WolfVote()
         {
-            Global.Game.NightTargets = new List<Personnage>();
+            Global.Game.NightTargets.Clear(); // On vide la liste des gens à manger
+
             var embed = new DiscordEmbedBuilder
             {
                 Color = Color.PollColor,
-                Title = Global.Game.Texts.Annoucement.NightlyWolfMessage
+                Title = Global.Game.Texts.Polls.NightlyWolfMessage
             };
 
             var msg = await Global.Game.DiscordChannels[GameChannel.WolfText].SendMessageAsync(embed: embed.Build());
@@ -50,7 +51,7 @@ namespace GameManager.Roles
                 await msg.CreateReactionAsync(personnage.Emoji);
             }
 
-            await Task.Delay(Global.Config.DayVoteTime);
+            await Task.Delay(Global.Config.NightPhase1);
 
             var target = (await BotCommands.GetVotes(msg)).Voted();
 

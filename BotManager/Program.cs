@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 
 namespace BotManager
 {
@@ -9,7 +10,7 @@ namespace BotManager
         private static void Main(string[] args)
         {
             
-            var strPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var strPath = Assembly.GetExecutingAssembly().Location;
             var strs = strPath.Split(Path.DirectorySeparatorChar);
             var str = "";
             for (var i = 0; i < strs.Length - 3; i++)

@@ -1,7 +1,7 @@
-using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
 using System.Linq;
 using System.Threading.Tasks;
+using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using GameManager.Env;
 using GameManager.Env.Enum;
 using GameManager.Locale;
@@ -41,9 +41,16 @@ namespace GameManager.Roles
                     Title = Global.Game.Texts.GameRoles.CupidMessage
                 };
                 var msg = await channel.SendMessageAsync(embed: embed.Build());
+
+                foreach (var p in Global.Game.PersonnagesList)
+                {
+                    await msg.CreateReactionAsync(p.Emoji);
+                }
+
+
                 Global.Client.MessageReactionAdded += OnReactionAddedCupidon;
 
-                await Task.Delay(Global.Config.DayVoteTime);
+                await Task.Delay(Global.Config.NightPhase1);
 
                 msg = await channel.GetMessageAsync(msg.Id);
 
@@ -60,6 +67,21 @@ namespace GameManager.Roles
                 {
                     personnage.Effect = Effect.Lover;
                 }
+
+                embed = new DiscordEmbedBuilder
+                {
+                    Title = Global.Game.Texts.DiscordRoles.CupidTitle,
+                    Color = Color.InfoColor,
+                    Description = $"{Global.Game.Texts.DiscordRoles.CupidMessage} {target[1].Me.DisplayName}",
+                };
+
+
+                await target[0].ChannelT.SendMessageAsync(embed: embed.Build());
+                embed.Description = $"{Global.Game.Texts.DiscordRoles.CupidMessage} {target[0].Me.DisplayName}";
+
+
+                await target[1].ChannelT.SendMessageAsync(embed: embed.Build());
+
 
                 Global.Client.MessageReactionAdded -= OnReactionAddedCupidon;
             }
@@ -80,7 +102,7 @@ namespace GameManager.Roles
             if (!present ||
                 (GameBuilder.GetMember(game.Guild, e.User)).Roles.Contains(Global.Roles[PublicRole.Spectator]))
             {
-                await BotFunctions.DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
+                await Game.DailyVotingMessage.DeleteReactionAsync(e.Emoji, e.User);
                 return;
             }
 
@@ -94,7 +116,7 @@ namespace GameManager.Roles
                     cnt++;
                     if (otherEmoji.Name != e.Emoji.Name && cnt > 1)
                     {
-                        await BotFunctions.DailyVotingMessage.DeleteReactionAsync(otherEmoji, e.User,
+                        await Game.DailyVotingMessage.DeleteReactionAsync(otherEmoji, e.User,
                             $"{e.User.Username} already voted");
                         cnt = 0; // 0  car on ajoute 1 avant le test
                     }
