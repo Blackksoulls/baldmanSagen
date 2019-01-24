@@ -26,47 +26,109 @@
                 </div>
                 <div class="mb-4">
                     <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="joingame">
-                        Time to join the game
+                        Temps pour rejoindre la partie
                     </label>
                     <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="joingame" name="joingame">
-                        <option>0s</option>
-                        <option>10s</option>
-                        <option selected>15s</option>
-                        <option>20s</option>
+                        <option>5s</option>
+                        <option selected>10s</option>
+                        <option>15s</option>
                         <option>30s</option>
                         <option>45s</option>
-                        <option>50s</option>
                         <option>60s</option>
+                        <option>90s</option>
                     </select>
                 </div>
                 <div class="mb-4">
                     <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="actionight">
-                        Time to play per player during night
+                        Temps pour jouer durant la nuit
                     </label>
                     <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="actionight" name="actionight">
+                        <option>5s</option>
                         <option>10s</option>
                         <option>15s</option>
-                        <option>20s</option>
+                        <option>30s</option>
+                        <option>45s</option>
+                        <option selected>60s</option>
+                        <option>90s</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="nf1">
+                        Temps d'action durant la 1ere phase de la nuit
+                    </label>
+                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="nf1" name="nf1">
+                        <option>5s</option>
+                        <option>10s</option>
+                        <option>15s</option>
                         <option selected>30s</option>
                         <option>45s</option>
-                        <option>50s</option>
                         <option>60s</option>
                         <option>90s</option>
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="voteday">
-                        Time to vote per player during daytime
+                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="nf2">
+                        Temps d'action durant la 2nd phase de la nuit
                     </label>
-                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="voteday" name="voteday">
+                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="nf2" name="nf2">
+                        <option>5s</option>
                         <option>10s</option>
                         <option>15s</option>
-                        <option>20s</option>
-                        <option>30s</option>
-                        <option selected>45s</option>
+                        <option selected>30s</option>
+                        <option>45s</option>
+                        <option>60s</option>
+                        <option>90s</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="quick">
+                        Temps pour les actions rapides (E.G. mort du chasseur)
+                    </label>
+                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="quick" name="quick">
+                        <option>5s</option>
+                        <option>10s</option>
+                        <option>15s</option>
+                        <option selected>30s</option>
+                        <option>45s</option>
+                        <option>60s</option>
+                        <option>90s</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="death">
+                        Temps quand un mort arrive
+                    </label>
+                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="death" name="death">
+                        <option>1s</option>
+                        <option>3s</option>
+                        <option selected>5s</option>
+                        <option>7s</option>
+                        <option>10s</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="fresh">
+                        Temps entre deux refresh
+                    </label>
+                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="fresh" name="fresh">
+                        <option selected>1s</option>
+                        <option>2s</option>
+                        <option>3s</option>
+                        <option>4s</option>
+                        <option>5s</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="noselect block text-grey-darker text-sm font-bold mb-2" for="voteday">
+                        Temps pour voter le jour
+                    </label>
+                    <select class="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="voteday" name="voteday">
+                        <option>45s</option>
                         <option>50s</option>
                         <option>60s</option>
                         <option>90s</option>
+                        <option selected>120s</option>
+                        <option>150s</option>
                     </select>
                 </div>
                 <div class="flex items-center justify-between">

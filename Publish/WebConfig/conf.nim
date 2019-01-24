@@ -28,11 +28,23 @@ proc main(req: Request) {.async.} =
                     var preset = req.body.getMatch(re".*preset=([0-9])&.*")
                     var join = req.body.getMatch(re".*joingame=([0-9]*)s&.*")
                     var act = req.body.getMatch(re".*actionight=([0-9]*)s&.*")
+                    var nf1 = req.body.getMatch(re".*nf1=([0-9]*)s&.*")
+                    var nf2 = req.body.getMatch(re".*nf2=([0-9]*)s&.*")
+                    var quick = req.body.getMatch(re".*quick=([0-9]*)s&.*")
+                    var death = req.body.getMatch(re".*death=([0-9]*)s&.*")
+                    var remind = req.body.getMatch(re".*fresh=([0-9]*)s&.*")
                     var vote = req.body.getMatch(re".*voteday=([0-9]*)s.*")
+                    
                     var json = %* {
-                        "join_time":join & "000","night_action_time":act & "000",
-                        "day_vote_time":vote & "000",
-                        "preset":preset,
+                        "join_time": join & "000",
+                        "night_action_time": act & "000",
+                        "night_phase_1_time": nf1 & "000",
+                        "night_phase_2_time": nf2 & "000",
+                        "preset": preset,
+                        "day_vote_time": vote & "000",
+                        "quick_action_time": quick & "000",
+                        "wait_after_death_time": death & "000",
+                        "refresh_remaining_time": remind & "000",
                     }
                     var f = open("game-settings.json", fmWrite)
                     write(f, json.pretty())
