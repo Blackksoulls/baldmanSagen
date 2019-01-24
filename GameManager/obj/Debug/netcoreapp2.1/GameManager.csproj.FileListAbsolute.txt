@@ -9,3 +9,13 @@ P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.As
 P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.dll
 P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.pdb
 P:\Professionels\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.csprojAssemblyReference.cache
+C:\Users\olivi\Source\Repos\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\GameManager.deps.json
+C:\Users\olivi\Source\Repos\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\GameManager.runtimeconfig.json
+C:\Users\olivi\Source\Repos\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\GameManager.runtimeconfig.dev.json
+C:\Users\olivi\Source\Repos\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\GameManager.dll
+C:\Users\olivi\Source\Repos\baldmanSagen\GameManager\bin\Debug\netcoreapp2.1\GameManager.pdb
+C:\Users\olivi\Source\Repos\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.csproj.CoreCompileInputs.cache
+C:\Users\olivi\Source\Repos\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.AssemblyInfoInputs.cache
+C:\Users\olivi\Source\Repos\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.AssemblyInfo.cs
+C:\Users\olivi\Source\Repos\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.dll
+C:\Users\olivi\Source\Repos\baldmanSagen\GameManager\obj\Debug\netcoreapp2.1\GameManager.pdb

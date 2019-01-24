@@ -35,7 +35,6 @@ namespace EventManager
                 File.ReadAllText(Path.Combine(str, "Config", "config.json")));
             var client = new DiscordClient(new DiscordConfiguration {LogLevel = LogLevel.Debug, Token = _config.Token});
 
-            client.MessageReactionAdded += PreventMultiVote;
 
             try
             {
@@ -46,7 +45,7 @@ namespace EventManager
                 Console.WriteLine(e);
             }
 
-
+            client.MessageReactionAdded += PreventMultiVote;
             client.MessageCreated += PleaseInviteMe;
 
             Console.WriteLine("Bot Event : GOO0D");
@@ -77,11 +76,7 @@ namespace EventManager
                     Console.WriteLine($"Suppression de l'émoji de {e.User.Username}");
                 }
             }
-
-      
         }
-
- 
 
         public class Config
         {

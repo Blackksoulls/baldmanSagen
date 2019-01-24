@@ -36,4 +36,4 @@ robocopy.exe Libraries\   Publish\Bots\GameManager\Bin /E /IS
 
 
 
-start ptut
+start Publish\run.bat
